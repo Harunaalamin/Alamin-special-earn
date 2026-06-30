@@ -109,7 +109,32 @@
             </div>
 
             <!-- Interactive Area (Wurin Tambayoyi da Talla) -->
-            <div id="interactive-box" class="mt-8 bg-slate-800 border border-indigo-500/30 rounded-2xl p-6 hidden shadow-2xl mb-8"></div>
+            <div id="interactive-box" class="mt-8 bg-slate-800 border border-indigo-500/30 rounded-2xl p-6 hidden shadow-2xl mb-8">
+                <!-- Dynamic Content Inside -->
+                <div id="quiz-content" class="hidden"></div>
+                
+                <div id="ads-content" class="hidden text-center py-4">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                        <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-rectangle-ad mr-1"></i> Sponsored Ad</span>
+                        <span id="ad-timer" class="text-xs bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold">5s</span>
+                    </div>
+                    
+                    <!-- WURIN SAKA CODE NA ADSTERRA NA ZAHIRI -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 min-h-[250px] flex items-center justify-center text-center">
+                        <div class="w-full">
+                            <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"></script>
+                            <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4">Karka rufe shafin nan har sai lokaci ya cika don samun maki.</p>
+                </div>
+                
+                <div id="ad-success-content" class="hidden text-center py-6">
+                    <h4 class="text-emerald-400 font-bold text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>An Kammala Kallo!</h4>
+                    <p class="text-slate-300 text-sm">An ƙara maka <span class="text-amber-400 font-bold">+20 Points</span>.</p>
+                    <button onclick="closeBox()" class="mt-4 bg-emerald-500 text-slate-900 font-bold text-xs px-4 py-2 rounded-lg">To</button>
+                </div>
+            </div>
 
             <!-- WITHDRAWAL SECTION -->
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
@@ -151,6 +176,9 @@
         let generatedOTP = null;
         const pointsDisplay = document.getElementById('points-display');
         const interactiveBox = document.getElementById('interactive-box');
+        const quizContent = document.getElementById('quiz-content');
+        const adsContent = document.getElementById('ads-content');
+        const adSuccessContent = document.getElementById('ad-success-content');
 
         const PUBLIC_KEY = "ujdxkAckzXLPYsTkH"; 
         const SERVICE_ID = "service_adq70ak"; 
@@ -158,33 +186,19 @@
 
         emailjs.init(PUBLIC_KEY);
 
-        // DATA NA TAMBAYOYI (QUIZ BANK)
         const quizBank = [
-            // Tarihin Najeriya
             { fanni: "Tarihin Najeriya", q: "A wace shekara Najeriya ta sami 'Yancin Kai?", a: "1960", b: "1963", c: "1914", d: "1999", ans: "a" },
             { fanni: "Tarihin Najeriya", q: "Wane ne Firayim Ministan farko na Najeriya?", a: "Nnamdi Azikiwe", b: "Sir Abubakar Tafawa Balewa", c: "Ahmadu Bello", d: "Obafemi Awolowo", ans: "b" },
-            
-            // Al'adu
             { fanni: "Al'adu", q: "Wace sana'a ce aka fi sani da mutanen karkara na kasar Hausa na gargajiya?", a: "Kira da Noma", b: "Tukin Jirgi", c: "Dinki na Kzam", d: "Sassaka", ans: "a" },
             { fanni: "Al'adu", q: "Mene ne asalin babban abincin gargajiya na mutanen Yarbawa?", a: "Tuwon Shinkafa", b: "Amala da Ewedu", c: "Pounded Yam", d: "Sakwara", ans: "b" },
-
-            // Tarihin Duniya
             { fanni: "Tarihin Duniya", q: "A wace shekara aka fafata Yakin Duniya na Farko (WWI)?", a: "1914", b: "1939", c: "1812", d: "1945", ans: "a" },
-            
-            // Fannin English
             { fanni: "English Language", q: "What is the plural form of the word 'Child'?", a: "Childs", b: "Childrens", c: "Children", d: "Childes", ans: "c" },
             { fanni: "English Language", q: "Identify the verb in: 'Alamin runs very fast.'", a: "Alamin", b: "runs", c: "very", d: "fast", ans: "b" },
-
-            // Fannin Hausa
             { fanni: "Fannin Hausa", q: "Wanne ne harafin wasali (Vowel) a cikin wadannan?", a: "B", b: "M", c: "A", d: "Z", ans: "c" },
             { fanni: "Fannin Hausa", q: "Mene ne ma'anar kararin maganar nan 'Gani ga wane'?", a: "Ya isa riga", b: "Ya isa wa'azi", c: "Tsoro ne", d: "Hanyar gida", ans: "b" },
-
-            // Fannin Geography
-            { fanni: "Fannin Geography", q: "Wanne ne kogi mafi tsawo a duniyar ga baki daya?", a: "Kogin Nilu (Nile)", b: "Kogin Amazon", c: "Kogin Niger", d: "Kogin Mississippi", ans: "a" },
+            { fanni: "Fannin Geography", q: "Wanne kogi mafi tsawo a duniyar ga baki daya?", a: "Kogin Nilu (Nile)", b: "Kogin Amazon", c: "Kogin Niger", d: "Kogin Mississippi", ans: "a" },
             { fanni: "Fannin Geography", q: "Wanne gari ne babban birnin jihar Kano?", a: "Wudil", b: "Kano", c: "Bichi", d: "Dambatta", ans: "b" },
-
-            // Fannin Addini
-            { fanni: "Fannin Addini", q: "Shisshikan Musulunci guda nawa ne?", a: "Guda 6", b: "Guda 5", r: "Guda 4", d: "Guda 7", ans: "b" },
+            { fanni: "Fannin Addini", q: "Shisshikan Musulunci guda nawa ne?", a: "Guda 6", b: "Guda 5", c: "Guda 4", d: "Guda 7", ans: "b" },
             { fanni: "Fannin Addini", q: "A wani gari aka haifi Annabi Muhammadu (SAW)?", a: "Madina", b: "Makka", c: "Ta'if", d: "Shams", ans: "b" }
         ];
 
@@ -274,13 +288,16 @@
             pointsDisplay.innerText = totalPoints;
         }
 
-        // 1. SABON SASHA NA INTERACTIVE QUIZ (FANNONI DUBAN-DUBAN)
         function startQuiz() {
             interactiveBox.classList.remove('hidden');
+            quizContent.classList.remove('hidden');
+            adsContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
+
             const randomIndex = Math.floor(Math.random() * quizBank.length);
             currentQuestion = quizBank[randomIndex];
 
-            interactiveBox.innerHTML = `
+            quizContent.innerHTML = `
                 <div>
                     <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
                         <span class="bg-indigo-500/20 text-indigo-400 px-3 py-1 rounded-full text-xs font-bold uppercase">${currentQuestion.fanni}</span>
@@ -300,7 +317,7 @@
         function checkAnswer(userChoice) {
             if(userChoice === currentQuestion.ans) {
                 updatePoints(10);
-                interactiveBox.innerHTML = `
+                quizContent.innerHTML = `
                     <div class="text-center py-6">
                         <div class="text-emerald-400 text-4xl mb-2"><i class="fa-solid fa-circle-check"></i></div>
                         <h4 class="text-emerald-400 font-bold text-xl mb-1">Haka ne, Ka Taylor!</h4>
@@ -312,7 +329,7 @@
                     </div>
                 `;
             } else {
-                interactiveBox.innerHTML = `
+                quizContent.innerHTML = `
                     <div class="text-center py-6">
                         <div class="text-rose-400 text-4xl mb-2"><i class="fa-solid fa-circle-xmark"></i></div>
                         <h4 class="text-rose-400 font-bold text-xl mb-1">Kash, Ba Haka Ba Ne!</h4>
@@ -326,31 +343,15 @@
             }
         }
 
-        // 2. SABON SASHE NA TALLA NA ZAHIRI (REAL ADS CONTAINER WITH ADSTERRA NATIVE)
         function watchAd() {
             interactiveBox.classList.remove('hidden');
-            interactiveBox.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
-                        <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-rectangle-ad mr-1"></i> Sponsored Ad</span>
-                        <span id="ad-timer" class="text-xs bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold">5s</span>
-                    </div>
-                    
-                    <!-- WURIN SAKA CODE NA ADSENSE / ADSTERRA -->
-                    <div id="real-ad-container" class="bg-slate-950 p-4 rounded-xl border border-slate-800 min-h-[250px] flex items-center justify-center text-center">
-                        <div class="w-full">
-                            <!-- ADSTERRA NATIVE AD CODE INJECTED HERE -->
-                            <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"><\/script>
-                            <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
-                        </div>
-                    </div>
-                    
-                    <p class="text-xs text-slate-400 mt-4">Karka rufe shafin nan har sai lokaci ya cika don samun maki.</p>
-                </div>
-            `;
+            adsContent.classList.remove('hidden');
+            quizContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
 
             let timeLeft = 5;
             const timerDisplay = document.getElementById('ad-timer');
+            timerDisplay.innerText = "5s";
             
             const countdown = setInterval(() => {
                 timeLeft--;
@@ -359,13 +360,8 @@
                 } else {
                     clearInterval(countdown);
                     updatePoints(20);
-                    interactiveBox.innerHTML = `
-                        <div class="text-center py-6">
-                            <h4 class="text-emerald-400 font-bold text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>An Kammala Kallo!</h4>
-                            <p class="text-slate-300 text-sm">An ƙara maka <span class="text-amber-400 font-bold">+20 Points</span>.</p>
-                            <button onclick="closeBox()" class="mt-4 bg-emerald-500 text-slate-900 font-bold text-xs px-4 py-2 rounded-lg">To</button>
-                        </div>
-                    `;
+                    adsContent.classList.add('hidden');
+                    adSuccessContent.classList.remove('hidden');
                 }
             }, 1000);
         }
@@ -395,7 +391,12 @@
             document.getElementById('withdraw-amount').value = '';
         }
 
-        function closeBox() { interactiveBox.classList.add('hidden'); }
+        function closeBox() { 
+            interactiveBox.classList.add('hidden'); 
+            adsContent.classList.add('hidden');
+            quizContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
+        }
     </script>
 </body>
 </html>
