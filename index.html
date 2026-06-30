@@ -169,7 +169,7 @@
             { fanni: "Al'adu", q: "Mene ne asalin babban abincin gargajiya na mutanen Yarbawa?", a: "Tuwon Shinkafa", b: "Amala da Ewedu", c: "Pounded Yam", d: "Sakwara", ans: "b" },
 
             // Tarihin Duniya
-            { fanni: "Tarihin Duniya", q: "A wace shekara aka fafata Yakin Duniya na Farko (WWI)?", a: "1939", b: "1914", c: "1812", d: "1945", ans: "b" },
+            { fanni: "Tarihin Duniya", q: "A wace shekara aka fafata Yakin Duniya na Farko (WWI)?", a: "1914", b: "1939", c: "1812", d: "1945", ans: "a" },
             
             // Fannin English
             { fanni: "English Language", q: "What is the plural form of the word 'Child'?", a: "Childs", b: "Childrens", c: "Children", d: "Childes", ans: "c" },
@@ -184,7 +184,7 @@
             { fanni: "Fannin Geography", q: "Wanne gari ne babban birnin jihar Kano?", a: "Wudil", b: "Kano", c: "Bichi", d: "Dambatta", ans: "b" },
 
             // Fannin Addini
-            { fanni: "Fannin Addini", q: "Shisshikan Musulunci guda nawa ne?", a: "Guda 6", b: "Guda 5", c: "Guda 4", d: "Guda 7", ans: "b" },
+            { fanni: "Fannin Addini", q: "Shisshikan Musulunci guda nawa ne?", a: "Guda 6", b: "Guda 5", r: "Guda 4", d: "Guda 7", ans: "b" },
             { fanni: "Fannin Addini", q: "A wani gari aka haifi Annabi Muhammadu (SAW)?", a: "Madina", b: "Makka", c: "Ta'if", d: "Shams", ans: "b" }
         ];
 
@@ -277,7 +277,6 @@
         // 1. SABON SASHA NA INTERACTIVE QUIZ (FANNONI DUBAN-DUBAN)
         function startQuiz() {
             interactiveBox.classList.remove('hidden');
-            // Zaba tambaya barkatai daga bankin tambayoyi
             const randomIndex = Math.floor(Math.random() * quizBank.length);
             currentQuestion = quizBank[randomIndex];
 
@@ -327,7 +326,7 @@
             }
         }
 
-        // 2. SABON SASHE NA TALLA NA ZAHIRI (REAL ADS CONTAINER)
+        // 2. SABON SASHE NA TALLA NA ZAHIRI (REAL ADS CONTAINER WITH ADSTERRA NATIVE)
         function watchAd() {
             interactiveBox.classList.remove('hidden');
             interactiveBox.innerHTML = `
@@ -339,11 +338,10 @@
                     
                     <!-- WURIN SAKA CODE NA ADSENSE / ADSTERRA -->
                     <div id="real-ad-container" class="bg-slate-950 p-4 rounded-xl border border-slate-800 min-h-[250px] flex items-center justify-center text-center">
-                        <div>
-                            <!-- Placeholder Tallan Zahiri -->
-                            <i class="fa-solid fa-photo-film text-slate-700 text-4xl mb-2 animate-pulse"></i>
-                            <p class="text-slate-500 text-xs">Tallan Zahiri Tana Waje...</p>
-                            <span class="text-[10px] text-slate-600 block mt-1">Saka script ɗinka na Ad Network a nan</span>
+                        <div class="w-full">
+                            <!-- ADSTERRA NATIVE AD CODE INJECTED HERE -->
+                            <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"><\/script>
+                            <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
                         </div>
                     </div>
                     
