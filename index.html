@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Special Earn - Global Premium Edition</title>
+    <title>Alamin Special Earn - Global Premium Edition v2.0</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font Awesome Icons -->
@@ -11,64 +11,169 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        .neon-glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
-        .neon-glow-amber { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
-        .neon-glow-indigo { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
-        .glass-panel { backdrop-filter: blur(12px); background-color: rgba(15, 23, 42, 0.75); }
+        :root {
+            --neon-emerald: rgba(16, 185, 129, 0.4);
+            --neon-amber: rgba(245, 158, 11, 0.4);
+            --neon-indigo: rgba(99, 102, 241, 0.4);
+        }
+        
+        .neon-glow-emerald { box-shadow: 0 0 20px var(--neon-emerald), 0 0 40px var(--neon-emerald); }
+        .neon-glow-amber { box-shadow: 0 0 20px var(--neon-amber), 0 0 40px var(--neon-amber); }
+        .neon-glow-indigo { box-shadow: 0 0 20px var(--neon-indigo), 0 0 40px var(--neon-indigo); }
+        .glass-panel { 
+            backdrop-filter: blur(16px); 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.75));
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, #10b981, #059669);
+            border-radius: 3px;
+        }
+        
+        .btn-hover-effect {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-hover-effect:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-white font-sans min-h-screen overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900">
+<body class="bg-slate-950 text-white font-sans min-h-screen overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900 custom-scrollbar">
 
-    <!-- AD-BLOCK DETECTOR OVERLAY -->
-    <div id="adblock-overlay" class="fixed inset-0 bg-slate-950/98 z-55 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 border border-rose-500/30 w-full max-w-md rounded-2xl p-6 text-center shadow-2xl">
-            <div class="w-16 h-16 bg-rose-500/10 text-rose-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
-                <i class="fa-solid fa-hand"></i>
+    <!-- ENHANCED AD-BLOCK DETECTOR OVERLAY -->
+    <div id="adblock-overlay" class="fixed inset-0 bg-slate-950/98 z-55 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-8 text-center shadow-2xl transform animate-float">
+            <div class="w-20 h-20 bg-gradient-to-br from-rose-500 to-pink-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg">
+                <i class="fa-solid fa-shield-halved text-white"></i>
             </div>
-            <h2 class="text-xl font-black text-rose-400 mb-2">Ad-Blocker Detected!</h2>
-            <p class="text-slate-300 text-sm mb-6 leading-relaxed">Please disable your ad blocker or shields extension and reload the page to continue earning rewards safely.</p>
-            <button onclick="window.location.reload()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition shadow-lg">
-                I've Disabled It, Reload <i class="fa-solid fa-rotate-right ml-1"></i>
+            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400 mb-3">
+                Ad-Blocker Detected!
+            </h2>
+            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                To ensure fair earnings and prevent abuse, please temporarily disable your ad blocker. 
+                We respect your privacy and only show verified, non-intrusive advertisements.
+            </p>
+            <button onclick="retryWithoutAdBlock()" 
+                    class="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
+                <i class="fa-solid fa-rotate-right mr-2"></i> I've Disabled It, Continue
+            </button>
+            <button onclick="dismissAdBlockWarning()" 
+                    class="w-full mt-3 bg-transparent border border-slate-700 hover:border-rose-500 text-slate-400 hover:text-rose-400 font-semibold py-3 rounded-2xl transition-all duration-300 text-sm">
+                Continue Anyway (Limited Features)
             </button>
         </div>
     </div>
 
-    <!-- LOGIN SCREEN OVERLAY -->
-    <div id="login-overlay" class="fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl text-center">
-            <div class="inline-block bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4 tracking-wider uppercase animate-pulse">
-                <i class="fa-solid fa-shield-halved mr-1"></i> Secure Access Protocol
+    <!-- ENHANCED LOGIN SCREEN -->
+    <div id="login-overlay" class="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-50 flex items-center justify-center p-4 transition-all duration-500">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-8 shadow-2xl text-center transform transition-all duration-500">
+            <!-- Premium Badge -->
+            <div class="inline-flex items-center bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2 rounded-full text-xs font-bold mb-6 tracking-wider shadow-lg">
+                <i class="fa-solid fa-crown mr-2"></i> 
+                <span class="text-white">PREMIUM ACCESS</span>
             </div>
-            <h2 class="text-3xl font-black text-emerald-400 mb-1 tracking-wide">ALAMIN SPECIAL</h2>
-            <h2 class="text-2xl font-black text-white mb-2 tracking-wide">EARN PLATFORM</h2>
-            <p class="text-slate-400 text-xs mb-6">Enter your Gmail to receive a dynamic security OTP code</p>
+            
+            <!-- Animated Logo -->
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-xl animate-pulse-glow">
+                <i class="fa-solid fa-gem text-white"></i>
+            </div>
+            
+            <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 mb-1 tracking-wide">
+                ALAMIN SPECIAL
+            </h2>
+            <h2 class="text-3xl font-black text-white mb-2 tracking-wide">
+                EARN PLATFORM
+            </h2>
+            <p class="text-slate-400 text-sm mb-8">
+                Enter your Gmail to receive a secure OTP verification code
+            </p>
 
-            <div id="email-step">
-                <div class="mb-4 text-left">
-                    <label class="text-xs font-semibold text-slate-400 block mb-2">Gmail Address</label>
+            <!-- Email Step -->
+            <div id="email-step" class="space-y-4">
+                <div class="text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">
+                        <i class="fa-solid fa-envelope mr-2 text-emerald-400"></i>Email Address
+                    </label>
                     <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-500"></i>
-                        <input type="email" id="user-email" placeholder="example@gmail.com" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white transition">
+                        <input type="email" id="user-email" 
+                               placeholder="example@gmail.com" 
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-white transition-all duration-300"
+                               onkeypress="if(event.key==='Enter') sendOTP()">
+                        <i class="fa-solid fa-at absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
                     </div>
                 </div>
-                <button id="otp-btn" onclick="sendOTP()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center shadow-lg">
-                    <span id="btn-text">Request OTP Token</span> <i class="fa-solid fa-paper-plane ml-2"></i>
+                <button id="otp-btn" onclick="sendOTP()" 
+                        class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
+                    <span id="btn-text"><i class="fa-solid fa-paper-plane mr-2"></i>Send Verification Code</span>
                 </button>
             </div>
 
-            <div id="otp-step" class="hidden">
-                <div class="mb-4 text-left">
-                    <label class="text-xs font-semibold text-slate-400 block mb-2">Enter Verification Code</label>
+            <!-- OTP Step -->
+            <div id="otp-step" class="hidden space-y-4">
+                <div class="text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">
+                        <i class="fa-solid fa-key mr-2 text-amber-400"></i>Verification Code
+                    </label>
                     <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-500"></i>
-                        <input type="number" id="otp-input" placeholder="4-Digit Code" 
-                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white tracking-widest font-bold text-center">
+                        <input type="text" id="otp-input" 
+                               placeholder="Enter 6-digit code" 
+                               maxlength="6"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 px-4 text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-white transition-all duration-300"
+                               onkeypress="if(event.key==='Enter') verifyOTP()">
                     </div>
-                    <p class="text-xs text-amber-400 mt-2 text-center" id="otp-hint"></p>
+                    <p class="text-xs text-amber-400 mt-3 text-center flex items-center justify-center" id="otp-hint">
+                        <i class="fa-solid fa-info-circle mr-2"></i>Check your email for the code
+                    </p>
                 </div>
-                <button onclick="verifyOTP()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer shadow-lg">
-                    Verify & Authenticate <i class="fa-solid fa-circle-check ml-2"></i>
+                <button onclick="verifyOTP()" 
+                        class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
+                    <i class="fa-solid fa-shield-halved mr-2"></i>Verify & Login
+                </button>
+                <button onclick="goBackToEmail()" 
+                        class="text-slate-500 hover:text-slate-300 text-sm transition-colors duration-300">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>Back to Email
                 </button>
             </div>
         </div>
@@ -76,303 +181,527 @@
 
     <!-- MAIN APP CONTENT -->
     <div id="main-app" class="hidden">
-        <!-- Header -->
-        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
-            <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-lg font-black text-emerald-400 tracking-wider flex items-center">
-                    <i class="fa-solid fa-wallet mr-2 text-emerald-400"></i>ALAMIN SPECIAL EARN
-                </h1>
+        <!-- Enhanced Header -->
+        <header class="glass-panel sticky top-0 z-40 border-b border-slate-700/50">
+            <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-full flex items-center shadow-inner">
-                        <i class="fa-solid fa-coins text-amber-400 mr-1.5 text-sm"></i>
-                        <span id="points-display" class="font-black text-amber-400 text-sm">0</span> <span class="text-[10px] ml-1 text-slate-400 font-bold">PTS</span>
+                    <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-gem text-white text-lg"></i>
                     </div>
-                    <button onclick="logOut()" class="bg-rose-500/10 hover:bg-rose-500 border border-rose-500/20 hover:border-transparent text-rose-400 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
+                    <div>
+                        <h1 class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+                            ALAMIN SPECIAL
+                        </h1>
+                        <p class="text-[10px] text-slate-400 font-medium">Premium Earn Platform</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Points Display -->
+                    <div class="bg-slate-800/50 border border-slate-700 px-4 py-2 rounded-full flex items-center shadow-lg">
+                        <i class="fa-solid fa-coins text-amber-400 mr-2 animate-pulse"></i>
+                        <span id="points-display" class="font-black text-amber-400 text-lg">0</span>
+                        <span class="text-[10px] ml-2 text-slate-400 font-bold">PTS</span>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div class="relative group">
+                        <button class="bg-slate-800/50 hover:bg-slate-700 border border-slate-700 p-2 rounded-xl transition-all duration-300">
+                            <i class="fa-solid fa-user text-slate-300"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
+                            <button onclick="logOut()" class="w-full text-left px-4 py-3 hover:bg-rose-500/20 text-rose-400 rounded-xl transition-colors duration-300">
+                                <i class="fa-solid fa-right-from-bracket mr-2"></i>Logout
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-4xl mx-auto px-4 py-6">
-            <!-- Welcome Hero Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-center">
-                    <h2 class="text-xl font-black mb-1 text-slate-100">Welcome Back! 👋</h2>
-                    <p id="user-welcome" class="text-slate-400 text-xs">Test your global knowledge or complete interactive premium offers to boost your point balance.</p>
+        <main class="max-w-6xl mx-auto px-6 py-8 space-y-8">
+            <!-- Welcome Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Welcome Card -->
+                <div class="lg:col-span-2 glass-panel rounded-3xl p-8 shadow-2xl card-hover">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="text-2xl font-black text-white mb-2">Welcome Back! 👋</h2>
+                            <p id="user-welcome" class="text-slate-400 text-sm">Loading your dashboard...</p>
+                        </div>
+                        <div class="bg-emerald-500/10 p-3 rounded-2xl">
+                            <i class="fa-solid fa-chart-line text-emerald-400 text-2xl"></i>
+                        </div>
+                    </div>
                     
-                    <!-- Progress Bar to 1000 PTS -->
-                    <div class="mt-4">
-                        <div class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
-                            <span>Payout Completion Goal</span>
-                            <span id="progress-text">0% (0/1000)</span>
+                    <!-- Enhanced Progress Bar -->
+                    <div class="mt-6">
+                        <div class="flex justify-between text-sm font-bold mb-2">
+                            <span class="text-slate-300">Progress to Payout</span>
+                            <span id="progress-text" class="text-emerald-400">0% (0/1000 PTS)</span>
                         </div>
-                        <div class="w-full bg-slate-950 rounded-full h-2.5 p-0.5 border border-slate-800">
-                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        <div class="w-full bg-slate-800 rounded-full h-3 p-0.5 border border-slate-700">
+                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 h-2 rounded-full transition-all duration-700 ease-out shadow-lg" style="width: 0%"></div>
                         </div>
+                        <p class="text-[10px] text-slate-500 mt-2">
+                            <i class="fa-solid fa-info-circle mr-1"></i>
+                            Reach 1000 PTS to unlock withdrawal (₦1,000 minimum)
+                        </p>
                     </div>
                 </div>
                 
-                <!-- Daily Reward Card -->
-                <div class="bg-slate-900 border border-amber-500/20 rounded-2xl p-5 shadow-xl text-center flex flex-col justify-between items-center">
+                <!-- Daily Bonus Card -->
+                <div class="glass-panel rounded-3xl p-6 shadow-2xl card-hover flex flex-col justify-between bg-gradient-to-br from-amber-500/5 to-orange-500/5">
                     <div>
-                        <div class="text-amber-400 text-2xl mb-1"><i class="fa-solid fa-gift animate-bounce"></i></div>
-                        <h4 class="text-sm font-black text-slate-200">Daily Attendance</h4>
-                        <p class="text-[11px] text-slate-400 mt-1">Claim your continuous streak allocation of <span class="text-amber-400 font-bold">+50 PTS</span> every 24 hours.</p>
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-sm font-black text-white">Daily Reward</h3>
+                            <div class="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-gift text-amber-400 text-xl animate-bounce"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">
+                            Claim your daily <span class="text-amber-400 font-bold">+50 PTS</span> bonus. Available every 24 hours.
+                        </p>
                     </div>
-                    <button id="daily-btn" onclick="claimDailyBonus()" class="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-xs py-2.5 rounded-xl transition neon-glow-amber">
-                        Claim Bonus
+                    <button id="daily-btn" onclick="claimDailyBonus()" 
+                            class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-sm py-3.5 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
+                        <i class="fa-solid fa-gift mr-2"></i>Claim Bonus
                     </button>
                 </div>
             </div>
 
-            <!-- Main Interactive Options -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Quiz Portal Card -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-emerald-500/30 transition duration-300">
-                    <div>
-                        <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
-                            <i class="fa-solid fa-brain"></i>
-                        </div>
-                        <h3 class="text-lg font-black mb-1">Interactive Quiz Engine</h3>
-                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Choose your preferred native language and answer complex knowledge challenges. Earn <span class="text-emerald-400 font-bold">+10 PTS</span> per win.</p>
+            <!-- Main Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Quiz Card -->
+                <div class="glass-panel rounded-3xl p-8 shadow-2xl card-hover bg-gradient-to-br from-emerald-500/5 to-teal-500/5">
+                    <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg">
+                        <i class="fa-solid fa-brain text-emerald-400"></i>
                     </div>
-                    <button onclick="showLanguageSelection()" class="w-full bg-slate-950 border border-emerald-500/30 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 font-bold py-3 rounded-xl transition neon-glow-emerald">
-                        Launch Quiz Module
+                    <h3 class="text-xl font-black text-white mb-3">Knowledge Quiz</h3>
+                    <p class="text-slate-400 text-sm mb-6">
+                        Test your knowledge in multiple languages. Earn 
+                        <span class="text-emerald-400 font-bold">+10 PTS</span> per correct answer.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇺🇸 English</span>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇳🇬 Hausa</span>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇸🇦 Arabic</span>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇳🇬 Yorùbá</span>
+                    </div>
+                    <button onclick="showLanguageSelection()" 
+                            class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-emerald">
+                        <i class="fa-solid fa-play mr-2"></i>Start Quiz
                     </button>
                 </div>
 
-                <!-- Premium Ads Card -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-amber-500/30 transition duration-300">
-                    <div>
-                        <div class="bg-amber-500/10 text-amber-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
-                            <i class="fa-solid fa-rectangle-ad"></i>
-                        </div>
-                        <h3 class="text-lg font-black mb-1">Premium Ads Stream</h3>
-                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Watch premium sponsored distributions from localized networks. Earn guaranteed allocations of <span class="text-amber-400 font-bold">+20 PTS</span>.</p>
+                <!-- Ads Card -->
+                <div class="glass-panel rounded-3xl p-8 shadow-2xl card-hover bg-gradient-to-br from-amber-500/5 to-orange-500/5">
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg">
+                        <i class="fa-solid fa-ad text-amber-400"></i>
                     </div>
-                    <button onclick="watchAd()" class="w-full bg-slate-950 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-bold py-3 rounded-xl transition neon-glow-amber">
-                        Stream Ad Offer
+                    <h3 class="text-xl font-black text-white mb-3">Premium Ads</h3>
+                    <p class="text-slate-400 text-sm mb-6">
+                        Watch premium advertisements. Earn guaranteed 
+                        <span class="text-amber-400 font-bold">+20 PTS</span> per view.
+                    </p>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa-solid fa-clock text-amber-400 text-sm"></i>
+                        <span class="text-xs text-slate-400">10 seconds per ad</span>
+                    </div>
+                    <button onclick="watchAd()" 
+                            class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-amber">
+                        <i class="fa-solid fa-play mr-2"></i>Watch Ad
                     </button>
                 </div>
             </div>
 
-            <!-- DYNAMIC INTERACTIVE DISPLAY AREA -->
-            <div id="interactive-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hidden shadow-2xl mb-6 relative">
-                
-                <!-- Language Selector Step -->
+            <!-- Interactive Display Area -->
+            <div id="interactive-box" class="glass-panel rounded-3xl p-8 hidden shadow-2xl">
+                <!-- Language Selector -->
                 <div id="quiz-lang-selector" class="hidden text-center">
-                    <h3 class="text-md font-black mb-4 text-emerald-400 uppercase tracking-wider">Select Quiz Language</h3>
-                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
-                        <button onclick="startQuiz('en')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm">🇺🇸 English</button>
-                        <button onclick="startQuiz('ha')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm">🇳🇬 Hausa</button>
-                        <button onclick="startQuiz('ar')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm">🇸🇦 العربية (Arabic)</button>
-                        <button onclick="startQuiz('yo')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm">🇳🇬 Yorùbá</button>
+                    <h3 class="text-xl font-black text-emerald-400 mb-6">Select Quiz Language</h3>
+                    <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+                        <button onclick="startQuiz('en')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
+                            <span class="text-3xl mb-2 block">🇺🇸</span>
+                            <span class="text-white">English</span>
+                        </button>
+                        <button onclick="startQuiz('ha')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
+                            <span class="text-3xl mb-2 block">🇳🇬</span>
+                            <span class="text-white">Hausa</span>
+                        </button>
+                        <button onclick="startQuiz('ar')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
+                            <span class="text-3xl mb-2 block">🇸🇦</span>
+                            <span class="text-white">العربية</span>
+                        </button>
+                        <button onclick="startQuiz('yo')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
+                            <span class="text-3xl mb-2 block">🇳🇬</span>
+                            <span class="text-white">Yorùbá</span>
+                        </button>
                     </div>
+                    <button onclick="closeBox()" class="mt-6 text-slate-500 hover:text-slate-300 text-sm transition-colors duration-300">
+                        <i class="fa-solid fa-times mr-2"></i>Close
+                    </button>
                 </div>
 
-                <!-- Question Render Container -->
+                <!-- Quiz Content -->
                 <div id="quiz-content" class="hidden"></div>
                 
-                <!-- Premium Secured Advertisement Interface -->
-                <div id="ads-content" class="hidden text-center py-2">
-                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
-                        <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-rectangle-ad mr-1"></i> Premium Live Asset</span>
-                        <span id="ad-timer" class="text-xs bg-amber-500 text-slate-900 px-3 py-0.5 rounded-full font-black tracking-wide">10s</span>
+                <!-- Ads Content -->
+                <div id="ads-content" class="hidden">
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-700">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-ad text-amber-400"></i>
+                            <span class="text-sm font-bold text-amber-400">Premium Ad</span>
+                        </div>
+                        <span id="ad-timer" class="bg-amber-500/20 text-amber-400 px-4 py-2 rounded-full font-black text-sm">
+                            <i class="fa-solid fa-clock mr-1"></i>10s
+                        </span>
                     </div>
                     
-                    <!-- Dynamic Anti-Duplicate Refresh Container Box -->
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-900 min-h-[260px] flex items-center justify-center text-center relative">
-                        <div id="ad-placement-zone" class="w-full overflow-hidden flex justify-center items-center">
-                            <!-- Premium Placement Zone -->
-                        </div>
-                        
-                        <!-- Fallback Placeholder: Shows if ad is blank or while next is initializing -->
-                        <div id="ad-fallback-placeholder" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-4 text-center">
-                            <i class="fa-solid fa-circle-notch animate-spin text-amber-400 text-3xl mb-3"></i>
-                            <h5 class="text-xs font-bold text-slate-300">Synchronizing Live Distribution...</h5>
-                            <p class="text-[10px] text-slate-500 mt-1 max-w-xs">Waiting for next premium offer placement from network hosts.</p>
+                    <div class="bg-slate-800/30 rounded-2xl p-8 min-h-[300px] flex items-center justify-center border border-slate-700">
+                        <div id="ad-placement-zone" class="w-full"></div>
+                        <div id="ad-fallback-placeholder" class="text-center">
+                            <i class="fa-solid fa-spinner animate-spin text-amber-400 text-4xl mb-4"></i>
+                            <p class="text-slate-400">Loading premium content...</p>
                         </div>
                     </div>
-                    <p class="text-[11px] text-slate-500 mt-4">Do not close this panel or navigate away until the security ledger updates.</p>
                 </div>
                 
-                <!-- Success State Display -->
-                <div id="ad-success-content" class="hidden text-center py-6">
-                    <h4 class="text-emerald-400 font-black text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>Reward Dispatched!</h4>
-                    <p class="text-slate-300 text-sm">Verification Ledger approved. Added <span class="text-amber-400 font-bold">+20 Points</span>.</p>
-                    <button onclick="closeBox()" class="mt-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs px-6 py-2.5 rounded-xl shadow-md transition">Continue</button>
+                <!-- Success State -->
+                <div id="ad-success-content" class="hidden text-center py-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl animate-bounce">
+                        <i class="fa-solid fa-check text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-emerald-400 mb-2">Reward Earned!</h3>
+                    <p class="text-slate-300 mb-6">+20 Points added to your balance</p>
+                    <button onclick="closeBox()" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold px-8 py-3 rounded-2xl transition-all duration-300 transform hover:scale-105">
+                        Continue Earning
+                    </button>
                 </div>
             </div>
 
-            <!-- BOTTOM METRIC PANELS -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Global Leaderboard -->
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-sm font-black mb-3 text-slate-200 flex items-center">
-                            <i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Global Leaderboard
-                        </h3>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
-                                <span class="font-medium text-slate-300">1. Alamin Specialist ⭐</span>
-                                <span class="font-black text-amber-400">4,850 PTS</span>
+            <!-- Bottom Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Leaderboard -->
+                <div class="glass-panel rounded-3xl p-6 shadow-2xl">
+                    <h3 class="text-sm font-black text-white mb-4 flex items-center">
+                        <i class="fa-solid fa-trophy text-amber-400 mr-2"></i>Top Earners
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-amber-400">🥇</span>
+                                <span class="text-sm text-white">Alamin Specialist</span>
                             </div>
-                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
-                                <span class="font-medium text-slate-400">2. Ibrahim Kano</span>
-                                <span class="font-bold text-slate-300">3,120 PTS</span>
+                            <span class="text-sm font-bold text-amber-400">4,850 PTS</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-slate-400">🥈</span>
+                                <span class="text-sm text-slate-300">Ibrahim Kano</span>
                             </div>
-                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
-                                <span class="font-medium text-slate-400">3. Rilwanu Tech</span>
-                                <span class="font-bold text-slate-300">2,900 PTS</span>
+                            <span class="text-sm font-bold text-slate-300">3,120 PTS</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-amber-700">🥉</span>
+                                <span class="text-sm text-slate-300">Rilwanu Tech</span>
                             </div>
+                            <span class="text-sm font-bold text-slate-300">2,900 PTS</span>
                         </div>
                     </div>
-                    <p class="text-[10px] text-slate-500 mt-4 text-center">Rankings update automatically weekly.</p>
                 </div>
 
-                <!-- Secure Bank Settlement Center -->
-                <div class="md:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="bg-indigo-500/10 text-indigo-400 w-9 h-9 rounded-xl flex items-center justify-center text-md">
-                            <i class="fa-solid fa-money-bill-transfer"></i>
+                <!-- Withdrawal Section -->
+                <div class="lg:col-span-2 glass-panel rounded-3xl p-8 shadow-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-building-columns text-indigo-400 text-xl"></i>
                         </div>
-                        <h3 class="text-base font-black">Settlement Gateway</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-4">Minimum threshold verification benchmark: <span class="text-amber-400 font-bold">1000 PTS (= ₦1,000)</span></p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Target Institution</label>
-                            <select id="withdraw-bank" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                            <h3 class="text-lg font-black text-white">Withdrawal Portal</h3>
+                            <p class="text-xs text-slate-400">Minimum: 1000 PTS = ₦1,000</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-400 block mb-2">Select Bank</label>
+                            <select id="withdraw-bank" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
+                                <option value="">Choose bank...</option>
                                 <option value="OPay">OPay</option>
                                 <option value="PalmPay">PalmPay</option>
                                 <option value="Moniepoint">Moniepoint</option>
                                 <option value="Kuda Bank">Kuda Bank</option>
+                                <option value="Access Bank">Access Bank</option>
+                                <option value="GTBank">GTBank</option>
                             </select>
                         </div>
                         <div>
-                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Account Number (NUBAN)</label>
-                            <input type="number" id="withdraw-account" placeholder="10-Digit Standard Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Points Liquidation Volume</label>
-                            <input type="number" id="withdraw-amount" placeholder="Minimum: 1000" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                            <label class="text-xs font-semibold text-slate-400 block mb-2">Account Number</label>
+                            <input type="text" id="withdraw-account" placeholder="10-digit NUBAN" maxlength="10"
+                                   class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
                         </div>
                     </div>
-                    <button onclick="processWithdrawal()" class="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs transition shadow-md neon-glow-indigo">
-                        Execute Settlement Order
+                    
+                    <div class="mb-4">
+                        <label class="text-xs font-semibold text-slate-400 block mb-2">Amount (PTS)</label>
+                        <input type="number" id="withdraw-amount" placeholder="Minimum: 1000" min="1000"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
+                    </div>
+                    
+                    <button onclick="processWithdrawal()" 
+                            class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-indigo">
+                        <i class="fa-solid fa-paper-plane mr-2"></i>Process Withdrawal
                     </button>
+                    
+                    <p class="text-[10px] text-slate-500 mt-4 text-center">
+                        <i class="fa-solid fa-shield-halved mr-1"></i>
+                        Secured by end-to-end encryption. Processing time: 24-48 hours.
+                    </p>
                 </div>
             </div>
         </main>
+        
+        <!-- Footer -->
+        <footer class="border-t border-slate-800 mt-12">
+            <div class="max-w-6xl mx-auto px-6 py-6 text-center">
+                <p class="text-xs text-slate-500">
+                    &copy; 2024 Alamin Special Earn Platform. All rights reserved. 
+                    <span class="text-emerald-400">Version 2.0</span>
+                </p>
+            </div>
+        </footer>
     </div>
 
-    <!-- Micro Decoy Component to Trip Active Browser Extensions -->
-    <div class="ad-banner-check adsbox ads-holder" style="position:absolute; left:-9999px; width:1px; height:1px;"></div>
+    <!-- Hidden Ad Decoy -->
+    <div class="ad-banner-check adsbox ads-holder" style="position:absolute; left:-9999px; width:1px; height:1px;" aria-hidden="true"></div>
 
     <script>
-        const SALT_KEY = "GLOBAL_SECURE_ALAMIN_SUPER_991823";
-        let totalPoints = 0;
-        let generatedOTP = null;
-        let lastActionTime = 0;
+        // ==================== SECURITY & CONFIGURATION ====================
+        const CONFIG = {
+            SALT_KEY: "GLOBAL_SECURE_ALAMIN_SUPER_991823",
+            MIN_WITHDRAWAL: 1000,
+            DAILY_BONUS: 50,
+            QUIZ_REWARD: 10,
+            AD_REWARD: 20,
+            AD_DURATION: 10,
+            COOLDOWN_MS: 1000,
+            OTP_LENGTH: 6,
+            STORAGE_PREFIX: 'alamin_v2_'
+        };
 
-        const pointsDisplay = document.getElementById('points-display');
-        const interactiveBox = document.getElementById('interactive-box');
-        const quizLangSelector = document.getElementById('quiz-lang-selector');
-        const quizContent = document.getElementById('quiz-content');
-        const adsContent = document.getElementById('ads-content');
-        const adSuccessContent = document.getElementById('ad-success-content');
-        const adZone = document.getElementById('ad-placement-zone');
-        const adFallback = document.getElementById('ad-fallback-placeholder');
+        // EmailJS Configuration
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: "ujdxkAckzXLPYsTkH",
+            SERVICE_ID: "service_adq70ak",
+            TEMPLATE_ID: "template_74pioox"
+        };
 
-        const PUBLIC_KEY = "ujdxkAckzXLPYsTkH"; 
-        const SERVICE_ID = "service_adq70ak"; 
-        const TEMPLATE_ID = "template_74pioox"; 
+        // ==================== STATE MANAGEMENT ====================
+        let appState = {
+            totalPoints: 0,
+            generatedOTP: null,
+            lastActionTime: 0,
+            currentQuizLanguage: 'en',
+            currentQuestion: null,
+            isAdBlocked: false
+        };
 
-        emailjs.init(PUBLIC_KEY);
+        // ==================== DOM ELEMENTS ====================
+        const DOM = {
+            pointsDisplay: document.getElementById('points-display'),
+            interactiveBox: document.getElementById('interactive-box'),
+            quizLangSelector: document.getElementById('quiz-lang-selector'),
+            quizContent: document.getElementById('quiz-content'),
+            adsContent: document.getElementById('ads-content'),
+            adSuccessContent: document.getElementById('ad-success-content'),
+            adZone: document.getElementById('ad-placement-zone'),
+            adFallback: document.getElementById('ad-fallback-placeholder'),
+            progressBar: document.getElementById('progress-bar'),
+            progressText: document.getElementById('progress-text'),
+            dailyBtn: document.getElementById('daily-btn'),
+            userWelcome: document.getElementById('user-welcome')
+        };
 
-        // Multilingual High-Quality Database Bank
+        // ==================== ENHANCED QUIZ DATABASE ====================
         const quizMasterDatabase = {
             en: [
-                { fanni: "Cybersecurity", q: "What does the 'S' stand for in HTTPS?", a: "Standard", b: "Secure", c: "Speed", d: "Science", ans: "b" },
-                { fanni: "Web Architecture", q: "Which programming language runs natively inside web browsers?", a: "Python", b: "C++", c: "JavaScript", d: "Java", ans: "c" }
+                { 
+                    fanni: "Cybersecurity", 
+                    q: "What does the 'S' stand for in HTTPS?", 
+                    options: ["Standard", "Secure", "Speed", "Science"], 
+                    ans: 1,
+                    explanation: "HTTPS stands for HyperText Transfer Protocol Secure"
+                },
+                { 
+                    fanni: "Web Development", 
+                    q: "Which language runs natively in browsers?", 
+                    options: ["Python", "C++", "JavaScript", "Java"], 
+                    ans: 2,
+                    explanation: "JavaScript is the only language that runs directly in web browsers"
+                },
+                { 
+                    fanni: "Technology", 
+                    q: "What year was the first iPhone released?", 
+                    options: ["2005", "2006", "2007", "2008"], 
+                    ans: 2,
+                    explanation: "The first iPhone was released on June 29, 2007"
+                },
+                { 
+                    fanni: "Science", 
+                    q: "What is the chemical symbol for gold?", 
+                    options: ["Ag", "Au", "Fe", "Cu"], 
+                    ans: 1,
+                    explanation: "Au comes from the Latin word 'aurum' meaning gold"
+                }
             ],
             ha: [
-                { fanni: "Tarihin Najeriya", q: "A wace shekara aka samar da tsarin mulkin kasarnan na yanzu?", a: "1960", b: "1999", c: "2015", d: "1963", ans: "b" },
-                { fanni: "Harshe", q: "Wane harafi ne ba ya cikin haruffan boko na Hausa?", a: "C", b: "P", c: "X", d: "Q", ans: "c" }
+                { 
+                    fanni: "Tarihin Najeriya", 
+                    q: "A wace shekara aka samar da tsarin mulkin kasarnan na yanzu?", 
+                    options: ["1960", "1999", "2015", "1963"], 
+                    ans: 1,
+                    explanation: "An dawo da mulkin dimokaradiyya a Najeriya a shekarar 1999"
+                },
+                { 
+                    fanni: "Harshe", 
+                    q: "Wane harafi ne ba ya cikin haruffan boko na Hausa?", 
+                    options: ["C", "P", "X", "Q"], 
+                    ans: 2,
+                    explanation: "Harafin 'X' ba ya cikin haruffan Hausa na asali"
+                }
             ],
             ar: [
-                { fanni: "لغة عربية", q: "ما هو الاسم الآخر للمدينة المنورة؟", a: "طيبة", b: "مكة", c: "القدس", d: "بغداد", ans: "a" },
-                { fanni: "ثقافة عامة", q: "كم عدد سور القرآن الكريم؟", a: "١1٣", b: "١١٤", c: "١١٥", d: "١٢٠", ans: "b" }
+                { 
+                    fanni: "لغة عربية", 
+                    q: "ما هو الاسم الآخر للمدينة المنورة؟", 
+                    options: ["طيبة", "مكة", "القدس", "بغداد"], 
+                    ans: 0,
+                    explanation: "طيبة هو أحد أسماء المدينة المنورة"
+                },
+                { 
+                    fanni: "ثقافة عامة", 
+                    q: "كم عدد سور القرآن الكريم؟", 
+                    options: ["١١٣", "١١٤", "١١٥", "١٢٠"], 
+                    ans: 1,
+                    explanation: "عدد سور القرآن الكريم 114 سورة"
+                }
             ],
             yo: [
-                { fanni: "Àṣà Ìbílẹ̀", q: "Kini orúkọ olú-ìlú ìpínlẹ̀ Ọ̀yọ́?", a: "Èkó", b: "Ìbàdàn", c: "Abẹ́òkúta", d: "Akúrẹ́", ans: "b" },
-                { fanni: "Èdè", q: "Kini ìtumọ̀ ọ̀rọ̀ náà 'Ọmọ' ní èdè gẹ̀ẹ́sì?", a: "Father", b: "Mother", c: "Child", d: "Friend", ans: "c" }
+                { 
+                    fanni: "Àṣà Ìbílẹ̀", 
+                    q: "Kini orúkọ olú-ìlú ìpínlẹ̀ Ọ̀yọ́?", 
+                    options: ["Èkó", "Ìbàdàn", "Abẹ́òkúta", "Akúrẹ́"], 
+                    ans: 1,
+                    explanation: "Ìbàdàn ni olú-ìlú ìpínlẹ̀ Ọ̀yọ́"
+                },
+                { 
+                    fanni: "Èdè", 
+                    q: "Kini ìtumọ̀ ọ̀rọ̀ náà 'Ọmọ' ní èdè gẹ̀ẹ́sì?", 
+                    options: ["Father", "Mother", "Child", "Friend"], 
+                    ans: 2,
+                    explanation: "'Ọmọ' túmọ̀ sí 'Child' ní èdè Gẹ̀ẹ́sì"
+                }
             ]
         };
 
-        let activeQuizLanguage = 'en';
-        let activeQuestion = null;
-
+        // ==================== ENHANCED STORAGE MANAGEMENT ====================
         function getSecurePoints() {
-            const raw = localStorage.getItem('alamin_pts_secure');
-            const hash = localStorage.getItem('alamin_pts_hash');
-            if(!raw || !hash) return 0;
-            if(btoa(raw + SALT_KEY) !== hash) {
-                setSecurePoints(0);
+            try {
+                const raw = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}pts`);
+                const hash = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}hash`);
+                
+                if (!raw || !hash) return 0;
+                
+                const computedHash = btoa(raw + CONFIG.SALT_KEY);
+                if (computedHash !== hash) {
+                    console.warn('Points data tampered with, resetting to 0');
+                    setSecurePoints(0);
+                    return 0;
+                }
+                
+                return parseInt(atob(raw));
+            } catch (error) {
+                console.error('Error reading points:', error);
                 return 0;
             }
-            return parseInt(atob(raw));
         }
 
         function setSecurePoints(value) {
-            let encodedValue = btoa(value.toString());
-            let computedHash = btoa(encodedValue + SALT_KEY);
-            localStorage.setItem('alamin_pts_secure', encodedValue);
-            localStorage.setItem('alamin_pts_hash', computedHash);
-            totalPoints = value;
-            updateUI();
-        }
-
-        function updateUI() {
-            pointsDisplay.innerText = totalPoints;
-            let percent = Math.min((totalPoints / 1000) * 100, 100);
-            document.getElementById('progress-bar').style.width = percent + "%";
-            document.getElementById('progress-text').innerText = `${Math.floor(percent)}% (${totalPoints}/1000)`;
-            
-            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
-            const todayStr = new Date().toDateString();
-            const dailyBtn = document.getElementById('daily-btn');
-            if(lastClaim === todayStr) {
-                dailyBtn.innerText = "Claimed Today";
-                dailyBtn.disabled = true;
-                dailyBtn.className = "w-full mt-3 bg-slate-800 text-slate-500 font-bold text-xs py-2.5 rounded-xl cursor-not-allowed";
+            try {
+                const encodedValue = btoa(value.toString());
+                const computedHash = btoa(encodedValue + CONFIG.SALT_KEY);
+                
+                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}pts`, encodedValue);
+                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}hash`, computedHash);
+                
+                appState.totalPoints = value;
+                updateUI();
+            } catch (error) {
+                console.error('Error saving points:', error);
             }
         }
 
+        // ==================== ENHANCED UI UPDATES ====================
+        function updateUI() {
+            // Update points display with animation
+            DOM.pointsDisplay.textContent = appState.totalPoints;
+            
+            // Update progress bar
+            const percent = Math.min((appState.totalPoints / CONFIG.MIN_WITHDRAWAL) * 100, 100);
+            DOM.progressBar.style.width = `${percent}%`;
+            DOM.progressText.textContent = `${Math.floor(percent)}% (${appState.totalPoints}/${CONFIG.MIN_WITHDRAWAL} PTS)`;
+            
+            // Update daily button state
+            const lastClaim = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}daily_claim`);
+            const todayStr = new Date().toDateString();
+            
+            if (lastClaim === todayStr) {
+                DOM.dailyBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Claimed Today';
+                DOM.dailyBtn.disabled = true;
+                DOM.dailyBtn.className = "w-full bg-slate-800 text-slate-500 font-bold text-sm py-3.5 rounded-2xl cursor-not-allowed";
+            }
+        }
+
+        // ==================== ENHANCED AD BLOCKER DETECTION ====================
         function detectAdBlocker() {
             const decoy = document.querySelector('.ad-banner-check');
-            if (!decoy || decoy.offsetHeight === 0 || window.getComputedStyle(decoy).display === 'none') {
+            
+            if (!decoy) return false;
+            
+            const isBlocked = decoy.offsetHeight === 0 || 
+                            window.getComputedStyle(decoy).display === 'none' ||
+                            decoy.offsetParent === null;
+            
+            if (isBlocked) {
                 document.getElementById('adblock-overlay').classList.remove('hidden');
+                appState.isAdBlocked = true;
                 return true;
             }
+            
             return false;
         }
 
-        window.addEventListener('load', () => {
-            setTimeout(detectAdBlocker, 1000);
-            totalPoints = getSecurePoints();
-            checkLoginStatus();
-            updateUI();
-        });
+        function retryWithoutAdBlock() {
+            window.location.reload();
+        }
 
+        function dismissAdBlockWarning() {
+            document.getElementById('adblock-overlay').classList.add('hidden');
+            appState.isAdBlocked = true;
+            // Allow limited functionality
+        }
+
+        // ==================== ENHANCED LOGIN SYSTEM ====================
         function checkLoginStatus() {
-            if(localStorage.getItem('user_logged_in') === 'true') {
+            const isLoggedIn = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}logged_in`) === 'true';
+            const userEmail = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}email`);
+            
+            if (isLoggedIn && userEmail) {
                 document.getElementById('login-overlay').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-                let email = localStorage.getItem('user_gmail');
-                document.getElementById('user-welcome').innerText = `Authenticated Session: ${email}. Complete tasks to unlock liquidation milestones.`;
+                DOM.userWelcome.textContent = `Welcome, ${userEmail}! Complete tasks to earn points.`;
             } else {
                 document.getElementById('login-overlay').classList.remove('hidden');
                 document.getElementById('main-app').classList.add('hidden');
@@ -380,212 +709,382 @@
         }
 
         function sendOTP() {
-            const emailInput = document.getElementById('user-email').value;
+            const emailInput = document.getElementById('user-email').value.trim();
             const btnText = document.getElementById('btn-text');
             const otpBtn = document.getElementById('otp-btn');
-
-            if(!emailInput.includes('@') || !emailInput.includes('.com')) {
-                alert('Please enter a valid global email address!');
+            
+            // Enhanced email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput)) {
+                showNotification('Please enter a valid email address!', 'error');
                 return;
             }
-
-            btnText.innerText = "Transmitting Token...";
+            
+            // Generate 6-digit OTP
+            appState.generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            // Update UI
+            btnText.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i>Sending...';
             otpBtn.disabled = true;
-            generatedOTP = Math.floor(1000 + Math.random() * 9000);
-
+            
             const templateParams = {
                 to_email: emailInput,
-                to_name: emailInput,
-                otp_code: generatedOTP,
-                message: `Your requested authentication token is: ${generatedOTP}`
+                to_name: emailInput.split('@')[0],
+                otp_code: appState.generatedOTP,
+                message: `Your verification code is: ${appState.generatedOTP}`
             };
-
-            emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
-                .then(function() {
-                    alert('Security token dispatched successfully to your email inbox.');
+            
+            emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams)
+                .then(() => {
+                    showNotification('Verification code sent! Check your email.', 'success');
                     document.getElementById('email-step').classList.add('hidden');
                     document.getElementById('otp-step').classList.remove('hidden');
-                    document.getElementById('otp-hint').innerText = `Inspect inbox or spam folder for: ${emailInput}`;
-                }, function() {
-                    alert('Transmission layer failure. Verify active device parameters.');
-                    btnText.innerText = "Request OTP Token";
+                    document.getElementById('otp-hint').innerHTML = 
+                        `<i class="fa-solid fa-envelope mr-2"></i>Code sent to: ${emailInput}`;
+                })
+                .catch((error) => {
+                    console.error('EmailJS Error:', error);
+                    showNotification('Failed to send code. Please try again.', 'error');
+                    btnText.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>Send Verification Code';
                     otpBtn.disabled = false;
                 });
         }
 
         function verifyOTP() {
-            const userOTP = document.getElementById('otp-input').value;
-            if(userOTP == generatedOTP) {
-                const emailInput = document.getElementById('user-email').value;
-                localStorage.setItem('user_logged_in', 'true');
-                localStorage.setItem('user_gmail', emailInput);
+            const userOTP = document.getElementById('otp-input').value.trim();
+            
+            if (!userOTP || userOTP.length !== 6) {
+                showNotification('Please enter the 6-digit code', 'error');
+                return;
+            }
+            
+            if (userOTP === appState.generatedOTP) {
+                const emailInput = document.getElementById('user-email').value.trim();
+                
+                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}logged_in`, 'true');
+                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}email`, emailInput);
+                
+                showNotification('Login successful! Welcome to Alamin Special Earn.', 'success');
                 checkLoginStatus();
             } else {
-                alert('Invalid security authorization checksum.');
+                showNotification('Invalid verification code. Please try again.', 'error');
+                document.getElementById('otp-input').value = '';
             }
+        }
+
+        function goBackToEmail() {
+            document.getElementById('otp-step').classList.add('hidden');
+            document.getElementById('email-step').classList.remove('hidden');
+            document.getElementById('otp-input').value = '';
         }
 
         function logOut() {
-            localStorage.removeItem('user_logged_in');
-            localStorage.removeItem('user_gmail');
+            localStorage.removeItem(`${CONFIG.STORAGE_PREFIX}logged_in`);
+            localStorage.removeItem(`${CONFIG.STORAGE_PREFIX}email`);
             checkLoginStatus();
         }
 
+        // ==================== ENHANCED DAILY BONUS ====================
         function claimDailyBonus() {
-            if(detectAdBlocker()) return;
-            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
+            if (detectAdBlocker()) return;
+            
+            const lastClaim = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}daily_claim`);
             const todayStr = new Date().toDateString();
-
+            
             if (lastClaim === todayStr) {
-                alert("Allocation limits reached for today. Return tomorrow.");
+                showNotification('You already claimed today\'s bonus! Come back tomorrow.', 'warning');
                 return;
             }
-
-            localStorage.setItem('last_daily_bonus_claim', todayStr);
-            setSecurePoints(totalPoints + 50);
-            alert("Success! Authenticated Daily Bonus allocation +50 PTS has settled.");
+            
+            localStorage.setItem(`${CONFIG.STORAGE_PREFIX}daily_claim`, todayStr);
+            setSecurePoints(appState.totalPoints + CONFIG.DAILY_BONUS);
+            
+            showNotification(`Daily bonus claimed! +${CONFIG.DAILY_BONUS} PTS added.`, 'success');
+            
+            // Add celebration effect
+            celebrateReward();
         }
 
+        // ==================== ENHANCED QUIZ SYSTEM ====================
         function showLanguageSelection() {
-            if(detectAdBlocker()) return;
-            interactiveBox.classList.remove('hidden');
-            quizLangSelector.classList.remove('hidden');
-            quizContent.classList.add('hidden');
-            adsContent.classList.add('hidden');
-            adSuccessContent.classList.add('hidden');
+            if (detectAdBlocker()) return;
+            
+            DOM.interactiveBox.classList.remove('hidden');
+            DOM.quizLangSelector.classList.remove('hidden');
+            DOM.quizContent.classList.add('hidden');
+            DOM.adsContent.classList.add('hidden');
+            DOM.adSuccessContent.classList.add('hidden');
+            
+            // Scroll to interactive box
+            DOM.interactiveBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function startQuiz(lang) {
-            activeQuizLanguage = lang;
-            quizLangSelector.classList.add('hidden');
-            quizContent.classList.remove('hidden');
-
+            appState.currentQuizLanguage = lang;
+            DOM.quizLangSelector.classList.add('hidden');
+            DOM.quizContent.classList.remove('hidden');
+            
             const bank = quizMasterDatabase[lang];
             const randomIndex = Math.floor(Math.random() * bank.length);
-            activeQuestion = bank[randomIndex];
-
-            quizContent.innerHTML = `
-                <div>
-                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
-                        <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">${activeQuestion.fanni}</span>
-                        <button onclick="closeBox()" class="text-slate-400 hover:text-white text-xs font-bold">&times; Close Portal</button>
+            appState.currentQuestion = bank[randomIndex];
+            
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            DOM.quizContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center pb-4 border-b border-slate-700">
+                        <span class="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-xs font-bold uppercase">
+                            <i class="fa-solid fa-tag mr-2"></i>${appState.currentQuestion.fanni}
+                        </span>
+                        <button onclick="closeBox()" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fa-solid fa-times text-lg"></i>
+                        </button>
                     </div>
-                    <p class="text-base font-semibold mb-6 text-slate-100">${activeQuestion.q}</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <button onclick="checkAnswer('a')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">A) ${activeQuestion.a}</button>
-                        <button onclick="checkAnswer('b')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">B) ${activeQuestion.b}</button>
-                        <button onclick="checkAnswer('c')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">C) ${activeQuestion.c}</button>
-                        <button onclick="checkAnswer('d')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">D) ${activeQuestion.d}</button>
+                    
+                    <p class="text-lg font-semibold text-white">${appState.currentQuestion.q}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${appState.currentQuestion.options.map((opt, i) => `
+                            <button onclick="checkAnswer(${i})" 
+                                    class="w-full text-left bg-slate-800/50 hover:bg-emerald-500/20 p-5 rounded-2xl transition-all duration-300 border border-slate-700 hover:border-emerald-500 transform hover:scale-105">
+                                <span class="text-emerald-400 font-bold mr-3">${letters[i]})</span>
+                                <span class="text-white">${opt}</span>
+                            </button>
+                        `).join('')}
                     </div>
                 </div>
             `;
         }
 
-        function checkAnswer(choice) {
+        function checkAnswer(choiceIndex) {
             const now = Date.now();
-            if(now - lastActionTime < 1000) return;
-            lastActionTime = now;
-
-            if(choice === activeQuestion.ans) {
-                setSecurePoints(totalPoints + 10);
-                quizContent.innerHTML = `
-                    <div class="text-center py-6">
-                        <div class="text-emerald-400 text-4xl mb-2"><i class="fa-solid fa-circle-check"></i></div>
-                        <h4 class="text-emerald-400 font-black text-lg mb-1">Correct Answer!</h4>
-                        <p class="text-slate-400 text-xs">Allocation +10 Points processed successfully.</p>
-                        <div class="flex justify-center space-x-3 mt-5">
-                            <button onclick="startQuiz('${activeQuizLanguage}')" class="bg-emerald-500 text-slate-950 text-xs font-black px-5 py-2.5 rounded-xl">Next Challenge</button>
-                            <button onclick="closeBox()" class="bg-slate-950 text-slate-400 text-xs font-bold px-5 py-2.5 border border-slate-800 rounded-xl">Terminate Session</button>
+            if (now - appState.lastActionTime < CONFIG.COOLDOWN_MS) return;
+            appState.lastActionTime = now;
+            
+            if (choiceIndex === appState.currentQuestion.ans) {
+                setSecurePoints(appState.totalPoints + CONFIG.QUIZ_REWARD);
+                
+                DOM.quizContent.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl animate-bounce">
+                            <i class="fa-solid fa-check text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-emerald-400 mb-2">Correct!</h3>
+                        <p class="text-slate-300 mb-2">+${CONFIG.QUIZ_REWARD} Points Earned</p>
+                        <p class="text-xs text-slate-500 mb-6">${appState.currentQuestion.explanation}</p>
+                        <div class="flex justify-center space-x-4">
+                            <button onclick="startQuiz('${appState.currentQuizLanguage}')" 
+                                    class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold px-6 py-3 rounded-2xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fa-solid fa-forward mr-2"></i>Next Question
+                            </button>
+                            <button onclick="closeBox()" 
+                                    class="bg-slate-800 text-slate-400 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:border-slate-500">
+                                Close
+                            </button>
                         </div>
                     </div>
                 `;
+                
+                celebrateReward();
             } else {
-                quizContent.innerHTML = `
-                    <div class="text-center py-6">
-                        <div class="text-rose-400 text-4xl mb-2"><i class="fa-solid fa-circle-xmark"></i></div>
-                        <h4 class="text-rose-400 font-black text-lg mb-1">Incorrect Assertion!</h4>
-                        <p class="text-slate-400 text-xs">Accurate tracking pointer was: <span class="font-black text-emerald-400">${activeQuestion.ans.toUpperCase()}</span></p>
-                        <div class="flex justify-center space-x-3 mt-5">
-                            <button onclick="startQuiz('${activeQuizLanguage}')" class="bg-slate-950 text-slate-300 border border-slate-800 text-xs px-5 py-2.5 rounded-xl">Retry Block</button>
-                            <button onclick="closeBox()" class="bg-slate-950 text-slate-500 text-xs px-5 py-2.5 rounded-xl">Exit</button>
+                const correctAnswer = appState.currentQuestion.options[appState.currentQuestion.ans];
+                
+                DOM.quizContent.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl">
+                            <i class="fa-solid fa-times text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-rose-400 mb-2">Incorrect</h3>
+                        <p class="text-slate-300 mb-2">The correct answer was: <span class="text-emerald-400 font-bold">${correctAnswer}</span></p>
+                        <p class="text-xs text-slate-500 mb-6">${appState.currentQuestion.explanation}</p>
+                        <div class="flex justify-center space-x-4">
+                            <button onclick="startQuiz('${appState.currentQuizLanguage}')" 
+                                    class="bg-slate-800 text-white font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:bg-slate-700">
+                                <i class="fa-solid fa-rotate-right mr-2"></i>Try Again
+                            </button>
+                            <button onclick="closeBox()" 
+                                    class="bg-slate-800 text-slate-400 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:border-slate-500">
+                                Close
+                            </button>
                         </div>
                     </div>
                 `;
             }
         }
 
+        // ==================== ENHANCED AD SYSTEM ====================
         function watchAd() {
-            if(detectAdBlocker()) return;
-
-            interactiveBox.classList.remove('hidden');
-            adsContent.classList.remove('hidden');
-            quizLangSelector.classList.add('hidden');
-            quizContent.classList.add('hidden');
-            adSuccessContent.classList.add('hidden');
+            if (detectAdBlocker()) return;
             
-            // Re-render placement zone and show initialization fallback loader
-            adZone.innerHTML = '';
-            adFallback.style.display = 'flex';
-
-            // Safe Async injection sequence to ensure assets aren't repeated or stuck
+            DOM.interactiveBox.classList.remove('hidden');
+            DOM.adsContent.classList.remove('hidden');
+            DOM.quizLangSelector.classList.add('hidden');
+            DOM.quizContent.classList.add('hidden');
+            DOM.adSuccessContent.classList.add('hidden');
+            
+            // Reset ad zone
+            DOM.adZone.innerHTML = '';
+            DOM.adFallback.style.display = 'flex';
+            
+            // Load ad after delay
             setTimeout(() => {
-                adZone.innerHTML = `
+                DOM.adZone.innerHTML = `
                     <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"><\/script>
                     <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
                 `;
-                // Hide fallback overlay safely to show active stream
-                adFallback.style.display = 'none';
-            }, 1200);
-
-            let timeLeft = 10;
+                DOM.adFallback.style.display = 'none';
+            }, 1500);
+            
+            // Start countdown
+            let timeLeft = CONFIG.AD_DURATION;
             const timerDisplay = document.getElementById('ad-timer');
-            timerDisplay.innerText = "10s";
             
             const countdown = setInterval(() => {
                 timeLeft--;
-                if(timeLeft > 0) {
-                    timerDisplay.innerText = timeLeft + "s";
-                } else {
+                timerDisplay.innerHTML = `<i class="fa-solid fa-clock mr-1"></i>${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
                     clearInterval(countdown);
-                    setSecurePoints(totalPoints + 20);
-                    adsContent.classList.add('hidden');
-                    adSuccessContent.classList.remove('hidden');
+                    setSecurePoints(appState.totalPoints + CONFIG.AD_REWARD);
+                    
+                    DOM.adsContent.classList.add('hidden');
+                    DOM.adSuccessContent.classList.remove('hidden');
+                    
+                    celebrateReward();
                 }
             }, 1000);
+            
+            DOM.interactiveBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        // ==================== ENHANCED WITHDRAWAL SYSTEM ====================
         function processWithdrawal() {
             const bank = document.getElementById('withdraw-bank').value;
-            const account = document.getElementById('withdraw-account').value;
+            const account = document.getElementById('withdraw-account').value.trim();
             const amount = parseInt(document.getElementById('withdraw-amount').value);
-
-            if(!account || account.length < 10) {
-                alert('NUBAN formatting rule exception. Enter a valid 10-digit account number.');
-                return;
-            }
-            if(!amount || amount < 1000) {
-                alert('Threshold condition error. Minimum extraction volume is 1,000 PTS.');
-                return;
-            }
-            if(amount > totalPoints) {
-                alert('Liquidation failed. Insufficient ledger balance.');
-                return;
-            }
-
-            setSecurePoints(totalPoints - amount);
-            alert(`Liquidation Order Dispatched Successfully!\n\nInstitution: ${bank}\nAccount: ${account}\nVolume: ${amount} PTS\n\nLedger clearance verification pending.`);
             
-            document.getElementById('withdraw-account').value = '';
-            document.getElementById('withdraw-amount').value = '';
+            // Validation
+            if (!bank) {
+                showNotification('Please select a bank', 'error');
+                return;
+            }
+            
+            if (!account || account.length !== 10 || !/^\d+$/.test(account)) {
+                showNotification('Please enter a valid 10-digit account number', 'error');
+                return;
+            }
+            
+            if (!amount || amount < CONFIG.MIN_WITHDRAWAL) {
+                showNotification(`Minimum withdrawal is ${CONFIG.MIN_WITHDRAWAL} PTS`, 'error');
+                return;
+            }
+            
+            if (amount > appState.totalPoints) {
+                showNotification('Insufficient balance!', 'error');
+                return;
+            }
+            
+            // Process withdrawal
+            const nairaAmount = amount; // 1 PTS = ₦1
+            
+            if (confirm(`Confirm withdrawal?\n\nBank: ${bank}\nAccount: ${account}\nAmount: ${amount} PTS (₦${nairaAmount})\n\nThis action cannot be undone.`)) {
+                setSecurePoints(appState.totalPoints - amount);
+                
+                showNotification(`Withdrawal of ₦${nairaAmount} to ${bank} (${account}) initiated! Processing within 24-48 hours.`, 'success');
+                
+                // Clear form
+                document.getElementById('withdraw-account').value = '';
+                document.getElementById('withdraw-amount').value = '';
+            }
         }
 
-        function closeBox() { 
-            interactiveBox.classList.add('hidden'); 
-            adsContent.classList.add('hidden');
-            quizLangSelector.classList.add('hidden');
-            quizContent.classList.add('hidden');
-            adSuccessContent.classList.add('hidden');
+        // ==================== UTILITY FUNCTIONS ====================
+        function closeBox() {
+            DOM.interactiveBox.classList.add('hidden');
+            DOM.adsContent.classList.add('hidden');
+            DOM.quizLangSelector.classList.add('hidden');
+            DOM.quizContent.classList.add('hidden');
+            DOM.adSuccessContent.classList.add('hidden');
         }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-500',
+                error: 'bg-rose-500',
+                warning: 'bg-amber-500',
+                info: 'bg-blue-500'
+            };
+            
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl z-50 animate-slide-in`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}-circle text-xl"></i>
+                    <p class="text-sm font-semibold">${message}</p>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.transition = 'all 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function celebrateReward() {
+            // Simple celebration animation
+            const emojis = ['🎉', '✨', '💰', '🎊', '💎'];
+            const body = document.body;
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'fixed pointer-events-none z-50 animate-float';
+                    emoji.style.left = `${Math.random() * 100}%`;
+                    emoji.style.top = `${Math.random() * 100}%`;
+                    emoji.style.fontSize = `${Math.random() * 30 + 20}px`;
+                    emoji.textContent = emojis[i];
+                    
+                    body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 1000);
+                }, i * 100);
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', () => {
+            // Initialize EmailJS
+            emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            
+            // Load points
+            appState.totalPoints = getSecurePoints();
+            
+            // Check ad blocker
+            setTimeout(detectAdBlocker, 1500);
+            
+            // Check login status
+            checkLoginStatus();
+            
+            // Update UI
+            updateUI();
+            
+            console.log('🚀 Alamin Special Earn Platform v2.0 Initialized');
+        });
+
+        // Prevent accidental navigation
+        window.addEventListener('beforeunload', (e) => {
+            if (DOM.adsContent && !DOM.adsContent.classList.contains('hidden')) {
+                e.preventDefault();
+                e.returnValue = 'You have an active ad. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
     </script>
 </body>
 </html>
