@@ -3,852 +3,904 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Special Earn - Global Premium Edition v2.0</title>
+    <title>Alamin Special Earn - WORLD EXCLUSIVE EDITION</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome Icons -->
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Confetti for Celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    
     <style>
+        /* ============ CUSTOM FONTS & VARIABLES ============ */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap');
+        
         :root {
-            --neon-emerald: rgba(16, 185, 129, 0.4);
-            --neon-amber: rgba(245, 158, 11, 0.4);
-            --neon-indigo: rgba(99, 102, 241, 0.4);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gold-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --diamond-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --premium-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --quantum-gradient: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
         }
         
-        .neon-glow-emerald { box-shadow: 0 0 20px var(--neon-emerald), 0 0 40px var(--neon-emerald); }
-        .neon-glow-amber { box-shadow: 0 0 20px var(--neon-amber), 0 0 40px var(--neon-amber); }
-        .neon-glow-indigo { box-shadow: 0 0 20px var(--neon-indigo), 0 0 40px var(--neon-indigo); }
-        .glass-panel { 
-            backdrop-filter: blur(16px); 
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.75));
-            border: 1px solid rgba(148, 163, 184, 0.1);
+        /* ============ ANIMATIONS ============ */
+        @keyframes quantum-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes neon-pulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(102, 126, 234, 0.5), 0 0 20px rgba(118, 75, 162, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 40px rgba(118, 75, 162, 0.6); }
         }
         
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.2); }
-            50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+        @keyframes diamond-sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
-        
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { 
-            background: linear-gradient(to bottom, #10b981, #059669);
-            border-radius: 3px;
+        @keyframes border-glow {
+            0%, 100% { border-color: rgba(102, 126, 234, 0.3); }
+            50% { border-color: rgba(102, 126, 234, 0.8); }
         }
         
-        .btn-hover-effect {
+        @keyframes matrix-rain {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: perspective(1000px) rotateY(0deg); }
+            100% { transform: perspective(1000px) rotateY(360deg); }
+        }
+        
+        /* ============ CUSTOM CLASSES ============ */
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .text-neon { animation: neon-pulse 2s infinite; }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-morphism-dark {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .quantum-card {
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
         
-        .btn-hover-effect::after {
+        .quantum-card::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.2), transparent, rgba(118, 75, 162, 0.2), transparent);
+            animation: rotate3d 4s linear infinite;
         }
         
-        .btn-hover-effect:hover::after {
-            width: 300px;
-            height: 300px;
+        .quantum-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: inherit;
+            z-index: 1;
         }
         
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .quantum-card > * {
+            position: relative;
+            z-index: 2;
         }
         
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        /* ============ CUSTOM SCROLLBAR ============ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+        
+        /* ============ PARTICLE BACKGROUND ============ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-white font-sans min-h-screen overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900 custom-scrollbar">
+<body class="bg-slate-950 text-white font-['Poppins'] min-h-screen overflow-x-hidden">
+    
+    <!-- ANIMATED PARTICLE BACKGROUND -->
+    <canvas id="particles-canvas"></canvas>
 
-    <!-- ENHANCED AD-BLOCK DETECTOR OVERLAY -->
-    <div id="adblock-overlay" class="fixed inset-0 bg-slate-950/98 z-55 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="glass-panel w-full max-w-md rounded-3xl p-8 text-center shadow-2xl transform animate-float">
-            <div class="w-20 h-20 bg-gradient-to-br from-rose-500 to-pink-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg">
-                <i class="fa-solid fa-shield-halved text-white"></i>
-            </div>
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400 mb-3">
-                Ad-Blocker Detected!
-            </h2>
-            <p class="text-slate-300 text-sm mb-6 leading-relaxed">
-                To ensure fair earnings and prevent abuse, please temporarily disable your ad blocker. 
-                We respect your privacy and only show verified, non-intrusive advertisements.
+    <!-- ============ WORLD EXCLUSIVE AD BLOCKER PAGE ============ -->
+    <div id="adblock-overlay" class="fixed inset-0 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 z-60 flex items-center justify-center p-4 hidden">
+        <div class="quantum-card rounded-3xl p-10 max-w-lg w-full text-center">
+            <div class="text-8xl mb-6 animate-bounce">🛡️</div>
+            <h2 class="text-4xl font-black font-orbitron text-neon mb-4">EXCLUSIVE ACCESS</h2>
+            <p class="text-slate-300 mb-6 leading-relaxed">
+                To unlock <span class="text-purple-400 font-bold">WORLD-EXCLUSIVE FEATURES</span>, 
+                please disable your ad blocker temporarily. We offer the most advanced earning system 
+                on the planet! 🌍
             </p>
-            <button onclick="retryWithoutAdBlock()" 
-                    class="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
-                <i class="fa-solid fa-rotate-right mr-2"></i> I've Disabled It, Continue
+            <button onclick="window.location.reload()" 
+                    class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105">
+                <i class="fa-solid fa-unlock mr-2"></i>UNLOCK EXCLUSIVE FEATURES
             </button>
-            <button onclick="dismissAdBlockWarning()" 
-                    class="w-full mt-3 bg-transparent border border-slate-700 hover:border-rose-500 text-slate-400 hover:text-rose-400 font-semibold py-3 rounded-2xl transition-all duration-300 text-sm">
-                Continue Anyway (Limited Features)
+            <button onclick="dismissAdBlocker()" 
+                    class="w-full mt-3 bg-transparent border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 font-semibold py-3 rounded-2xl transition-all duration-300">
+                Continue with Limited Access
             </button>
         </div>
     </div>
 
-    <!-- ENHANCED LOGIN SCREEN -->
-    <div id="login-overlay" class="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 z-50 flex items-center justify-center p-4 transition-all duration-500">
-        <div class="glass-panel w-full max-w-md rounded-3xl p-8 shadow-2xl text-center transform transition-all duration-500">
-            <!-- Premium Badge -->
-            <div class="inline-flex items-center bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2 rounded-full text-xs font-bold mb-6 tracking-wider shadow-lg">
-                <i class="fa-solid fa-crown mr-2"></i> 
-                <span class="text-white">PREMIUM ACCESS</span>
+    <!-- ============ EXCLUSIVE LOGIN PORTAL ============ -->
+    <div id="login-overlay" class="fixed inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 z-50 flex items-center justify-center p-4">
+        <div class="quantum-card rounded-3xl p-10 max-w-md w-full text-center">
+            
+            <!-- Exclusive Badge -->
+            <div class="inline-flex items-center bg-gradient-to-r from-yellow-500 to-amber-500 px-4 py-2 rounded-full text-xs font-bold mb-6 text-black">
+                <i class="fa-solid fa-crown mr-2"></i>
+                WORLD EXCLUSIVE • LIMITED ACCESS
             </div>
             
-            <!-- Animated Logo -->
-            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-xl animate-pulse-glow">
-                <i class="fa-solid fa-gem text-white"></i>
+            <!-- Animated Diamond -->
+            <div class="text-6xl mb-4 diamond-sparkle" style="animation: diamond-sparkle 2s infinite;">
+                💎
             </div>
             
-            <h2 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 mb-1 tracking-wide">
-                ALAMIN SPECIAL
-            </h2>
-            <h2 class="text-3xl font-black text-white mb-2 tracking-wide">
-                EARN PLATFORM
-            </h2>
-            <p class="text-slate-400 text-sm mb-8">
-                Enter your Gmail to receive a secure OTP verification code
+            <h2 class="text-4xl font-black font-orbitron gradient-text mb-2">ALAMIN</h2>
+            <h3 class="text-3xl font-black text-white mb-2">SPECIAL EARN</h3>
+            <p class="text-purple-300 text-xs mb-8 font-orbitron tracking-widest">
+                WORLD EXCLUSIVE PLATFORM
             </p>
-
+            
             <!-- Email Step -->
-            <div id="email-step" class="space-y-4">
-                <div class="text-left">
+            <div id="email-step">
+                <div class="text-left mb-4">
                     <label class="text-xs font-semibold text-slate-400 block mb-2">
-                        <i class="fa-solid fa-envelope mr-2 text-emerald-400"></i>Email Address
+                        <i class="fa-solid fa-envelope mr-2 text-purple-400"></i>Email Address
                     </label>
-                    <div class="relative">
-                        <input type="email" id="user-email" 
-                               placeholder="example@gmail.com" 
-                               class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-white transition-all duration-300"
-                               onkeypress="if(event.key==='Enter') sendOTP()">
-                        <i class="fa-solid fa-at absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
-                    </div>
+                    <input type="email" id="user-email" 
+                           placeholder="example@gmail.com" 
+                           class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 px-4 text-sm focus:outline-none focus:border-purple-500 text-white">
                 </div>
-                <button id="otp-btn" onclick="sendOTP()" 
-                        class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
-                    <span id="btn-text"><i class="fa-solid fa-paper-plane mr-2"></i>Send Verification Code</span>
+                
+                <!-- AUTH METHOD SELECTOR (EXCLUSIVE) -->
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <button class="auth-method-btn bg-purple-500/20 border-2 border-purple-500 p-2 rounded-xl text-xs font-bold text-white active" data-method="email">
+                        <i class="fa-solid fa-envelope"></i> Email
+                    </button>
+                    <button class="auth-method-btn bg-slate-800/50 border border-slate-700 p-2 rounded-xl text-xs font-bold text-slate-400" data-method="face">
+                        <i class="fa-solid fa-face-smile"></i> Face ID
+                    </button>
+                    <button class="auth-method-btn bg-slate-800/50 border border-slate-700 p-2 rounded-xl text-xs font-bold text-slate-400" data-method="voice">
+                        <i class="fa-solid fa-microphone"></i> Voice
+                    </button>
+                </div>
+                
+                <button onclick="sendOTP()" id="otp-btn"
+                        class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl">
+                    <span id="btn-text"><i class="fa-solid fa-rocket mr-2"></i>LAUNCH AUTHENTICATION</span>
                 </button>
             </div>
-
+            
             <!-- OTP Step -->
-            <div id="otp-step" class="hidden space-y-4">
-                <div class="text-left">
+            <div id="otp-step" class="hidden">
+                <div class="text-left mb-4">
                     <label class="text-xs font-semibold text-slate-400 block mb-2">
                         <i class="fa-solid fa-key mr-2 text-amber-400"></i>Verification Code
                     </label>
-                    <div class="relative">
-                        <input type="text" id="otp-input" 
-                               placeholder="Enter 6-digit code" 
-                               maxlength="6"
-                               class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 px-4 text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-white transition-all duration-300"
-                               onkeypress="if(event.key==='Enter') verifyOTP()">
-                    </div>
-                    <p class="text-xs text-amber-400 mt-3 text-center flex items-center justify-center" id="otp-hint">
-                        <i class="fa-solid fa-info-circle mr-2"></i>Check your email for the code
-                    </p>
+                    <input type="text" id="otp-input" 
+                           placeholder="Enter 6-digit code" 
+                           maxlength="6"
+                           class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 px-4 text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:border-amber-500 text-white">
                 </div>
-                <button onclick="verifyOTP()" 
-                        class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
-                    <i class="fa-solid fa-shield-halved mr-2"></i>Verify & Login
-                </button>
-                <button onclick="goBackToEmail()" 
-                        class="text-slate-500 hover:text-slate-300 text-sm transition-colors duration-300">
-                    <i class="fa-solid fa-arrow-left mr-2"></i>Back to Email
+                <button onclick="verifyOTP()"
+                        class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105">
+                    <i class="fa-solid fa-shield-halved mr-2"></i>VERIFY & ACCESS
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MAIN APP CONTENT -->
+    <!-- ============ MAIN APP - WORLD EXCLUSIVE ============ -->
     <div id="main-app" class="hidden">
-        <!-- Enhanced Header -->
-        <header class="glass-panel sticky top-0 z-40 border-b border-slate-700/50">
-            <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fa-solid fa-gem text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
-                            ALAMIN SPECIAL
-                        </h1>
-                        <p class="text-[10px] text-slate-400 font-medium">Premium Earn Platform</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <!-- Points Display -->
-                    <div class="bg-slate-800/50 border border-slate-700 px-4 py-2 rounded-full flex items-center shadow-lg">
-                        <i class="fa-solid fa-coins text-amber-400 mr-2 animate-pulse"></i>
-                        <span id="points-display" class="font-black text-amber-400 text-lg">0</span>
-                        <span class="text-[10px] ml-2 text-slate-400 font-bold">PTS</span>
+        
+        <!-- ULTRA PREMIUM HEADER -->
+        <header class="glass-morphism sticky top-0 z-40 border-b border-slate-700/30">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl animate-pulse">
+                            <i class="fa-solid fa-diamond text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-black font-orbitron gradient-text">ALAMIN</h1>
+                            <p class="text-[10px] text-purple-400">WORLD EXCLUSIVE EARN</p>
+                        </div>
                     </div>
                     
-                    <!-- User Menu -->
-                    <div class="relative group">
-                        <button class="bg-slate-800/50 hover:bg-slate-700 border border-slate-700 p-2 rounded-xl transition-all duration-300">
-                            <i class="fa-solid fa-user text-slate-300"></i>
-                        </button>
-                        <div class="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
-                            <button onclick="logOut()" class="w-full text-left px-4 py-3 hover:bg-rose-500/20 text-rose-400 rounded-xl transition-colors duration-300">
-                                <i class="fa-solid fa-right-from-bracket mr-2"></i>Logout
-                            </button>
+                    <!-- Multi-Currency Display -->
+                    <div class="hidden md:flex items-center space-x-4">
+                        <div class="bg-slate-800/50 rounded-full px-4 py-2 text-xs">
+                            <span class="text-slate-400">USD:</span>
+                            <span id="usd-value" class="font-bold text-green-400 ml-1">$0.00</span>
                         </div>
+                        <div class="bg-slate-800/50 rounded-full px-4 py-2 text-xs">
+                            <span class="text-slate-400">EUR:</span>
+                            <span id="eur-value" class="font-bold text-blue-400 ml-1">€0.00</span>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-full px-4 py-2 text-xs">
+                            <span class="text-slate-400">GBP:</span>
+                            <span id="gbp-value" class="font-bold text-red-400 ml-1">£0.00</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Points & User -->
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-gradient-to-r from-yellow-500 to-amber-500 px-4 py-2 rounded-full flex items-center shadow-lg">
+                            <i class="fa-solid fa-coins text-black mr-2"></i>
+                            <span id="points-display" class="font-black text-black">0</span>
+                            <span class="text-[10px] ml-1 text-black/70 font-bold">PTS</span>
+                        </div>
+                        <button onclick="logOut()" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 p-2 rounded-xl transition">
+                            <i class="fa-solid fa-right-from-bracket text-red-400"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-6xl mx-auto px-6 py-8 space-y-8">
-            <!-- Welcome Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Main Welcome Card -->
-                <div class="lg:col-span-2 glass-panel rounded-3xl p-8 shadow-2xl card-hover">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-black text-white mb-2">Welcome Back! 👋</h2>
-                            <p id="user-welcome" class="text-slate-400 text-sm">Loading your dashboard...</p>
-                        </div>
-                        <div class="bg-emerald-500/10 p-3 rounded-2xl">
-                            <i class="fa-solid fa-chart-line text-emerald-400 text-2xl"></i>
-                        </div>
+        <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+            
+            <!-- ============ EXCLUSIVE FEATURE #1: REFERRAL EMPIRE DASHBOARD ============ -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-8">
+                <!-- Total Earnings -->
+                <div class="quantum-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl mb-2">💰</div>
+                    <div class="text-2xl font-black text-white" id="total-earned">0 PTS</div>
+                    <p class="text-xs text-slate-400">Total Earned</p>
+                </div>
+                
+                <!-- Referral Count -->
+                <div class="quantum-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl mb-2">👥</div>
+                    <div class="text-2xl font-black text-white" id="referral-count">0</div>
+                    <p class="text-xs text-slate-400">Active Referrals</p>
+                </div>
+                
+                <!-- Multiplier Level -->
+                <div class="quantum-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl mb-2">⚡</div>
+                    <div class="text-2xl font-black text-yellow-400" id="multiplier-level">1x</div>
+                    <p class="text-xs text-slate-400">Earning Multiplier</p>
+                </div>
+                
+                <!-- Daily Streak -->
+                <div class="quantum-card rounded-2xl p-6 text-center">
+                    <div class="text-3xl mb-2">🔥</div>
+                    <div class="text-2xl font-black text-orange-400" id="daily-streak">0</div>
+                    <p class="text-xs text-slate-400">Day Streak</p>
+                </div>
+            </div>
+            
+            <!-- ============ EXCLUSIVE FEATURE #2: SMART MINING OPTIONS ============ -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                
+                <!-- AI Quiz Mining -->
+                <div class="glass-morphism rounded-3xl p-8 hover-lift cursor-pointer" onclick="showQuizMining()">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-xl">
+                        🤖
                     </div>
-                    
-                    <!-- Enhanced Progress Bar -->
-                    <div class="mt-6">
-                        <div class="flex justify-between text-sm font-bold mb-2">
-                            <span class="text-slate-300">Progress to Payout</span>
-                            <span id="progress-text" class="text-emerald-400">0% (0/1000 PTS)</span>
-                        </div>
-                        <div class="w-full bg-slate-800 rounded-full h-3 p-0.5 border border-slate-700">
-                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 h-2 rounded-full transition-all duration-700 ease-out shadow-lg" style="width: 0%"></div>
-                        </div>
-                        <p class="text-[10px] text-slate-500 mt-2">
-                            <i class="fa-solid fa-info-circle mr-1"></i>
-                            Reach 1000 PTS to unlock withdrawal (₦1,000 minimum)
-                        </p>
+                    <h3 class="text-xl font-black mb-2">AI QUIZ MINING</h3>
+                    <p class="text-slate-400 text-sm mb-4">Advanced AI-generated questions. Earn up to <span class="text-purple-400 font-bold">50 PTS</span> per answer!</p>
+                    <div class="flex items-center text-xs text-purple-400">
+                        <i class="fa-solid fa-brain mr-2"></i>
+                        <span>POWERED BY GPT-4</span>
                     </div>
                 </div>
                 
-                <!-- Daily Bonus Card -->
-                <div class="glass-panel rounded-3xl p-6 shadow-2xl card-hover flex flex-col justify-between bg-gradient-to-br from-amber-500/5 to-orange-500/5">
+                <!-- Premium Ads Mining -->
+                <div class="glass-morphism rounded-3xl p-8 hover-lift cursor-pointer" onclick="showAdsMining()">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-xl">
+                        📺
+                    </div>
+                    <h3 class="text-xl font-black mb-2">PREMIUM ADS</h3>
+                    <p class="text-slate-400 text-sm mb-4">Watch exclusive ads. Earn <span class="text-blue-400 font-bold">20-100 PTS</span> per view!</p>
+                    <div class="flex items-center text-xs text-blue-400">
+                        <i class="fa-solid fa-chart-line mr-2"></i>
+                        <span>MULTI-TIER REWARDS</span>
+                    </div>
+                </div>
+                
+                <!-- Social Mining -->
+                <div class="glass-morphism rounded-3xl p-8 hover-lift cursor-pointer" onclick="showSocialMining()">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-xl">
+                        🌐
+                    </div>
+                    <h3 class="text-xl font-black mb-2">SOCIAL MINING</h3>
+                    <p class="text-slate-400 text-sm mb-4">Share on social media. Earn <span class="text-green-400 font-bold">100 PTS</span> per verified share!</p>
+                    <div class="flex items-center text-xs text-green-400">
+                        <i class="fa-solid fa-share-nodes mr-2"></i>
+                        <span>INSTANT VERIFICATION</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ============ EXCLUSIVE FEATURE #3: LIVE EARNINGS CHART ============ -->
+            <div class="glass-morphism rounded-3xl p-8 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-black font-orbitron">📈 LIVE EARNINGS ANALYTICS</h3>
+                    <div class="flex space-x-2">
+                        <button class="chart-btn bg-purple-500 text-white px-4 py-2 rounded-xl text-xs font-bold active" data-period="24h">24H</button>
+                        <button class="chart-btn bg-slate-800 text-slate-400 px-4 py-2 rounded-xl text-xs font-bold" data-period="7d">7D</button>
+                        <button class="chart-btn bg-slate-800 text-slate-400 px-4 py-2 rounded-xl text-xs font-bold" data-period="30d">30D</button>
+                    </div>
+                </div>
+                <canvas id="earnings-chart" height="100"></canvas>
+            </div>
+            
+            <!-- ============ EXCLUSIVE FEATURE #4: REFERRAL EMPIRE ============ -->
+            <div class="glass-morphism rounded-3xl p-8 mb-8">
+                <div class="flex justify-between items-center mb-6">
                     <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-sm font-black text-white">Daily Reward</h3>
-                            <div class="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center">
-                                <i class="fa-solid fa-gift text-amber-400 text-xl animate-bounce"></i>
-                            </div>
+                        <h3 class="text-xl font-black font-orbitron">👑 REFERRAL EMPIRE</h3>
+                        <p class="text-xs text-slate-400 mt-1">Earn 10% from direct referrals + 5% from their referrals (Up to 10 levels deep!)</p>
+                    </div>
+                    <button onclick="copyReferralLink()" class="bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold px-6 py-3 rounded-2xl hover:scale-105 transition">
+                        <i class="fa-solid fa-copy mr-2"></i>COPY REFERRAL LINK
+                    </button>
+                </div>
+                
+                <!-- Referral Link Display -->
+                <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 mb-6">
+                    <code id="referral-link" class="text-purple-400 text-sm break-all">
+                        https://alamin-special.com/ref/user123
+                    </code>
+                </div>
+                
+                <!-- Referral Levels -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-2xl mb-2">🥇</div>
+                        <div class="text-lg font-bold text-yellow-400">Level 1</div>
+                        <div class="text-xs text-slate-400">10% Commission</div>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-2xl mb-2">🥈</div>
+                        <div class="text-lg font-bold text-slate-300">Level 2</div>
+                        <div class="text-xs text-slate-400">5% Commission</div>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-2xl mb-2">🥉</div>
+                        <div class="text-lg font-bold text-amber-600">Level 3</div>
+                        <div class="text-xs text-slate-400">3% Commission</div>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-2xl mb-2">💎</div>
+                        <div class="text-lg font-bold text-slate-400">Level 4-5</div>
+                        <div class="text-xs text-slate-400">2% Commission</div>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-2xl mb-2">👑</div>
+                        <div class="text-lg font-bold text-slate-400">Level 6-10</div>
+                        <div class="text-xs text-slate-400">1% Commission</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ============ EXCLUSIVE FEATURE #5: MULTI-CURRENCY WITHDRAWAL ============ -->
+            <div class="glass-morphism rounded-3xl p-8 mb-8">
+                <h3 class="text-xl font-black font-orbitron mb-6">💱 MULTI-CURRENCY WITHDRAWAL</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Currency Selection -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 block mb-2">SELECT CURRENCY</label>
+                        <select id="currency-select" onchange="updateCurrencyConversion()"
+                                class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500">
+                            <option value="NGN">🇳🇬 Nigerian Naira (₦)</option>
+                            <option value="USD">🇺🇸 US Dollar ($)</option>
+                            <option value="EUR">🇪🇺 Euro (€)</option>
+                            <option value="GBP">🇬🇧 British Pound (£)</option>
+                            <option value="GHC">🇬🇭 Ghanaian Cedi (₵)</option>
+                            <option value="CFA">🌍 CFA Franc (FCFA)</option>
+                            <option value="INR">🇮🇳 Indian Rupee (₹)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Bank Selection -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 block mb-2">SELECT BANK</label>
+                        <select id="withdraw-bank"
+                                class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500">
+                            <option value="">Choose Bank...</option>
+                            <option value="OPay">OPay</option>
+                            <option value="PalmPay">PalmPay</option>
+                            <option value="Moniepoint">Moniepoint</option>
+                            <option value="Kuda">Kuda Bank</option>
+                            <option value="Access">Access Bank</option>
+                            <option value="GTB">GTBank</option>
+                            <option value="UBA">UBA</option>
+                            <option value="Zenith">Zenith Bank</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Account Number -->
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 block mb-2">ACCOUNT NUMBER</label>
+                        <input type="text" id="withdraw-account" placeholder="Enter account number"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                </div>
+                
+                <!-- Amount Input with Conversion -->
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 block mb-2">AMOUNT (PTS)</label>
+                        <input type="number" id="withdraw-amount" placeholder="Min: 1000 PTS" onkeyup="updateCurrencyConversion()"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-400 block mb-2">YOU WILL RECEIVE</label>
+                        <div id="conversion-display" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white font-bold">
+                            ₦0.00
                         </div>
-                        <p class="text-xs text-slate-400 mb-4">
-                            Claim your daily <span class="text-amber-400 font-bold">+50 PTS</span> bonus. Available every 24 hours.
-                        </p>
                     </div>
-                    <button id="daily-btn" onclick="claimDailyBonus()" 
-                            class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-sm py-3.5 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect">
-                        <i class="fa-solid fa-gift mr-2"></i>Claim Bonus
-                    </button>
+                </div>
+                
+                <button onclick="processWithdrawal()"
+                        class="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>EXECUTE WITHDRAWAL
+                </button>
+                
+                <p class="text-[10px] text-slate-500 mt-4 text-center">
+                    <i class="fa-solid fa-shield-halved mr-1"></i>
+                    Secured by QUANTUM ENCRYPTION • Processing: 1-24 hours
+                </p>
+            </div>
+            
+            <!-- ============ INTERACTIVE DISPLAY AREA ============ -->
+            <div id="interactive-box" class="glass-morphism rounded-3xl p-8 hidden mb-8">
+                <!-- Dynamic content loads here -->
+            </div>
+            
+            <!-- ============ EXCLUSIVE FEATURE #6: ACHIEVEMENT SYSTEM ============ -->
+            <div class="glass-morphism rounded-3xl p-8">
+                <h3 class="text-xl font-black font-orbitron mb-6">🏆 ACHIEVEMENTS & BADGES</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-4xl mb-2">🌟</div>
+                        <p class="text-xs font-bold text-yellow-400">Newcomer</p>
+                        <p class="text-[10px] text-slate-500">Earn 100 PTS</p>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-4xl mb-2">💫</div>
+                        <p class="text-xs font-bold text-purple-400">Pro Miner</p>
+                        <p class="text-[10px] text-slate-500">Earn 1000 PTS</p>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-4xl mb-2">👑</div>
+                        <p class="text-xs font-bold text-amber-400">Elite</p>
+                        <p class="text-[10px] text-slate-500">Earn 5000 PTS</p>
+                    </div>
+                    <div class="text-center bg-slate-800/30 rounded-xl p-4">
+                        <div class="text-4xl mb-2">💎</div>
+                        <p class="text-xs font-bold text-blue-400">Diamond</p>
+                        <p class="text-[10px] text-slate-500">Earn 10000 PTS</p>
+                    </div>
                 </div>
             </div>
+            
+        </main>
+    </div>
 
-            <!-- Main Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Quiz Card -->
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl card-hover bg-gradient-to-br from-emerald-500/5 to-teal-500/5">
-                    <div class="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg">
-                        <i class="fa-solid fa-brain text-emerald-400"></i>
-                    </div>
-                    <h3 class="text-xl font-black text-white mb-3">Knowledge Quiz</h3>
-                    <p class="text-slate-400 text-sm mb-6">
-                        Test your knowledge in multiple languages. Earn 
-                        <span class="text-emerald-400 font-bold">+10 PTS</span> per correct answer.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇺🇸 English</span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇳🇬 Hausa</span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇸🇦 Arabic</span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">🇳🇬 Yorùbá</span>
-                    </div>
-                    <button onclick="showLanguageSelection()" 
-                            class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-emerald">
-                        <i class="fa-solid fa-play mr-2"></i>Start Quiz
-                    </button>
-                </div>
+    <!-- Hidden ad decoy -->
+    <div class="ad-banner-check" style="position:absolute;left:-9999px;width:1px;height:1px;"></div>
 
-                <!-- Ads Card -->
-                <div class="glass-panel rounded-3xl p-8 shadow-2xl card-hover bg-gradient-to-br from-amber-500/5 to-orange-500/5">
-                    <div class="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-lg">
-                        <i class="fa-solid fa-ad text-amber-400"></i>
-                    </div>
-                    <h3 class="text-xl font-black text-white mb-3">Premium Ads</h3>
-                    <p class="text-slate-400 text-sm mb-6">
-                        Watch premium advertisements. Earn guaranteed 
-                        <span class="text-amber-400 font-bold">+20 PTS</span> per view.
-                    </p>
-                    <div class="flex items-center space-x-2 mb-6">
-                        <i class="fa-solid fa-clock text-amber-400 text-sm"></i>
-                        <span class="text-xs text-slate-400">10 seconds per ad</span>
-                    </div>
-                    <button onclick="watchAd()" 
-                            class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-amber">
-                        <i class="fa-solid fa-play mr-2"></i>Watch Ad
-                    </button>
-                </div>
-            </div>
+    <script>
+        // ==================== WORLD EXCLUSIVE CONFIGURATION ====================
+        const WORLD_EXCLUSIVE_CONFIG = {
+            SALT_KEY: "ALAMIN_WORLD_EXCLUSIVE_2024_SUPER_SECURE",
+            APP_NAME: "Alamin Special Earn - World Exclusive",
+            VERSION: "3.0.0-EXCLUSIVE",
+            MIN_WITHDRAWAL: 1000,
+            DAILY_BONUS: 100,
+            REFERRAL_BONUS: 50,
+            QUIZ_REWARDS: { easy: 10, medium: 25, hard: 50 },
+            AD_REWARDS: { tier1: 20, tier2: 50, tier3: 100 },
+            SOCIAL_REWARDS: 100,
+            CURRENCY_RATES: {
+                NGN: 1,
+                USD: 0.00065,
+                EUR: 0.00060,
+                GBP: 0.00052,
+                GHC: 0.008,
+                CFA: 0.65,
+                INR: 0.054
+            }
+        };
 
-            <!-- Interactive Display Area -->
-            <div id="interactive-box" class="glass-panel rounded-3xl p-8 hidden shadow-2xl">
-                <!-- Language Selector -->
-                <div id="quiz-lang-selector" class="hidden text-center">
-                    <h3 class="text-xl font-black text-emerald-400 mb-6">Select Quiz Language</h3>
-                    <div class="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-                        <button onclick="startQuiz('en')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
-                            <span class="text-3xl mb-2 block">🇺🇸</span>
-                            <span class="text-white">English</span>
+        // ==================== GLOBAL STATE ====================
+        let worldState = {
+            totalPoints: 0,
+            totalEarned: 0,
+            referralCount: 0,
+            multiplierLevel: 1,
+            dailyStreak: 0,
+            generatedOTP: null,
+            userEmail: null,
+            earningsHistory: [],
+            lastActionTime: 0
+        };
+
+        // ==================== PARTICLE BACKGROUND ANIMATION ====================
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const particleCount = 100;
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.opacity = Math.random();
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+                
+                draw() {
+                    ctx.fillStyle = `rgba(139, 92, 246, ${this.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                // Draw connections
+                particles.forEach((p1, i) => {
+                    particles.slice(i + 1).forEach(p2 => {
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 150) {
+                            ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - distance / 150)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(p1.x, p1.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+
+        // ==================== EARNINGS CHART ====================
+        let earningsChart;
+        
+        function initEarningsChart() {
+            const ctx = document.getElementById('earnings-chart').getContext('2d');
+            
+            earningsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Earnings (PTS)',
+                        data: [],
+                        borderColor: 'rgb(139, 92, 246)',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgb(139, 92, 246)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.5)' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.5)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart(period = '24h') {
+            // Simulate earnings data
+            const now = new Date();
+            const data = [];
+            const labels = [];
+            
+            let points;
+            switch(period) {
+                case '24h': points = 24; break;
+                case '7d': points = 7; break;
+                case '30d': points = 30; break;
+            }
+            
+            for (let i = points - 1; i >= 0; i--) {
+                const date = new Date(now - i * (period === '24h' ? 3600000 : 86400000));
+                labels.push(period === '24h' ? date.getHours() + ':00' : date.getDate() + '/' + (date.getMonth()+1));
+                data.push(Math.floor(Math.random() * 100) + worldState.totalPoints * 0.1);
+            }
+            
+            earningsChart.data.labels = labels;
+            earningsChart.data.datasets[0].data = data;
+            earningsChart.update();
+        }
+
+        // ==================== CURRENCY CONVERSION ====================
+        function updateCurrencyConversion() {
+            const points = document.getElementById('withdraw-amount').value || 0;
+            const currency = document.getElementById('currency-select').value;
+            const rate = WORLD_EXCLUSIVE_CONFIG.CURRENCY_RATES[currency];
+            
+            const converted = (points * rate).toFixed(2);
+            const symbols = {
+                NGN: '₦', USD: '$', EUR: '€', GBP: '£', GHC: '₵', CFA: 'FCFA', INR: '₹'
+            };
+            
+            document.getElementById('conversion-display').textContent = 
+                `${symbols[currency]}${converted} ${currency}`;
+            
+            // Update header currency displays
+            document.getElementById('usd-value').textContent = 
+                `$${(worldState.totalPoints * WORLD_EXCLUSIVE_CONFIG.CURRENCY_RATES.USD).toFixed(2)}`;
+            document.getElementById('eur-value').textContent = 
+                `€${(worldState.totalPoints * WORLD_EXCLUSIVE_CONFIG.CURRENCY_RATES.EUR).toFixed(2)}`;
+            document.getElementById('gbp-value').textContent = 
+                `£${(worldState.totalPoints * WORLD_EXCLUSIVE_CONFIG.CURRENCY_RATES.GBP).toFixed(2)}`;
+        }
+
+        // ==================== REFERRAL SYSTEM ====================
+        function generateReferralLink() {
+            const userId = localStorage.getItem('alamin_user_id') || generateUserId();
+            return `https://alamin-special.com/ref/${userId}`;
+        }
+
+        function generateUserId() {
+            const userId = 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('alamin_user_id', userId);
+            return userId;
+        }
+
+        function copyReferralLink() {
+            const link = document.getElementById('referral-link').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                showExclusiveNotification('✅ Referral link copied! Share to earn!', 'success');
+            });
+        }
+
+        // ==================== SOCIAL MINING ====================
+        function showSocialMining() {
+            const box = document.getElementById('interactive-box');
+            box.classList.remove('hidden');
+            
+            box.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-6">🌐</div>
+                    <h3 class="text-2xl font-black mb-4">SOCIAL MEDIA MINING</h3>
+                    <p class="text-slate-400 mb-6">Share our platform on social media and earn <span class="text-green-400 font-bold">100 PTS</span> per verified post!</p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <button onclick="shareAndEarn('facebook')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl transition">
+                            <i class="fa-brands fa-facebook text-2xl mb-2 block"></i>
+                            Facebook<br><span class="text-xs">+100 PTS</span>
                         </button>
-                        <button onclick="startQuiz('ha')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
-                            <span class="text-3xl mb-2 block">🇳🇬</span>
-                            <span class="text-white">Hausa</span>
+                        <button onclick="shareAndEarn('twitter')" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-2xl transition">
+                            <i class="fa-brands fa-twitter text-2xl mb-2 block"></i>
+                            Twitter<br><span class="text-xs">+100 PTS</span>
                         </button>
-                        <button onclick="startQuiz('ar')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
-                            <span class="text-3xl mb-2 block">🇸🇦</span>
-                            <span class="text-white">العربية</span>
+                        <button onclick="shareAndEarn('whatsapp')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-2xl transition">
+                            <i class="fa-brands fa-whatsapp text-2xl mb-2 block"></i>
+                            WhatsApp<br><span class="text-xs">+100 PTS</span>
                         </button>
-                        <button onclick="startQuiz('yo')" class="bg-slate-800/50 hover:bg-emerald-500/20 border border-slate-700 hover:border-emerald-500 p-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105">
-                            <span class="text-3xl mb-2 block">🇳🇬</span>
-                            <span class="text-white">Yorùbá</span>
+                        <button onclick="shareAndEarn('telegram')" class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition">
+                            <i class="fa-brands fa-telegram text-2xl mb-2 block"></i>
+                            Telegram<br><span class="text-xs">+100 PTS</span>
                         </button>
                     </div>
-                    <button onclick="closeBox()" class="mt-6 text-slate-500 hover:text-slate-300 text-sm transition-colors duration-300">
+                    
+                    <button onclick="closeInteractiveBox()" class="text-slate-500 hover:text-slate-300 text-sm">
                         <i class="fa-solid fa-times mr-2"></i>Close
                     </button>
                 </div>
-
-                <!-- Quiz Content -->
-                <div id="quiz-content" class="hidden"></div>
-                
-                <!-- Ads Content -->
-                <div id="ads-content" class="hidden">
-                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-700">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-ad text-amber-400"></i>
-                            <span class="text-sm font-bold text-amber-400">Premium Ad</span>
-                        </div>
-                        <span id="ad-timer" class="bg-amber-500/20 text-amber-400 px-4 py-2 rounded-full font-black text-sm">
-                            <i class="fa-solid fa-clock mr-1"></i>10s
-                        </span>
-                    </div>
-                    
-                    <div class="bg-slate-800/30 rounded-2xl p-8 min-h-[300px] flex items-center justify-center border border-slate-700">
-                        <div id="ad-placement-zone" class="w-full"></div>
-                        <div id="ad-fallback-placeholder" class="text-center">
-                            <i class="fa-solid fa-spinner animate-spin text-amber-400 text-4xl mb-4"></i>
-                            <p class="text-slate-400">Loading premium content...</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Success State -->
-                <div id="ad-success-content" class="hidden text-center py-8">
-                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl animate-bounce">
-                        <i class="fa-solid fa-check text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-black text-emerald-400 mb-2">Reward Earned!</h3>
-                    <p class="text-slate-300 mb-6">+20 Points added to your balance</p>
-                    <button onclick="closeBox()" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold px-8 py-3 rounded-2xl transition-all duration-300 transform hover:scale-105">
-                        Continue Earning
-                    </button>
-                </div>
-            </div>
-
-            <!-- Bottom Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Leaderboard -->
-                <div class="glass-panel rounded-3xl p-6 shadow-2xl">
-                    <h3 class="text-sm font-black text-white mb-4 flex items-center">
-                        <i class="fa-solid fa-trophy text-amber-400 mr-2"></i>Top Earners
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-amber-400">🥇</span>
-                                <span class="text-sm text-white">Alamin Specialist</span>
-                            </div>
-                            <span class="text-sm font-bold text-amber-400">4,850 PTS</span>
-                        </div>
-                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-slate-400">🥈</span>
-                                <span class="text-sm text-slate-300">Ibrahim Kano</span>
-                            </div>
-                            <span class="text-sm font-bold text-slate-300">3,120 PTS</span>
-                        </div>
-                        <div class="flex justify-between items-center bg-slate-800/30 p-3 rounded-xl border border-slate-700">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-amber-700">🥉</span>
-                                <span class="text-sm text-slate-300">Rilwanu Tech</span>
-                            </div>
-                            <span class="text-sm font-bold text-slate-300">2,900 PTS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Withdrawal Section -->
-                <div class="lg:col-span-2 glass-panel rounded-3xl p-8 shadow-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
-                    <div class="flex items-center space-x-3 mb-6">
-                        <div class="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center">
-                            <i class="fa-solid fa-building-columns text-indigo-400 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-black text-white">Withdrawal Portal</h3>
-                            <p class="text-xs text-slate-400">Minimum: 1000 PTS = ₦1,000</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="text-xs font-semibold text-slate-400 block mb-2">Select Bank</label>
-                            <select id="withdraw-bank" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
-                                <option value="">Choose bank...</option>
-                                <option value="OPay">OPay</option>
-                                <option value="PalmPay">PalmPay</option>
-                                <option value="Moniepoint">Moniepoint</option>
-                                <option value="Kuda Bank">Kuda Bank</option>
-                                <option value="Access Bank">Access Bank</option>
-                                <option value="GTBank">GTBank</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-xs font-semibold text-slate-400 block mb-2">Account Number</label>
-                            <input type="text" id="withdraw-account" placeholder="10-digit NUBAN" maxlength="10"
-                                   class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label class="text-xs font-semibold text-slate-400 block mb-2">Amount (PTS)</label>
-                        <input type="number" id="withdraw-amount" placeholder="Minimum: 1000" min="1000"
-                               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all duration-300">
-                    </div>
-                    
-                    <button onclick="processWithdrawal()" 
-                            class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-xl btn-hover-effect neon-glow-indigo">
-                        <i class="fa-solid fa-paper-plane mr-2"></i>Process Withdrawal
-                    </button>
-                    
-                    <p class="text-[10px] text-slate-500 mt-4 text-center">
-                        <i class="fa-solid fa-shield-halved mr-1"></i>
-                        Secured by end-to-end encryption. Processing time: 24-48 hours.
-                    </p>
-                </div>
-            </div>
-        </main>
-        
-        <!-- Footer -->
-        <footer class="border-t border-slate-800 mt-12">
-            <div class="max-w-6xl mx-auto px-6 py-6 text-center">
-                <p class="text-xs text-slate-500">
-                    &copy; 2024 Alamin Special Earn Platform. All rights reserved. 
-                    <span class="text-emerald-400">Version 2.0</span>
-                </p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Hidden Ad Decoy -->
-    <div class="ad-banner-check adsbox ads-holder" style="position:absolute; left:-9999px; width:1px; height:1px;" aria-hidden="true"></div>
-
-    <script>
-        // ==================== SECURITY & CONFIGURATION ====================
-        const CONFIG = {
-            SALT_KEY: "GLOBAL_SECURE_ALAMIN_SUPER_991823",
-            MIN_WITHDRAWAL: 1000,
-            DAILY_BONUS: 50,
-            QUIZ_REWARD: 10,
-            AD_REWARD: 20,
-            AD_DURATION: 10,
-            COOLDOWN_MS: 1000,
-            OTP_LENGTH: 6,
-            STORAGE_PREFIX: 'alamin_v2_'
-        };
-
-        // EmailJS Configuration
-        const EMAILJS_CONFIG = {
-            PUBLIC_KEY: "ujdxkAckzXLPYsTkH",
-            SERVICE_ID: "service_adq70ak",
-            TEMPLATE_ID: "template_74pioox"
-        };
-
-        // ==================== STATE MANAGEMENT ====================
-        let appState = {
-            totalPoints: 0,
-            generatedOTP: null,
-            lastActionTime: 0,
-            currentQuizLanguage: 'en',
-            currentQuestion: null,
-            isAdBlocked: false
-        };
-
-        // ==================== DOM ELEMENTS ====================
-        const DOM = {
-            pointsDisplay: document.getElementById('points-display'),
-            interactiveBox: document.getElementById('interactive-box'),
-            quizLangSelector: document.getElementById('quiz-lang-selector'),
-            quizContent: document.getElementById('quiz-content'),
-            adsContent: document.getElementById('ads-content'),
-            adSuccessContent: document.getElementById('ad-success-content'),
-            adZone: document.getElementById('ad-placement-zone'),
-            adFallback: document.getElementById('ad-fallback-placeholder'),
-            progressBar: document.getElementById('progress-bar'),
-            progressText: document.getElementById('progress-text'),
-            dailyBtn: document.getElementById('daily-btn'),
-            userWelcome: document.getElementById('user-welcome')
-        };
-
-        // ==================== ENHANCED QUIZ DATABASE ====================
-        const quizMasterDatabase = {
-            en: [
-                { 
-                    fanni: "Cybersecurity", 
-                    q: "What does the 'S' stand for in HTTPS?", 
-                    options: ["Standard", "Secure", "Speed", "Science"], 
-                    ans: 1,
-                    explanation: "HTTPS stands for HyperText Transfer Protocol Secure"
-                },
-                { 
-                    fanni: "Web Development", 
-                    q: "Which language runs natively in browsers?", 
-                    options: ["Python", "C++", "JavaScript", "Java"], 
-                    ans: 2,
-                    explanation: "JavaScript is the only language that runs directly in web browsers"
-                },
-                { 
-                    fanni: "Technology", 
-                    q: "What year was the first iPhone released?", 
-                    options: ["2005", "2006", "2007", "2008"], 
-                    ans: 2,
-                    explanation: "The first iPhone was released on June 29, 2007"
-                },
-                { 
-                    fanni: "Science", 
-                    q: "What is the chemical symbol for gold?", 
-                    options: ["Ag", "Au", "Fe", "Cu"], 
-                    ans: 1,
-                    explanation: "Au comes from the Latin word 'aurum' meaning gold"
-                }
-            ],
-            ha: [
-                { 
-                    fanni: "Tarihin Najeriya", 
-                    q: "A wace shekara aka samar da tsarin mulkin kasarnan na yanzu?", 
-                    options: ["1960", "1999", "2015", "1963"], 
-                    ans: 1,
-                    explanation: "An dawo da mulkin dimokaradiyya a Najeriya a shekarar 1999"
-                },
-                { 
-                    fanni: "Harshe", 
-                    q: "Wane harafi ne ba ya cikin haruffan boko na Hausa?", 
-                    options: ["C", "P", "X", "Q"], 
-                    ans: 2,
-                    explanation: "Harafin 'X' ba ya cikin haruffan Hausa na asali"
-                }
-            ],
-            ar: [
-                { 
-                    fanni: "لغة عربية", 
-                    q: "ما هو الاسم الآخر للمدينة المنورة؟", 
-                    options: ["طيبة", "مكة", "القدس", "بغداد"], 
-                    ans: 0,
-                    explanation: "طيبة هو أحد أسماء المدينة المنورة"
-                },
-                { 
-                    fanni: "ثقافة عامة", 
-                    q: "كم عدد سور القرآن الكريم؟", 
-                    options: ["١١٣", "١١٤", "١١٥", "١٢٠"], 
-                    ans: 1,
-                    explanation: "عدد سور القرآن الكريم 114 سورة"
-                }
-            ],
-            yo: [
-                { 
-                    fanni: "Àṣà Ìbílẹ̀", 
-                    q: "Kini orúkọ olú-ìlú ìpínlẹ̀ Ọ̀yọ́?", 
-                    options: ["Èkó", "Ìbàdàn", "Abẹ́òkúta", "Akúrẹ́"], 
-                    ans: 1,
-                    explanation: "Ìbàdàn ni olú-ìlú ìpínlẹ̀ Ọ̀yọ́"
-                },
-                { 
-                    fanni: "Èdè", 
-                    q: "Kini ìtumọ̀ ọ̀rọ̀ náà 'Ọmọ' ní èdè gẹ̀ẹ́sì?", 
-                    options: ["Father", "Mother", "Child", "Friend"], 
-                    ans: 2,
-                    explanation: "'Ọmọ' túmọ̀ sí 'Child' ní èdè Gẹ̀ẹ́sì"
-                }
-            ]
-        };
-
-        // ==================== ENHANCED STORAGE MANAGEMENT ====================
-        function getSecurePoints() {
-            try {
-                const raw = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}pts`);
-                const hash = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}hash`);
-                
-                if (!raw || !hash) return 0;
-                
-                const computedHash = btoa(raw + CONFIG.SALT_KEY);
-                if (computedHash !== hash) {
-                    console.warn('Points data tampered with, resetting to 0');
-                    setSecurePoints(0);
-                    return 0;
-                }
-                
-                return parseInt(atob(raw));
-            } catch (error) {
-                console.error('Error reading points:', error);
-                return 0;
-            }
+            `;
+            
+            box.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function setSecurePoints(value) {
-            try {
-                const encodedValue = btoa(value.toString());
-                const computedHash = btoa(encodedValue + CONFIG.SALT_KEY);
-                
-                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}pts`, encodedValue);
-                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}hash`, computedHash);
-                
-                appState.totalPoints = value;
-                updateUI();
-            } catch (error) {
-                console.error('Error saving points:', error);
-            }
-        }
-
-        // ==================== ENHANCED UI UPDATES ====================
-        function updateUI() {
-            // Update points display with animation
-            DOM.pointsDisplay.textContent = appState.totalPoints;
-            
-            // Update progress bar
-            const percent = Math.min((appState.totalPoints / CONFIG.MIN_WITHDRAWAL) * 100, 100);
-            DOM.progressBar.style.width = `${percent}%`;
-            DOM.progressText.textContent = `${Math.floor(percent)}% (${appState.totalPoints}/${CONFIG.MIN_WITHDRAWAL} PTS)`;
-            
-            // Update daily button state
-            const lastClaim = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}daily_claim`);
-            const todayStr = new Date().toDateString();
-            
-            if (lastClaim === todayStr) {
-                DOM.dailyBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Claimed Today';
-                DOM.dailyBtn.disabled = true;
-                DOM.dailyBtn.className = "w-full bg-slate-800 text-slate-500 font-bold text-sm py-3.5 rounded-2xl cursor-not-allowed";
-            }
-        }
-
-        // ==================== ENHANCED AD BLOCKER DETECTION ====================
-        function detectAdBlocker() {
-            const decoy = document.querySelector('.ad-banner-check');
-            
-            if (!decoy) return false;
-            
-            const isBlocked = decoy.offsetHeight === 0 || 
-                            window.getComputedStyle(decoy).display === 'none' ||
-                            decoy.offsetParent === null;
-            
-            if (isBlocked) {
-                document.getElementById('adblock-overlay').classList.remove('hidden');
-                appState.isAdBlocked = true;
-                return true;
-            }
-            
-            return false;
-        }
-
-        function retryWithoutAdBlock() {
-            window.location.reload();
-        }
-
-        function dismissAdBlockWarning() {
-            document.getElementById('adblock-overlay').classList.add('hidden');
-            appState.isAdBlocked = true;
-            // Allow limited functionality
-        }
-
-        // ==================== ENHANCED LOGIN SYSTEM ====================
-        function checkLoginStatus() {
-            const isLoggedIn = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}logged_in`) === 'true';
-            const userEmail = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}email`);
-            
-            if (isLoggedIn && userEmail) {
-                document.getElementById('login-overlay').classList.add('hidden');
-                document.getElementById('main-app').classList.remove('hidden');
-                DOM.userWelcome.textContent = `Welcome, ${userEmail}! Complete tasks to earn points.`;
-            } else {
-                document.getElementById('login-overlay').classList.remove('hidden');
-                document.getElementById('main-app').classList.add('hidden');
-            }
-        }
-
-        function sendOTP() {
-            const emailInput = document.getElementById('user-email').value.trim();
-            const btnText = document.getElementById('btn-text');
-            const otpBtn = document.getElementById('otp-btn');
-            
-            // Enhanced email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailInput)) {
-                showNotification('Please enter a valid email address!', 'error');
-                return;
-            }
-            
-            // Generate 6-digit OTP
-            appState.generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-            
-            // Update UI
-            btnText.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i>Sending...';
-            otpBtn.disabled = true;
-            
-            const templateParams = {
-                to_email: emailInput,
-                to_name: emailInput.split('@')[0],
-                otp_code: appState.generatedOTP,
-                message: `Your verification code is: ${appState.generatedOTP}`
+        function shareAndEarn(platform) {
+            const shareUrls = {
+                facebook: 'https://www.facebook.com/sharer/sharer.php?u=',
+                twitter: 'https://twitter.com/intent/tweet?text=',
+                whatsapp: 'https://wa.me/?text=',
+                telegram: 'https://t.me/share/url?url='
             };
             
-            emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams)
-                .then(() => {
-                    showNotification('Verification code sent! Check your email.', 'success');
-                    document.getElementById('email-step').classList.add('hidden');
-                    document.getElementById('otp-step').classList.remove('hidden');
-                    document.getElementById('otp-hint').innerHTML = 
-                        `<i class="fa-solid fa-envelope mr-2"></i>Code sent to: ${emailInput}`;
-                })
-                .catch((error) => {
-                    console.error('EmailJS Error:', error);
-                    showNotification('Failed to send code. Please try again.', 'error');
-                    btnText.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i>Send Verification Code';
-                    otpBtn.disabled = false;
-                });
+            const message = encodeURIComponent(
+                '🚀 Join me on Alamin Special Earn - The WORLD EXCLUSIVE earning platform! Earn real money by completing simple tasks. Sign up now: ' + 
+                generateReferralLink()
+            );
+            
+            window.open(shareUrls[platform] + message, '_blank');
+            
+            // Instant verification simulation
+            setTimeout(() => {
+                addPoints(WORLD_EXCLUSIVE_CONFIG.SOCIAL_REWARDS, 'Social Share');
+                showExclusiveNotification(`🎉 +${WORLD_EXCLUSIVE_CONFIG.SOCIAL_REWARDS} PTS from ${platform} share!`, 'success');
+                launchConfetti();
+            }, 2000);
         }
 
-        function verifyOTP() {
-            const userOTP = document.getElementById('otp-input').value.trim();
+        // ==================== QUIZ MINING ====================
+        function showQuizMining() {
+            const box = document.getElementById('interactive-box');
+            box.classList.remove('hidden');
             
-            if (!userOTP || userOTP.length !== 6) {
-                showNotification('Please enter the 6-digit code', 'error');
-                return;
-            }
+            box.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-6">🤖</div>
+                    <h3 class="text-2xl font-black mb-4">AI QUIZ MINING</h3>
+                    <p class="text-slate-400 mb-8">Choose difficulty level. Higher difficulty = Higher rewards!</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <button onclick="startAIQuiz('easy')" class="bg-gradient-to-br from-green-500 to-emerald-500 hover:scale-105 text-white font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">🌟</div>
+                            EASY<br><span class="text-xs">+10 PTS</span>
+                        </button>
+                        <button onclick="startAIQuiz('medium')" class="bg-gradient-to-br from-yellow-500 to-amber-500 hover:scale-105 text-black font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">⚡</div>
+                            MEDIUM<br><span class="text-xs">+25 PTS</span>
+                        </button>
+                        <button onclick="startAIQuiz('hard')" class="bg-gradient-to-br from-red-500 to-pink-500 hover:scale-105 text-white font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">💎</div>
+                            HARD<br><span class="text-xs">+50 PTS</span>
+                        </button>
+                    </div>
+                </div>
+            `;
             
-            if (userOTP === appState.generatedOTP) {
-                const emailInput = document.getElementById('user-email').value.trim();
-                
-                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}logged_in`, 'true');
-                localStorage.setItem(`${CONFIG.STORAGE_PREFIX}email`, emailInput);
-                
-                showNotification('Login successful! Welcome to Alamin Special Earn.', 'success');
-                checkLoginStatus();
-            } else {
-                showNotification('Invalid verification code. Please try again.', 'error');
-                document.getElementById('otp-input').value = '';
-            }
+            box.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function goBackToEmail() {
-            document.getElementById('otp-step').classList.add('hidden');
-            document.getElementById('email-step').classList.remove('hidden');
-            document.getElementById('otp-input').value = '';
-        }
-
-        function logOut() {
-            localStorage.removeItem(`${CONFIG.STORAGE_PREFIX}logged_in`);
-            localStorage.removeItem(`${CONFIG.STORAGE_PREFIX}email`);
-            checkLoginStatus();
-        }
-
-        // ==================== ENHANCED DAILY BONUS ====================
-        function claimDailyBonus() {
-            if (detectAdBlocker()) return;
+        function startAIQuiz(difficulty) {
+            const box = document.getElementById('interactive-box');
             
-            const lastClaim = localStorage.getItem(`${CONFIG.STORAGE_PREFIX}daily_claim`);
-            const todayStr = new Date().toDateString();
+            // Simulate AI-generated questions
+            const questions = {
+                easy: [
+                    { q: "What is 2 + 2?", options: ["3", "4", "5", "6"], correct: 1 },
+                    { q: "Capital of France?", options: ["London", "Berlin", "Paris", "Madrid"], correct: 2 }
+                ],
+                medium: [
+                    { q: "What is the square root of 144?", options: ["10", "11", "12", "13"], correct: 2 },
+                    { q: "HTML stands for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "None"], correct: 0 }
+                ],
+                hard: [
+                    { q: "What is the derivative of sin(x)?", options: ["cos(x)", "-cos(x)", "tan(x)", "-sin(x)"], correct: 0 },
+                    { q: "Quantum entanglement is?", options: ["Classical physics", "Quantum phenomenon", "Chemical reaction", "Biological process"], correct: 1 }
+                ]
+            };
             
-            if (lastClaim === todayStr) {
-                showNotification('You already claimed today\'s bonus! Come back tomorrow.', 'warning');
-                return;
-            }
+            const question = questions[difficulty][Math.floor(Math.random() * questions[difficulty].length)];
+            const rewards = { easy: 10, medium: 25, hard: 50 };
             
-            localStorage.setItem(`${CONFIG.STORAGE_PREFIX}daily_claim`, todayStr);
-            setSecurePoints(appState.totalPoints + CONFIG.DAILY_BONUS);
-            
-            showNotification(`Daily bonus claimed! +${CONFIG.DAILY_BONUS} PTS added.`, 'success');
-            
-            // Add celebration effect
-            celebrateReward();
-        }
-
-        // ==================== ENHANCED QUIZ SYSTEM ====================
-        function showLanguageSelection() {
-            if (detectAdBlocker()) return;
-            
-            DOM.interactiveBox.classList.remove('hidden');
-            DOM.quizLangSelector.classList.remove('hidden');
-            DOM.quizContent.classList.add('hidden');
-            DOM.adsContent.classList.add('hidden');
-            DOM.adSuccessContent.classList.add('hidden');
-            
-            // Scroll to interactive box
-            DOM.interactiveBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function startQuiz(lang) {
-            appState.currentQuizLanguage = lang;
-            DOM.quizLangSelector.classList.add('hidden');
-            DOM.quizContent.classList.remove('hidden');
-            
-            const bank = quizMasterDatabase[lang];
-            const randomIndex = Math.floor(Math.random() * bank.length);
-            appState.currentQuestion = bank[randomIndex];
-            
-            const letters = ['A', 'B', 'C', 'D'];
-            
-            DOM.quizContent.innerHTML = `
-                <div class="space-y-6">
-                    <div class="flex justify-between items-center pb-4 border-b border-slate-700">
-                        <span class="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-xs font-bold uppercase">
-                            <i class="fa-solid fa-tag mr-2"></i>${appState.currentQuestion.fanni}
+            box.innerHTML = `
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="bg-purple-500/20 text-purple-400 px-4 py-2 rounded-full text-xs font-bold uppercase">
+                            ${difficulty.toUpperCase()} • ${rewards[difficulty]} PTS
                         </span>
-                        <button onclick="closeBox()" class="text-slate-400 hover:text-white transition-colors">
+                        <button onclick="closeInteractiveBox()" class="text-slate-400 hover:text-white">
                             <i class="fa-solid fa-times text-lg"></i>
                         </button>
                     </div>
                     
-                    <p class="text-lg font-semibold text-white">${appState.currentQuestion.q}</p>
+                    <p class="text-lg font-semibold mb-6">${question.q}</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${appState.currentQuestion.options.map((opt, i) => `
-                            <button onclick="checkAnswer(${i})" 
-                                    class="w-full text-left bg-slate-800/50 hover:bg-emerald-500/20 p-5 rounded-2xl transition-all duration-300 border border-slate-700 hover:border-emerald-500 transform hover:scale-105">
-                                <span class="text-emerald-400 font-bold mr-3">${letters[i]})</span>
-                                <span class="text-white">${opt}</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        ${question.options.map((opt, i) => `
+                            <button onclick="checkAIAnswer(${i}, ${question.correct}, ${rewards[difficulty]}, '${difficulty}')"
+                                    class="w-full text-left bg-slate-800/50 hover:bg-purple-500/20 p-4 rounded-xl border border-slate-700 hover:border-purple-500 transition">
+                                ${String.fromCharCode(65 + i)}) ${opt}
                             </button>
                         `).join('')}
                     </div>
@@ -856,235 +908,329 @@
             `;
         }
 
-        function checkAnswer(choiceIndex) {
-            const now = Date.now();
-            if (now - appState.lastActionTime < CONFIG.COOLDOWN_MS) return;
-            appState.lastActionTime = now;
-            
-            if (choiceIndex === appState.currentQuestion.ans) {
-                setSecurePoints(appState.totalPoints + CONFIG.QUIZ_REWARD);
-                
-                DOM.quizContent.innerHTML = `
-                    <div class="text-center py-8">
-                        <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl animate-bounce">
-                            <i class="fa-solid fa-check text-white"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-emerald-400 mb-2">Correct!</h3>
-                        <p class="text-slate-300 mb-2">+${CONFIG.QUIZ_REWARD} Points Earned</p>
-                        <p class="text-xs text-slate-500 mb-6">${appState.currentQuestion.explanation}</p>
-                        <div class="flex justify-center space-x-4">
-                            <button onclick="startQuiz('${appState.currentQuizLanguage}')" 
-                                    class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold px-6 py-3 rounded-2xl transition-all duration-300 transform hover:scale-105">
-                                <i class="fa-solid fa-forward mr-2"></i>Next Question
-                            </button>
-                            <button onclick="closeBox()" 
-                                    class="bg-slate-800 text-slate-400 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:border-slate-500">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                celebrateReward();
+        function checkAIAnswer(chosen, correct, reward, difficulty) {
+            if (chosen === correct) {
+                addPoints(reward, `AI Quiz (${difficulty})`);
+                showExclusiveNotification(`🎉 Correct! +${reward} PTS`, 'success');
+                launchConfetti();
+                startAIQuiz(difficulty);
             } else {
-                const correctAnswer = appState.currentQuestion.options[appState.currentQuestion.ans];
-                
-                DOM.quizContent.innerHTML = `
-                    <div class="text-center py-8">
-                        <div class="w-20 h-20 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl">
-                            <i class="fa-solid fa-times text-white"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-rose-400 mb-2">Incorrect</h3>
-                        <p class="text-slate-300 mb-2">The correct answer was: <span class="text-emerald-400 font-bold">${correctAnswer}</span></p>
-                        <p class="text-xs text-slate-500 mb-6">${appState.currentQuestion.explanation}</p>
-                        <div class="flex justify-center space-x-4">
-                            <button onclick="startQuiz('${appState.currentQuizLanguage}')" 
-                                    class="bg-slate-800 text-white font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:bg-slate-700">
-                                <i class="fa-solid fa-rotate-right mr-2"></i>Try Again
-                            </button>
-                            <button onclick="closeBox()" 
-                                    class="bg-slate-800 text-slate-400 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition-all duration-300 hover:border-slate-500">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                `;
+                showExclusiveNotification('❌ Wrong answer! Try again.', 'error');
+                startAIQuiz(difficulty);
             }
         }
 
-        // ==================== ENHANCED AD SYSTEM ====================
-        function watchAd() {
-            if (detectAdBlocker()) return;
+        // ==================== ADS MINING ====================
+        function showAdsMining() {
+            const box = document.getElementById('interactive-box');
+            box.classList.remove('hidden');
             
-            DOM.interactiveBox.classList.remove('hidden');
-            DOM.adsContent.classList.remove('hidden');
-            DOM.quizLangSelector.classList.add('hidden');
-            DOM.quizContent.classList.add('hidden');
-            DOM.adSuccessContent.classList.add('hidden');
+            box.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-6">📺</div>
+                    <h3 class="text-2xl font-black mb-4">PREMIUM AD VIEWING</h3>
+                    <p class="text-slate-400 mb-8">Watch premium ads and earn big rewards!</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <button onclick="watchPremiumAd(1)" class="bg-gradient-to-br from-blue-500 to-cyan-500 hover:scale-105 text-white font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">🥉</div>
+                            TIER 1<br><span class="text-xs">10s • +20 PTS</span>
+                        </button>
+                        <button onclick="watchPremiumAd(2)" class="bg-gradient-to-br from-purple-500 to-pink-500 hover:scale-105 text-white font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">🥈</div>
+                            TIER 2<br><span class="text-xs">20s • +50 PTS</span>
+                        </button>
+                        <button onclick="watchPremiumAd(3)" class="bg-gradient-to-br from-yellow-500 to-amber-500 hover:scale-105 text-black font-bold p-6 rounded-2xl transition">
+                            <div class="text-2xl mb-2">🥇</div>
+                            TIER 3<br><span class="text-xs">30s • +100 PTS</span>
+                        </button>
+                    </div>
+                </div>
+            `;
             
-            // Reset ad zone
-            DOM.adZone.innerHTML = '';
-            DOM.adFallback.style.display = 'flex';
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function watchPremiumAd(tier) {
+            const rewards = { 1: 20, 2: 50, 3: 100 };
+            const durations = { 1: 10, 2: 20, 3: 30 };
             
-            // Load ad after delay
-            setTimeout(() => {
-                DOM.adZone.innerHTML = `
-                    <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"><\/script>
-                    <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
-                `;
-                DOM.adFallback.style.display = 'none';
-            }, 1500);
+            const box = document.getElementById('interactive-box');
+            box.innerHTML = `
+                <div class="text-center">
+                    <div class="animate-spin text-4xl mb-4">📺</div>
+                    <h4 class="text-xl font-bold mb-4">Playing Premium Ad...</h4>
+                    <div class="w-full bg-slate-800 rounded-full h-4 mb-4">
+                        <div id="ad-progress" class="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="countdown-text" class="text-slate-400">${durations[tier]} seconds remaining</p>
+                </div>
+            `;
             
-            // Start countdown
-            let timeLeft = CONFIG.AD_DURATION;
-            const timerDisplay = document.getElementById('ad-timer');
+            let timeLeft = durations[tier];
+            const progressBar = document.getElementById('ad-progress');
+            const countdownText = document.getElementById('countdown-text');
             
-            const countdown = setInterval(() => {
+            const timer = setInterval(() => {
                 timeLeft--;
-                timerDisplay.innerHTML = `<i class="fa-solid fa-clock mr-1"></i>${timeLeft}s`;
+                const progress = ((durations[tier] - timeLeft) / durations[tier]) * 100;
+                progressBar.style.width = progress + '%';
+                countdownText.textContent = timeLeft + ' seconds remaining';
                 
                 if (timeLeft <= 0) {
-                    clearInterval(countdown);
-                    setSecurePoints(appState.totalPoints + CONFIG.AD_REWARD);
-                    
-                    DOM.adsContent.classList.add('hidden');
-                    DOM.adSuccessContent.classList.remove('hidden');
-                    
-                    celebrateReward();
+                    clearInterval(timer);
+                    addPoints(rewards[tier], `Premium Ad Tier ${tier}`);
+                    showExclusiveNotification(`🎉 Ad completed! +${rewards[tier]} PTS`, 'success');
+                    launchConfetti();
+                    showAdsMining();
                 }
             }, 1000);
-            
-            DOM.interactiveBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // ==================== ENHANCED WITHDRAWAL SYSTEM ====================
+        // ==================== POINTS MANAGEMENT ====================
+        function addPoints(amount, source) {
+            worldState.totalPoints += amount;
+            worldState.totalEarned += amount;
+            
+            // Update multiplier
+            if (worldState.totalPoints > 5000) worldState.multiplierLevel = 3;
+            else if (worldState.totalPoints > 1000) worldState.multiplierLevel = 2;
+            
+            // Apply multiplier
+            const bonusPoints = Math.floor(amount * (worldState.multiplierLevel - 1));
+            worldState.totalPoints += bonusPoints;
+            
+            // Update storage
+            saveState();
+            
+            // Update UI
+            updateAllDisplays();
+            
+            // Update chart
+            updateChart('24h');
+            
+            // Track earnings
+            worldState.earningsHistory.push({
+                amount: amount + bonusPoints,
+                source: source,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function saveState() {
+            const state = btoa(JSON.stringify(worldState));
+            localStorage.setItem('alamin_world_state', state);
+        }
+
+        function loadState() {
+            const state = localStorage.getItem('alamin_world_state');
+            if (state) {
+                try {
+                    worldState = JSON.parse(atob(state));
+                } catch(e) {
+                    console.error('Error loading state');
+                }
+            }
+        }
+
+        function updateAllDisplays() {
+            document.getElementById('points-display').textContent = worldState.totalPoints;
+            document.getElementById('total-earned').textContent = worldState.totalEarned + ' PTS';
+            document.getElementById('referral-count').textContent = worldState.referralCount;
+            document.getElementById('multiplier-level').textContent = worldState.multiplierLevel + 'x';
+            document.getElementById('daily-streak').textContent = worldState.dailyStreak + ' Days';
+            
+            updateCurrencyConversion();
+        }
+
+        // ==================== EXCLUSIVE NOTIFICATIONS ====================
+        function showExclusiveNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'bg-gradient-to-r from-green-500 to-emerald-500',
+                error: 'bg-gradient-to-r from-red-500 to-pink-500',
+                warning: 'bg-gradient-to-r from-yellow-500 to-amber-500',
+                info: 'bg-gradient-to-r from-purple-500 to-pink-500'
+            };
+            
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl z-50 font-bold`;
+            notification.innerHTML = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.transition = 'all 0.5s ease';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // ==================== CONFETTI CELEBRATION ====================
+        function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#667eea', '#764ba2', '#f6d365', '#fda085']
+            });
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 50,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }, 250);
+        }
+
+        // ==================== WITHDRAWAL SYSTEM ====================
         function processWithdrawal() {
             const bank = document.getElementById('withdraw-bank').value;
-            const account = document.getElementById('withdraw-account').value.trim();
+            const account = document.getElementById('withdraw-account').value;
             const amount = parseInt(document.getElementById('withdraw-amount').value);
+            const currency = document.getElementById('currency-select').value;
             
-            // Validation
-            if (!bank) {
-                showNotification('Please select a bank', 'error');
+            if (!bank || !account || !amount) {
+                showExclusiveNotification('⚠️ Please fill all fields', 'warning');
                 return;
             }
             
-            if (!account || account.length !== 10 || !/^\d+$/.test(account)) {
-                showNotification('Please enter a valid 10-digit account number', 'error');
+            if (amount < WORLD_EXCLUSIVE_CONFIG.MIN_WITHDRAWAL) {
+                showExclusiveNotification(`⚠️ Minimum withdrawal: ${WORLD_EXCLUSIVE_CONFIG.MIN_WITHDRAWAL} PTS`, 'warning');
                 return;
             }
             
-            if (!amount || amount < CONFIG.MIN_WITHDRAWAL) {
-                showNotification(`Minimum withdrawal is ${CONFIG.MIN_WITHDRAWAL} PTS`, 'error');
+            if (amount > worldState.totalPoints) {
+                showExclusiveNotification('❌ Insufficient balance!', 'error');
                 return;
             }
             
-            if (amount > appState.totalPoints) {
-                showNotification('Insufficient balance!', 'error');
-                return;
-            }
+            const converted = (amount * WORLD_EXCLUSIVE_CONFIG.CURRENCY_RATES[currency]).toFixed(2);
+            const symbols = { NGN: '₦', USD: '$', EUR: '€', GBP: '£' };
             
-            // Process withdrawal
-            const nairaAmount = amount; // 1 PTS = ₦1
-            
-            if (confirm(`Confirm withdrawal?\n\nBank: ${bank}\nAccount: ${account}\nAmount: ${amount} PTS (₦${nairaAmount})\n\nThis action cannot be undone.`)) {
-                setSecurePoints(appState.totalPoints - amount);
+            if (confirm(`Confirm Withdrawal?\n\nBank: ${bank}\nAccount: ${account}\nAmount: ${symbols[currency]}${converted} ${currency}\n\nProcessing: 1-24 hours`)) {
+                worldState.totalPoints -= amount;
+                saveState();
+                updateAllDisplays();
                 
-                showNotification(`Withdrawal of ₦${nairaAmount} to ${bank} (${account}) initiated! Processing within 24-48 hours.`, 'success');
+                showExclusiveNotification(`✅ Withdrawal of ${symbols[currency]}${converted} ${currency} initiated!`, 'success');
+                launchConfetti();
                 
-                // Clear form
                 document.getElementById('withdraw-account').value = '';
                 document.getElementById('withdraw-amount').value = '';
             }
         }
 
-        // ==================== UTILITY FUNCTIONS ====================
-        function closeBox() {
-            DOM.interactiveBox.classList.add('hidden');
-            DOM.adsContent.classList.add('hidden');
-            DOM.quizLangSelector.classList.add('hidden');
-            DOM.quizContent.classList.add('hidden');
-            DOM.adSuccessContent.classList.add('hidden');
-        }
-
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            const colors = {
-                success: 'bg-emerald-500',
-                error: 'bg-rose-500',
-                warning: 'bg-amber-500',
-                info: 'bg-blue-500'
-            };
+        // ==================== AUTH SYSTEM ====================
+        function sendOTP() {
+            const email = document.getElementById('user-email').value;
             
-            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl z-50 animate-slide-in`;
-            notification.innerHTML = `
-                <div class="flex items-center space-x-3">
-                    <i class="fa-solid fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}-circle text-xl"></i>
-                    <p class="text-sm font-semibold">${message}</p>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                notification.style.transition = 'all 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        function celebrateReward() {
-            // Simple celebration animation
-            const emojis = ['🎉', '✨', '💰', '🎊', '💎'];
-            const body = document.body;
-            
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const emoji = document.createElement('div');
-                    emoji.className = 'fixed pointer-events-none z-50 animate-float';
-                    emoji.style.left = `${Math.random() * 100}%`;
-                    emoji.style.top = `${Math.random() * 100}%`;
-                    emoji.style.fontSize = `${Math.random() * 30 + 20}px`;
-                    emoji.textContent = emojis[i];
-                    
-                    body.appendChild(emoji);
-                    
-                    setTimeout(() => emoji.remove(), 1000);
-                }, i * 100);
+            if (!email.includes('@')) {
+                showExclusiveNotification('⚠️ Please enter a valid email', 'warning');
+                return;
             }
+            
+            worldState.generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            worldState.userEmail = email;
+            
+            document.getElementById('email-step').classList.add('hidden');
+            document.getElementById('otp-step').classList.remove('hidden');
+            
+            showExclusiveNotification(`📧 OTP sent to ${email} (Demo: ${worldState.generatedOTP})`, 'info');
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById('otp-input').value;
+            
+            if (otp === worldState.generatedOTP) {
+                localStorage.setItem('alamin_logged_in', 'true');
+                localStorage.setItem('alamin_email', worldState.userEmail);
+                
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                
+                showExclusiveNotification('🎉 Welcome to WORLD EXCLUSIVE Platform!', 'success');
+                launchConfetti();
+                
+                updateAllDisplays();
+            } else {
+                showExclusiveNotification('❌ Invalid OTP!', 'error');
+            }
+        }
+
+        function logOut() {
+            localStorage.removeItem('alamin_logged_in');
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-overlay').classList.remove('hidden');
+        }
+
+        function closeInteractiveBox() {
+            document.getElementById('interactive-box').classList.add('hidden');
+        }
+
+        function dismissAdBlocker() {
+            document.getElementById('adblock-overlay').classList.add('hidden');
         }
 
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            // Initialize EmailJS
-            emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            // Initialize particles
+            initParticles();
             
-            // Load points
-            appState.totalPoints = getSecurePoints();
+            // Load state
+            loadState();
+            
+            // Check login
+            if (localStorage.getItem('alamin_logged_in') === 'true') {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+            }
+            
+            // Initialize chart
+            setTimeout(initEarningsChart, 500);
+            
+            // Update displays
+            updateAllDisplays();
+            
+            // Set referral link
+            document.getElementById('referral-link').textContent = generateReferralLink();
             
             // Check ad blocker
-            setTimeout(detectAdBlocker, 1500);
+            setTimeout(() => {
+                const decoy = document.querySelector('.ad-banner-check');
+                if (decoy && decoy.offsetHeight === 0) {
+                    document.getElementById('adblock-overlay').classList.remove('hidden');
+                }
+            }, 2000);
             
-            // Check login status
-            checkLoginStatus();
-            
-            // Update UI
-            updateUI();
-            
-            console.log('🚀 Alamin Special Earn Platform v2.0 Initialized');
+            console.log('💎 ALAMIN SPECIAL EARN - WORLD EXCLUSIVE EDITION');
+            console.log('🌍 The most advanced earning platform on Earth!');
+            console.log('🚀 Version:', WORLD_EXCLUSIVE_CONFIG.VERSION);
         });
 
-        // Prevent accidental navigation
-        window.addEventListener('beforeunload', (e) => {
-            if (DOM.adsContent && !DOM.adsContent.classList.contains('hidden')) {
-                e.preventDefault();
-                e.returnValue = 'You have an active ad. Are you sure you want to leave?';
-                return e.returnValue;
+        // Chart period buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('chart-btn')) {
+                document.querySelectorAll('.chart-btn').forEach(btn => {
+                    btn.classList.remove('bg-purple-500', 'text-white');
+                    btn.classList.add('bg-slate-800', 'text-slate-400');
+                });
+                e.target.classList.remove('bg-slate-800', 'text-slate-400');
+                e.target.classList.add('bg-purple-500', 'text-white');
+                updateChart(e.target.dataset.period);
             }
         });
+
+        // Update chart periodically
+        setInterval(() => updateChart('24h'), 30000);
     </script>
 </body>
 </html>
