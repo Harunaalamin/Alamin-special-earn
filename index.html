@@ -3,20 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Special Earn</title>
+    <title>Alamin Special Earn - Premium Edition</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome Widgets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- EMAILJS SDK -->
+    <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        .neon-glow-emerald { box-shadow: 0 0 15px rgba(52, 211, 153, 0.4); }
+        .neon-glow-amber { box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+        .animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
 </head>
-<body class="bg-slate-900 text-white font-sans min-h-screen overflow-x-hidden">
+<body class="bg-slate-950 text-white font-sans min-h-screen overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900">
+
+    <!-- AD-BLOCK DETECTOR OVERLAY -->
+    <div id="adblock-overlay" class="fixed inset-0 bg-slate-950/98 z-55 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-rose-500/40 w-full max-w-md rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-rose-500/10 text-rose-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+                <i class="fa-solid fa-hand"></i>
+            </div>
+            <h2 class="text-xl font-black text-rose-400 mb-2">An Gano Ad-Blocker!</h2>
+            <p class="text-slate-300 text-sm mb-6 leading-relaxed">Dan Allah kashe tsarin toshe talla (Ad-Blocker/Shields) na browser dinka sannan kayi Refresh shafin don ci gaba da tara maki.</p>
+            <button onclick="window.location.reload()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition shadow-lg">
+                Na Kashe, Sake Dubawa <i class="fa-solid fa-rotate-right ml-1"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- LOGIN SCREEN OVERLAY -->
     <div id="login-overlay" class="fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl text-center">
-            <h2 class="text-2xl font-black text-emerald-400 mb-2 tracking-wide">ALAMIN SPECIAL EARN</h2>
+            <div class="inline-block bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4 tracking-wider uppercase animate-pulse">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Secure Login System
+            </div>
+            <h2 class="text-3xl font-black text-emerald-400 mb-2 tracking-wide">ALAMIN SPECIAL</h2>
+            <h2 class="text-2xl font-black text-white mb-2 tracking-wide">EARN SYSTEM</h2>
             <p class="text-slate-400 text-xs mb-6">Shigar da Gmail dinka don samun lambar sirri (OTP)</p>
 
             <div id="email-step">
@@ -25,10 +48,10 @@
                     <div class="relative">
                         <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-500"></i>
                         <input type="email" id="user-email" placeholder="misali@gmail.com" 
-                               class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white">
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white transition">
                     </div>
                 </div>
-                <button id="otp-btn" onclick="sendOTP()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center">
+                <button id="otp-btn" onclick="sendOTP()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center shadow-lg">
                     <span id="btn-text">Aiko da OTP</span> <i class="fa-solid fa-paper-plane ml-2"></i>
                 </button>
             </div>
@@ -39,11 +62,11 @@
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-500"></i>
                         <input type="number" id="otp-input" placeholder="Saka lambobi 4" 
-                               class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white tracking-widest font-bold text-center">
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white tracking-widest font-bold text-center">
                     </div>
                     <p class="text-xs text-amber-400 mt-2 text-center" id="otp-hint"></p>
                 </div>
-                <button onclick="verifyOTP()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer">
+                <button onclick="verifyOTP()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer shadow-lg">
                     Tabbatar da Shiga <i class="fa-solid fa-circle-check ml-2"></i>
                 </button>
             </div>
@@ -53,127 +76,192 @@
     <!-- MAIN APP CONTENT -->
     <div id="main-app" class="hidden">
         <!-- Header -->
-        <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-40">
+        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
             <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-lg font-bold text-emerald-400 tracking-wide">
-                    <i class="fa-solid fa-wallet mr-2"></i>ALAMIN SPECIAL EARN
+                <h1 class="text-lg font-black text-emerald-400 tracking-wider flex items-center">
+                    <i class="fa-solid fa-wallet mr-2 animate-pulse text-emerald-400"></i>ALAMIN SPECIAL EARN
                 </h1>
                 <div class="flex items-center space-x-3">
-                    <div class="bg-slate-700 px-3 py-1.5 rounded-full flex items-center shadow-inner">
+                    <div class="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-full flex items-center shadow-inner">
                         <i class="fa-solid fa-coins text-amber-400 mr-1.5 text-sm"></i>
-                        <span id="points-display" class="font-bold text-amber-300 text-sm">0</span> <span class="text-[10px] ml-1 text-slate-300">PTS</span>
+                        <span id="points-display" class="font-black text-amber-400 text-sm">0</span> <span class="text-[10px] ml-1 text-slate-400 font-bold">PTS</span>
                     </div>
-                    <button onclick="logOut()" class="bg-rose-500/20 hover:bg-rose-500 text-rose-400 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket"></i> Fita
+                    <button onclick="logOut()" class="bg-rose-500/10 hover:bg-rose-500 border border-rose-500/20 hover:border-transparent text-rose-400 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-4xl mx-auto px-4 py-8">
-            <!-- Welcome Hero -->
-            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-6 mb-8 shadow-xl">
-                <h2 class="text-2xl font-black mb-2">Barka da Zuwa, Aboki! 👋</h2>
-                <p id="user-welcome" class="text-emerald-100 text-sm">Amsa tambayoyi cikin sauƙi ko ka kalli gajerun tallace-tallace (Ads).</p>
+        <main class="max-w-4xl mx-auto px-4 py-6">
+            <!-- Welcome Hero & Daily Check-In Split -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-center">
+                    <h2 class="text-xl font-black mb-1 text-slate-100 flex items-center">Barka da Zuwa! 👋</h2>
+                    <p id="user-welcome" class="text-slate-400 text-xs">Cikakken tsarin samun maki ta hanyar amsa tambayoyi da kallon tallace-tallace.</p>
+                    
+                    <!-- Progress Bar to 1000 PTS -->
+                    <div class="mt-4">
+                        <div class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
+                            <span>Ci Gaban Malami (Goal Progress)</span>
+                            <span id="progress-text">0% (0/1000)</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-2.5 p-0.5 border border-slate-800">
+                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Daily Reward Card -->
+                <div class="bg-slate-900 border border-amber-500/20 rounded-2xl p-5 shadow-xl text-center flex flex-col justify-between items-center">
+                    <div>
+                        <div class="text-amber-400 text-2xl mb-1"><i class="fa-solid fa-gift animate-bounce"></i></div>
+                        <h4 class="text-sm font-black text-slate-200">Kyautar Kullum</h4>
+                        <p class="text-[11px] text-slate-400 mt-1">Sami kyautar <span class="text-amber-400 font-bold">+50 PTS</span> kyauta kowace rana.</p>
+                    </div>
+                    <button id="daily-btn" onclick="claimDailyBonus()" class="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-xs py-2.5 rounded-xl transition neon-glow-amber">
+                        Karbi Kyauta
+                    </button>
+                </div>
             </div>
 
             <!-- Grid Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Quiz Card -->
-                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-emerald-500/30 transition duration-300">
                     <div>
                         <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
                             <i class="fa-solid fa-brain"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Sashen Tambayoyi (Quiz)</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Gwada iliminka a fannoni daban-daban na Tarihi, Addini, Hausa, Geography da Turanci. Maki +10!</p>
+                        <h3 class="text-lg font-black mb-1">Sashen Tambayoyi (Quiz)</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Gwada iliminka a fannoni daban-daban na Tarihi, Addini, Hausa, da Turanci. Maki +10!</p>
                     </div>
-                    <button onclick="startQuiz()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition">
+                    <button onclick="startQuiz()" class="w-full bg-slate-950 border border-emerald-500/30 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 font-bold py-3 rounded-xl transition neon-glow-emerald">
                         Fara Amsa Tambayoyi
                     </button>
                 </div>
 
                 <!-- Ads Card -->
-                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-amber-500/30 transition duration-300">
                     <div>
                         <div class="bg-amber-500/10 text-amber-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
                             <i class="fa-solid fa-rectangle-ad"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Kalli Talla (Watch Ads)</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Kalli tallace-tallace na zahiri daga manyan kamfanoni don samun kyautar maki +20!</p>
+                        <h3 class="text-lg font-black mb-1">Kalli Talla (Watch Ads)</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Kalli tallace-tallace na zahiri daga manyan kamfanoni don samun kyautar maki +20!</p>
                     </div>
-                    <button onclick="watchAd()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition">
+                    <button onclick="watchAd()" class="w-full bg-slate-950 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-bold py-3 rounded-xl transition neon-glow-amber">
                         Kalli Talla Yanzu
                     </button>
                 </div>
             </div>
 
             <!-- Interactive Area (Wurin Tambayoyi da Talla) -->
-            <div id="interactive-box" class="mt-8 bg-slate-800 border border-indigo-500/30 rounded-2xl p-6 hidden shadow-2xl mb-8">
+            <div id="interactive-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hidden shadow-2xl mb-6 relative">
                 <!-- Dynamic Content Inside -->
                 <div id="quiz-content" class="hidden"></div>
                 
-                <div id="ads-content" class="hidden text-center py-4">
-                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                <div id="ads-content" class="hidden text-center py-2">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
                         <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-rectangle-ad mr-1"></i> Sponsored Ad</span>
                         <span id="ad-timer" class="text-xs bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold">5s</span>
                     </div>
                     
-                    <!-- WURIN SAKA CODE NA ADSTERRA NA ZAHIRI -->
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 min-h-[250px] flex items-center justify-center text-center">
-                        <div class="w-full">
+                    <!-- WURIN SAKA CODE NA ADSTERRA -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-900 min-h-[250px] flex items-center justify-center text-center">
+                        <div class="w-full overflow-hidden flex justify-center items-center">
+                            <!-- Adsterra Native Banner Anchor -->
                             <script async="async" data-cfasync="false" src="https://pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js"></script>
                             <div id="container-2798cb95d48c52b9c5336facbcedece3"></div>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-400 mt-4">Karka rufe shafin nan har sai lokaci ya cika don samun maki.</p>
+                    <p class="text-xs text-slate-500 mt-4">Karka rufe ko ka fita daga shafin nan har sai lokaci ya kare.</p>
                 </div>
                 
                 <div id="ad-success-content" class="hidden text-center py-6">
-                    <h4 class="text-emerald-400 font-bold text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>An Kammala Kallo!</h4>
-                    <p class="text-slate-300 text-sm">An ƙara maka <span class="text-amber-400 font-bold">+20 Points</span>.</p>
-                    <button onclick="closeBox()" class="mt-4 bg-emerald-500 text-slate-900 font-bold text-xs px-4 py-2 rounded-lg">To</button>
+                    <h4 class="text-emerald-400 font-black text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>An Kammala Kallo!</h4>
+                    <p class="text-slate-300 text-sm">An tabbatar da tsaro, an kara maka <span class="text-amber-400 font-bold">+20 Points</span>.</p>
+                    <button onclick="closeBox()" class="mt-4 bg-emerald-500 text-slate-950 font-black text-xs px-5 py-2 rounded-lg shadow-md">Lafiya</button>
                 </div>
             </div>
 
-            <!-- WITHDRAWAL SECTION -->
-            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
-                <div class="flex items-center space-x-3 mb-4">
-                    <div class="bg-indigo-500/10 text-indigo-400 w-10 h-10 rounded-xl flex items-center justify-center text-lg">
-                        <i class="fa-solid fa-money-bill-transfer"></i>
+            <!-- LEADERBOARD & WITHDRAWAL SPLIT -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Leaderboard (Gasar Gwarzaye) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-black mb-3 text-slate-200 flex items-center">
+                            <i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Babban Teburin Gasa
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-300">1. Alamin Specialist ⭐</span>
+                                <span class="font-black text-amber-400">4,850 PTS</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-400">2. Ibrahim Kano</span>
+                                <span class="font-bold text-slate-300">3,120 PTS</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-400">3. Rilwanu Tech</span>
+                                <span class="font-bold text-slate-300">2,900 PTS</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-400">4. Fatima_Abba</span>
+                                <span class="font-bold text-slate-300">1,750 PTS</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold">Sashen Cire Kuɗi (Withdrawal)</h3>
+                    <p class="text-[10px] text-slate-500 mt-4 text-center">Ana sabunta jerin sunayen duk bayan mako guda.</p>
                 </div>
-                <p class="text-xs text-slate-400 mb-6">Tsaida mafi ƙarancin maki na cire kuɗi: <span class="text-amber-400 font-bold">1000 PTS (= ₦1,000)</span></p>
 
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-xs font-semibold text-slate-400 block mb-2">Zaɓi Banki</label>
-                        <select id="withdraw-bank" class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
-                            <option value="OPay">OPay</option>
-                            <option value="PalmPay">PalmPay</option>
-                            <option value="Moniepoint">Moniepoint</option>
-                            <option value="Kuda Bank">Kuda Bank</option>
-                        </select>
+                <!-- Withdrawal Section -->
+                <div class="md:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="bg-indigo-500/10 text-indigo-400 w-9 h-9 rounded-xl flex items-center justify-center text-md">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                        </div>
+                        <h3 class="text-base font-black">Sashen Cire Kuɗi (Withdrawal)</h3>
                     </div>
-                    <div>
-                        <label class="text-xs font-semibold text-slate-400 block mb-2">Lambar Asusun Banki (Account Number)</label>
-                        <input type="number" id="withdraw-account" placeholder="Saka lambobi 10" class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
+                    <p class="text-xs text-slate-400 mb-4">Mafi ƙarancin maki na cire kuɗi: <span class="text-amber-400 font-bold">1000 PTS (= ₦1,000)</span></p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Zaɓi Banki</label>
+                            <select id="withdraw-bank" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Moniepoint">Moniepoint</option>
+                                <option value="Kuda Bank">Kuda Bank</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Account Number</label>
+                            <input type="number" id="withdraw-account" placeholder="Saka lambobi 10" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Yawan Maki</label>
+                            <input type="number" id="withdraw-amount" placeholder="Misali: 1000" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        </div>
                     </div>
-                    <div>
-                        <label class="text-xs font-semibold text-slate-400 block mb-2">Yawan Maki da Kake Son Cirewa</label>
-                        <input type="number" id="withdraw-amount" placeholder="Misali: 1000" class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
-                    </div>
-                    <button onclick="processWithdrawal()" class="w-full mt-2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl transition duration-200 shadow-md cursor-pointer">Tura Buƙatar Cire Kuɗi</button>
+                    <button onclick="processWithdrawal()" class="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs transition shadow-md">
+                        Tura Buƙatar Cire Kuɗi
+                    </button>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- JavaScript block -->
+    <!-- Hidden element specifically designed to catch AdBlockers -->
+    <div class="ad-banner-check adsbox ads-holder" style="position:absolute; left:-9999px; width:1px; height:1px;"></div>
+
     <script>
+        // CLIENT-SIDE ENCRYPTION SALT (FOR BASIC TAMPER PROTECTION)
+        const SALT_KEY = "ALAMIN_SECURITY_SECURE_993";
         let totalPoints = 0;
         let generatedOTP = null;
+        let lastActionTime = 0; // Anti-Cheat click velocity tracker
+
         const pointsDisplay = document.getElementById('points-display');
         const interactiveBox = document.getElementById('interactive-box');
         const quizContent = document.getElementById('quiz-content');
@@ -186,20 +274,79 @@
 
         emailjs.init(PUBLIC_KEY);
 
+        // Security Function: Get points securely from localStorage
+        function getSecurePoints() {
+            const raw = localStorage.getItem('alamin_pts_secure');
+            const hash = localStorage.getItem('alamin_pts_hash');
+            if(!raw || !hash) return 0;
+            
+            // Simple checksum calculation to spot unauthorized manipulations
+            let calculatedHash = btoa(raw + SALT_KEY);
+            if(calculatedHash !== hash) {
+                console.warn("Security Alert: Manipulation detected! Resetting state.");
+                setSecurePoints(0);
+                return 0;
+            }
+            return parseInt(atob(raw));
+        }
+
+        // Security Function: Save points securely with verification checksums
+        function setSecurePoints(value) {
+            let encodedValue = btoa(value.toString());
+            let computedHash = btoa(encodedValue + SALT_KEY);
+            localStorage.setItem('alamin_pts_secure', encodedValue);
+            localStorage.setItem('alamin_pts_hash', computedHash);
+            totalPoints = value;
+            updateUI();
+        }
+
+        function updateUI() {
+            pointsDisplay.innerText = totalPoints;
+            
+            // Update Goal Progress Bar
+            let percent = Math.min((totalPoints / 1000) * 100, 100);
+            document.getElementById('progress-bar').style.width = percent + "%";
+            document.getElementById('progress-text').innerText = `${Math.floor(percent)}% (${totalPoints}/1000)`;
+            
+            // Daily Check in text logic
+            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
+            const todayStr = new Date().toDateString();
+            const dailyBtn = document.getElementById('daily-btn');
+            if(lastClaim === todayStr) {
+                dailyBtn.innerText = "An Karba";
+                dailyBtn.disabled = true;
+                dailyBtn.className = "w-full mt-3 bg-slate-800 text-slate-500 font-bold text-xs py-2.5 rounded-xl cursor-not-allowed";
+            }
+        }
+
+        // Active AdBlock Detection
+        function detectAdBlocker() {
+            // Check if the decoy element was hidden or collapsed by browser extensions
+            const decoy = document.querySelector('.ad-banner-check');
+            if (!decoy || decoy.offsetHeight === 0 || window.getComputedStyle(decoy).display === 'none') {
+                document.getElementById('adblock-overlay').classList.remove('hidden');
+                return true;
+            }
+            return false;
+        }
+
+        // Initialize state inside secure load lifecycle
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                detectAdBlocker();
+            }, 1000);
+            
+            totalPoints = getSecurePoints();
+            checkLoginStatus();
+            updateUI();
+        });
+
         const quizBank = [
             { fanni: "Tarihin Najeriya", q: "A wace shekara Najeriya ta sami 'Yancin Kai?", a: "1960", b: "1963", c: "1914", d: "1999", ans: "a" },
             { fanni: "Tarihin Najeriya", q: "Wane ne Firayim Ministan farko na Najeriya?", a: "Nnamdi Azikiwe", b: "Sir Abubakar Tafawa Balewa", c: "Ahmadu Bello", d: "Obafemi Awolowo", ans: "b" },
             { fanni: "Al'adu", q: "Wace sana'a ce aka fi sani da mutanen karkara na kasar Hausa na gargajiya?", a: "Kira da Noma", b: "Tukin Jirgi", c: "Dinki na Kzam", d: "Sassaka", ans: "a" },
             { fanni: "Al'adu", q: "Mene ne asalin babban abincin gargajiya na mutanen Yarbawa?", a: "Tuwon Shinkafa", b: "Amala da Ewedu", c: "Pounded Yam", d: "Sakwara", ans: "b" },
-            { fanni: "Tarihin Duniya", q: "A wace shekara aka fafata Yakin Duniya na Farko (WWI)?", a: "1914", b: "1939", c: "1812", d: "1945", ans: "a" },
-            { fanni: "English Language", q: "What is the plural form of the word 'Child'?", a: "Childs", b: "Childrens", c: "Children", d: "Childes", ans: "c" },
-            { fanni: "English Language", q: "Identify the verb in: 'Alamin runs very fast.'", a: "Alamin", b: "runs", c: "very", d: "fast", ans: "b" },
-            { fanni: "Fannin Hausa", q: "Wanne ne harafin wasali (Vowel) a cikin wadannan?", a: "B", b: "M", c: "A", d: "Z", ans: "c" },
-            { fanni: "Fannin Hausa", q: "Mene ne ma'anar kararin maganar nan 'Gani ga wane'?", a: "Ya isa riga", b: "Ya isa wa'azi", c: "Tsoro ne", d: "Hanyar gida", ans: "b" },
-            { fanni: "Fannin Geography", q: "Wanne kogi mafi tsawo a duniyar ga baki daya?", a: "Kogin Nilu (Nile)", b: "Kogin Amazon", c: "Kogin Niger", d: "Kogin Mississippi", ans: "a" },
-            { fanni: "Fannin Geography", q: "Wanne gari ne babban birnin jihar Kano?", a: "Wudil", b: "Kano", c: "Bichi", d: "Dambatta", ans: "b" },
-            { fanni: "Fannin Addini", q: "Shisshikan Musulunci guda nawa ne?", a: "Guda 6", b: "Guda 5", c: "Guda 4", d: "Guda 7", ans: "b" },
-            { fanni: "Fannin Addini", q: "A wani gari aka haifi Annabi Muhammadu (SAW)?", a: "Madina", b: "Makka", c: "Ta'if", d: "Shams", ans: "b" }
+            { fanni: "English Language", q: "What is the plural form of the word 'Child'?", a: "Childs", b: "Childrens", c: "Children", d: "Childes", ans: "c" }
         ];
 
         let currentQuestion = null;
@@ -214,13 +361,6 @@
                 document.getElementById('login-overlay').classList.remove('hidden');
                 document.getElementById('main-app').classList.add('hidden');
             }
-        }
-
-        checkLoginStatus();
-
-        if(localStorage.getItem('alamin_points')) {
-            totalPoints = parseInt(localStorage.getItem('alamin_points'));
-            pointsDisplay.innerText = totalPoints;
         }
 
         function sendOTP() {
@@ -252,7 +392,7 @@
                     document.getElementById('otp-step').classList.remove('hidden');
                     document.getElementById('otp-hint').innerText = `Duba Inbox ko Spam folder na ${emailInput}`;
                 }, function(error) {
-                    alert('Kash! Ba a tura ba: ' + JSON.stringify(error));
+                    alert('Kash! Ba a tura ba. Duba network dinka.');
                     btnText.innerText = "Aiko da OTP";
                     otpBtn.disabled = false;
                 });
@@ -273,22 +413,28 @@
         function logOut() {
             localStorage.removeItem('user_logged_in');
             localStorage.removeItem('user_gmail');
-            document.getElementById('user-email').value = '';
-            document.getElementById('otp-input').value = '';
-            document.getElementById('email-step').classList.remove('hidden');
-            document.getElementById('otp-step').classList.add('hidden');
-            document.getElementById('btn-text').innerText = "Aiko da OTP";
-            document.getElementById('otp-btn').disabled = false;
             checkLoginStatus();
         }
 
-        function updatePoints(amount) {
-            totalPoints += amount;
-            localStorage.setItem('alamin_points', totalPoints);
-            pointsDisplay.innerText = totalPoints;
+        function claimDailyBonus() {
+            if(detectAdBlocker()) return;
+            
+            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
+            const todayStr = new Date().toDateString();
+
+            if (lastClaim === todayStr) {
+                alert("Kun riga kun karbi kyautar yau! Dawo gobe da safe.");
+                return;
+            }
+
+            localStorage.setItem('last_daily_bonus_claim', todayStr);
+            setSecurePoints(totalPoints + 50);
+            alert("Masha Allah! Kyautar maki +50 PTS ta tabbata.");
         }
 
         function startQuiz() {
+            if(detectAdBlocker()) return;
+            
             interactiveBox.classList.remove('hidden');
             quizContent.classList.remove('hidden');
             adsContent.classList.add('hidden');
@@ -299,32 +445,40 @@
 
             quizContent.innerHTML = `
                 <div>
-                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
-                        <span class="bg-indigo-500/20 text-indigo-400 px-3 py-1 rounded-full text-xs font-bold uppercase">${currentQuestion.fanni}</span>
-                        <button onclick="closeBox()" class="text-slate-400 hover:text-white text-sm">&times; Rufe</button>
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
+                        <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">${currentQuestion.fanni}</span>
+                        <button onclick="closeBox()" class="text-slate-400 hover:text-white text-xs font-bold">&times; Rufe</button>
                     </div>
-                    <p class="text-lg font-medium mb-6">${currentQuestion.q}</p>
+                    <p class="text-base font-semibold mb-6 text-slate-100">${currentQuestion.q}</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <button onclick="checkAnswer('a')" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3.5 rounded-xl transition border border-transparent hover:border-emerald-500/50">A) ${currentQuestion.a}</button>
-                        <button onclick="checkAnswer('b')" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3.5 rounded-xl transition border border-transparent hover:border-emerald-500/50">B) ${currentQuestion.b}</button>
-                        <button onclick="checkAnswer('c')" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3.5 rounded-xl transition border border-transparent hover:border-emerald-500/50">C) ${currentQuestion.c}</button>
-                        <button onclick="checkAnswer('d')" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3.5 rounded-xl transition border border-transparent hover:border-emerald-500/50">D) ${currentQuestion.d}</button>
+                        <button onclick="checkAnswer('a')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">A) ${currentQuestion.a}</button>
+                        <button onclick="checkAnswer('b')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">B) ${currentQuestion.b}</button>
+                        <button onclick="checkAnswer('c')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">C) ${currentQuestion.c}</button>
+                        <button onclick="checkAnswer('d')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs">D) ${currentQuestion.d}</button>
                     </div>
                 </div>
             `;
         }
 
         function checkAnswer(userChoice) {
+            // Core Security Guard against click speed macro bots
+            const now = Date.now();
+            if(now - lastActionTime < 1000) { 
+                alert("Security block: Speed running detected!"); 
+                return; 
+            }
+            lastActionTime = now;
+
             if(userChoice === currentQuestion.ans) {
-                updatePoints(10);
+                setSecurePoints(totalPoints + 10);
                 quizContent.innerHTML = `
                     <div class="text-center py-6">
                         <div class="text-emerald-400 text-4xl mb-2"><i class="fa-solid fa-circle-check"></i></div>
-                        <h4 class="text-emerald-400 font-bold text-xl mb-1">Haka ne, Ka Taylor!</h4>
-                        <p class="text-slate-300 text-xs">An saka maka +10 Points</p>
-                        <div class="flex justify-center space-x-3 mt-4">
-                            <button onclick="startQuiz()" class="bg-emerald-500 text-slate-900 text-xs font-bold px-4 py-2 rounded-lg">Tambaya ta Gaba</button>
-                            <button onclick="closeBox()" class="bg-slate-700 text-xs px-4 py-2 rounded-lg">Na gode</button>
+                        <h4 class="text-emerald-400 font-black text-lg mb-1">Haka ne, Ka Gano!</h4>
+                        <p class="text-slate-400 text-xs">An saka maka +10 Points</p>
+                        <div class="flex justify-center space-x-3 mt-5">
+                            <button onclick="startQuiz()" class="bg-emerald-500 text-slate-950 text-xs font-black px-4 py-2 rounded-lg">Tambaya ta Gaba</button>
+                            <button onclick="closeBox()" class="bg-slate-950 text-slate-400 text-xs font-bold px-4 py-2 border border-slate-800 rounded-lg">Fita</button>
                         </div>
                     </div>
                 `;
@@ -332,11 +486,11 @@
                 quizContent.innerHTML = `
                     <div class="text-center py-6">
                         <div class="text-rose-400 text-4xl mb-2"><i class="fa-solid fa-circle-xmark"></i></div>
-                        <h4 class="text-rose-400 font-bold text-xl mb-1">Kash, Ba Haka Ba Ne!</h4>
-                        <p class="text-slate-400 text-xs">Amsar daidai ita ce: <span class="font-bold text-emerald-400">${currentQuestion.ans.toUpperCase()}</span></p>
-                        <div class="flex justify-center space-x-3 mt-4">
-                            <button onclick="startQuiz()" class="bg-slate-700 text-xs px-4 py-2 rounded-lg">Sake Gwadawa</button>
-                            <button onclick="closeBox()" class="bg-slate-600 text-xs px-4 py-2 rounded-lg">Fita</button>
+                        <h4 class="text-rose-400 font-black text-lg mb-1">Kash, Ba Haka Ba Ne!</h4>
+                        <p class="text-slate-400 text-xs">Amsar daidai ita ce: <span class="font-black text-emerald-400">${currentQuestion.ans.toUpperCase()}</span></p>
+                        <div class="flex justify-center space-x-3 mt-5">
+                            <button onclick="startQuiz()" class="bg-slate-950 text-slate-300 border border-slate-800 text-xs px-4 py-2 rounded-lg">Gwadawa Kuma</button>
+                            <button onclick="closeBox()" class="bg-slate-950 text-slate-500 text-xs px-4 py-2 rounded-lg">Rufe</button>
                         </div>
                     </div>
                 `;
@@ -344,6 +498,8 @@
         }
 
         function watchAd() {
+            if(detectAdBlocker()) return;
+
             interactiveBox.classList.remove('hidden');
             adsContent.classList.remove('hidden');
             quizContent.classList.add('hidden');
@@ -359,7 +515,7 @@
                     timerDisplay.innerText = timeLeft + "s";
                 } else {
                     clearInterval(countdown);
-                    updatePoints(20);
+                    setSecurePoints(totalPoints + 20);
                     adsContent.classList.add('hidden');
                     adSuccessContent.classList.remove('hidden');
                 }
@@ -384,8 +540,8 @@
                 return;
             }
 
-            updatePoints(-amount);
-            alert(`An karbi buƙatarka ta cire kuɗi successfully!\n\nBanki: ${bank}\nLambar Asusun: ${account}\nMaki: ${amount} PTS`);
+            setSecurePoints(totalPoints - amount);
+            alert(`An karbi buƙatarka ta cire kuɗi successfully!\n\nBanki: ${bank}\nLambar Asusun: ${account}\nMaki: ${amount} PTS\n\nAlamin Specialist zai duba tsaron aikinka kafin a tura kudi.`);
             
             document.getElementById('withdraw-account').value = '';
             document.getElementById('withdraw-amount').value = '';
