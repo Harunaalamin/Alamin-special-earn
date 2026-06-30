@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alamin Special Earn</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-white font-sans min-h-screen overflow-x-hidden">
+
+    <!-- LOGIN SCREEN OVERLAY -->
+    <div id="login-overlay" class="fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl text-center">
+            <h2 class="text-2xl font-black text-emerald-400 mb-2 tracking-wide">ALAMIN SPECIAL EARN</h2>
+            <p class="text-slate-400 text-xs mb-6">Shigar da Gmail dinka don samun lambar sirri (OTP)</p>
+
+            <!-- Step 1: Gmail Input -->
+            <div id="email-step">
+                <div class="mb-4 text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">Gmail Address</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-500"></i>
+                        <input type="email" id="user-email" placeholder="misali@gmail.com" 
+                               class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white">
+                    </div>
+                </div>
+                <button onclick="sendOTP()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer">
+                    Aiko da OTP <i class="fa-solid fa-paper-plane ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Step 2: OTP Input -->
+            <div id="otp-step" class="hidden">
+                <div class="mb-4 text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">Shigar da OTP</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-500"></i>
+                        <input type="number" id="otp-input" placeholder="Saka lambobi 4" 
+                               class="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white tracking-widest font-bold text-center">
+                    </div>
+                    <p class="text-xs text-amber-400 mt-2 text-center" id="otp-hint"></p>
+                </div>
+                <button onclick="verifyOTP()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer">
+                    Tabbatar da Shiga <i class="fa-solid fa-circle-check ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTENT -->
+    <div id="main-app" class="hidden">
+        <!-- Header / Nav -->
+        <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-40">
+            <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-emerald-400 tracking-wide">
+                    <i class="fa-solid fa-wallet mr-2"></i>ALAMIN SPECIAL EARN
+                </h1>
+                <div class="bg-slate-700 px-4 py-1.5 rounded-full flex items-center shadow-inner">
+                    <i class="fa-solid fa-coins text-amber-400 mr-2"></i>
+                    <span id="points-display" class="font-bold text-amber-300">0</span> <span class="text-xs ml-1 text-slate-300">PTS</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Welcome Hero -->
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-6 mb-8 shadow-xl">
+                <h2 class="text-2xl font-black mb-2">Barka da Zuwa, Aboki! 👋</h2>
+                <p id="user-welcome" class="text-emerald-100 text-sm">Amsa tambayoyi cikin sauƙi ko ka kalli gajerun tallace-tallace (Ads).</p>
+            </div>
+
+            <!-- Grid Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Quiz Card -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Sashen Tambayoyi (Quiz)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Gwada iliminka taiyan amsa tambayoyi. Kowane amsa daidai yana maki +10!</p>
+                    </div>
+                    <button onclick="startQuiz()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition">
+                        Fara Amsa Tambayoyi
+                    </button>
+                </div>
+
+                <!-- Ads Card -->
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+                    <div>
+                        <div class="bg-amber-500/10 text-amber-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-rectangle-ad"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Kalli Talla (Watch Ads)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Kalli gajeren bidiyo ko hoton talla na tsawon daƙiƙa 5 don maki +20!</p>
+                    </div>
+                    <button onclick="watchAd()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition">
+                        Kalli Talla Yanzu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Area -->
+            <div id="interactive-box" class="mt-8 bg-slate-800 border border-indigo-500/30 rounded-2xl p-6 hidden shadow-2xl mb-8"></div>
+
+            <!-- WITHDRAWAL SECTION (SABO) -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-indigo-500/10 text-indigo-400 w-10 h-10 rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Sashen Cire Kuɗi (Withdrawal)</h3>
+                </div>
+                <p class="text-xs text-slate-400 mb-6">Tsaida mafi ƙarancin maki na cire kuɗi: <span class="text-amber-400 font-bold">1000 PTS (= ₦1,000)</span></p>
+
+                <div class="space-y-4">
+                    <!-- Bank Selection -->
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400 block mb-2">Zaɓi Banki</label>
+                        <select id="withdraw-bank" class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
+                            <option value="OPay">OPay</option>
+                            <option value="PalmPay">PalmPay</option>
+                            <option value="Moniepoint">Moniepoint</option>
+                            <option value="Kuda Bank">Kuda Bank</option>
+                        </select>
+                    </div>
+
+                    <!-- Account Number -->
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400 block mb-2">Lambar Asusun Banki (Account Number)</label>
+                        <input type="number" id="withdraw-account" placeholder="Saka lambobi 10" 
+                               class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
+                    </div>
+
+                    <!-- Points to Withdraw -->
+                    <div>
+                        <label class="text-xs font-semibold text-slate-400 block mb-2">Yawan Maki da Kake Son Cirewa</label>
+                        <input type="number" id="withdraw-amount" placeholder="Misali: 1000" 
+                               class="w-full bg-slate-700 border border-slate-600 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500 text-white">
+                    </div>
+
+                    <button onclick="processWithdrawal()" class="w-full mt-2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl transition duration-200 shadow-md cursor-pointer">
+                        Tura Buƙatar Cire Kuɗi
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript block -->
+    <script>
+        let totalPoints = 0;
+        let generatedOTP = null;
+        const pointsDisplay = document.getElementById('points-display');
+        const interactiveBox = document.getElementById('interactive-box');
+
+        if(localStorage.getItem('user_logged_in') === 'true') {
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            let email = localStorage.getItem('user_gmail');
+            document.getElementById('user-welcome').innerText = `Kayi login da: ${email}. Amsa tambayoyi ko ka kalli Ads don samun kudi!`;
+        }
+
+        if(localStorage.getItem('alamin_points')) {
+            totalPoints = parseInt(localStorage.getItem('alamin_points'));
+            pointsDisplay.innerText = totalPoints;
+        }
+
+        function sendOTP() {
+            const emailInput = document.getElementById('user-email').value;
+            if(!emailInput.includes('@') || !emailInput.includes('.com')) {
+                alert('Dan Allah shigar da ingantaccen Gmail address!');
+                return;
+            }
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('email-step').classList.add('hidden');
+            document.getElementById('otp-step').classList.remove('hidden');
+            document.getElementById('otp-hint').innerText = `Lambar OTP dinka don gwaji ita ce: ${generatedOTP}`;
+        }
+
+        function verifyOTP() {
+            const userOTP = document.getElementById('otp-input').value;
+            if(userOTP == generatedOTP) {
+                const emailInput = document.getElementById('user-email').value;
+                localStorage.setItem('user_logged_in', 'true');
+                localStorage.setItem('user_gmail', emailInput);
+                
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                document.getElementById('user-welcome').innerText = `Kayi login da: ${emailInput}. Amsa tambayoyi ko ka kalli Ads don samun kudi!`;
+            } else {
+                alert('Lambar OTP ba daidai ba ce! Sake gwadawa.');
+            }
+        }
+
+        function updatePoints(amount) {
+            totalPoints += amount;
+            localStorage.setItem('alamin_points', totalPoints);
+            pointsDisplay.innerText = totalPoints;
+        }
+
+        function watchAd() {
+            interactiveBox.classList.remove('hidden');
+            interactiveBox.innerHTML = `
+                <div class="text-center py-6">
+                    <h4 class="text-amber-400 font-bold text-lg mb-2"><i class="fa-solid fa-spinner animate-spin mr-2"></i>Talla tana buɗewa...</h4>
+                    <div class="w-full bg-slate-700 h-2 rounded-full mt-4 overflow-hidden">
+                        <div class="bg-amber-500 h-full w-0 animate-[progress_5s_linear_forwards]"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(() => {
+                updatePoints(20);
+                interactiveBox.innerHTML = `
+                    <div class="text-center py-6">
+                        <h4 class="text-emerald-400 font-bold text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>An Sarrafa Talla!</h4>
+                        <p class="text-slate-300 text-sm">An ƙara maka <span class="text-amber-400 font-bold">+20 Points</span>.</p>
+                        <button onclick="closeBox()" class="mt-4 text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded-lg">To</button>
+                    </div>
+                `;
+            }, 5000);
+        }
+
+        function startQuiz() {
+            interactiveBox.classList.remove('hidden');
+            interactiveBox.innerHTML = `
+                <div>
+                    <p class="text-lg font-medium mb-6">Wanne ne babban birnin ƙasar Najeriya?</p>
+                    <div class="space-y-3">
+                        <button onclick="checkAnswer(false)" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3 rounded-xl transition">A) Kano</button>
+                        <button onclick="checkAnswer(true)" class="w-full text-left bg-slate-700 hover:bg-slate-600 p-3 rounded-xl transition">B) Abuja</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkAnswer(isCorrect) {
+            if(isCorrect) {
+                updatePoints(10);
+                interactiveBox.innerHTML = `
+                    <div class="text-center py-6">
+                        <h4 class="text-emerald-400 font-bold text-xl mb-1">Haka ne, Ka Taylor!</h4>
+                        <button onclick="closeBox()" class="mt-4 bg-emerald-500 text-slate-900 text-xs px-4 py-1.5 rounded-lg">Ci gaba</button>
+                    </div>
+                `;
+            } else {
+                interactiveBox.innerHTML = `
+                    <div class="text-center py-6">
+                        <h4 class="text-rose-400 font-bold text-xl mb-1">Kash, Ba Haka Ba Ne!</h4>
+                        <button onclick="startQuiz()" class="mt-4 bg-slate-700 text-xs px-4 py-1.5 rounded-lg">Sake Gwadawa</button>
+                    </div>
+                `;
+            }
+        }
+
+        // FUNCTION NA CIRE KUDI (SABO)
+        function processWithdrawal() {
+            const bank = document.getElementById('withdraw-bank').value;
+            const account = document.getElementById('withdraw-account').value;
+            const amount = parseInt(document.getElementById('withdraw-amount').value);
+
+            if(!account || account.length < 10) {
+                alert('Dan Allah shigar da ingantacciyar lambar asusu (10 digits)!');
+                return;
+            }
+            if(!amount || amount < 1000) {
+                alert('Mafi karancin maki da zaka iya cirewa shine 1000 PTS!');
+                return;
+            }
+            if(amount > totalPoints) {
+                alert('Makinka bai kai haka ba tukunna! Ci gaba da tara maki.');
+                return;
+            }
+
+            // Rage maki idan dukkan sharuda sun cika
+            updatePoints(-amount);
+            alert(`An karbi buƙatarka ta cire kuɗi successfully!\n\nBanki: ${bank}\nLambar Asusun: ${account}\nMaki: ${amount} PTS\n\nZamu tura maka tabbataccen alert nan da awanni 24.`);
+            
+            // Clear inputs
+            document.getElementById('withdraw-account').value = '';
+            document.getElementById('withdraw-amount').value = '';
+        }
+
+        function closeBox() { interactiveBox.classList.add('hidden'); }
+    </script>
+    <style> @keyframes progress { from { width: 0%; } to { width: 100%; } } </style>
+</body>
+</html>
