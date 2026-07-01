@@ -11,6 +11,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
         /* ============ GOOGLE FONTS ============ */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -55,6 +58,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            padding-bottom: 70px; /* Space for sticky ad */
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -89,11 +93,6 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
         }
         
         .animate-fade-in {
@@ -149,15 +148,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-        }
-        
-        .btn-success {
-            background: var(--accent-green);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
         
         .btn-outline {
@@ -222,60 +212,59 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
         
-        .input-field::placeholder {
-            color: var(--text-muted);
-        }
-        
-        select.input-field {
-            cursor: pointer;
-        }
-        
         .divider {
             height: 1px;
             background: var(--border-color);
             margin: 24px 0;
         }
         
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
         
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
+        @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 640px) { .grid-4, .grid-3 { grid-template-columns: 1fr; } }
         
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        /* ============ PREMIUM AD UNITS PRESETS ============ */
+        .ad-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin: 20px 0;
+            padding: 10px;
+            min-height: 90px;
+            position: relative;
         }
-        
-        @media (max-width: 1024px) {
-            .grid-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            font-weight: 600;
         }
-        
-        @media (max-width: 768px) {
-            .grid-3 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
+        .sticky-bottom-ad {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            z-index: 49;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
         }
-        
-        @media (max-width: 640px) {
-            .grid-4, .grid-3 {
-                grid-template-columns: 1fr;
-            }
-        }
-        
+
         /* ============ NOTIFICATION ============ */
         .notification {
             position: fixed;
@@ -295,18 +284,9 @@
             animation: slideUp 0.3s ease-out;
             max-width: 400px;
         }
-        
-        .notification-success {
-            border-left: 4px solid var(--accent-green);
-        }
-        
-        .notification-error {
-            border-left: 4px solid var(--accent-red);
-        }
-        
-        .notification-warning {
-            border-left: 4px solid var(--accent-amber);
-        }
+        .notification-success { border-left: 4px solid var(--accent-green); }
+        .notification-error { border-left: 4px solid var(--accent-red); }
+        .notification-warning { border-left: 4px solid var(--accent-amber); }
         
         /* ============ OVERLAY ============ */
         .overlay {
@@ -320,7 +300,6 @@
             z-index: 50;
             padding: 20px;
         }
-        
         .modal {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -331,39 +310,11 @@
             box-shadow: var(--shadow-xl);
         }
         
-        /* ============ PROGRESS BAR ============ */
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--bg-secondary);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 4px;
-            transition: width 0.6s ease;
-        }
-        
-        /* ============ SECTION SPACING ============ */
-        .section {
-            margin-bottom: 32px;
-        }
-        
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-        
-        .section-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
+        .progress-bar { width: 100%; height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--gradient-1); border-radius: 4px; transition: width 0.6s ease; }
+        .section { margin-bottom: 32px; }
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
+        .section-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
     </style>
 </head>
 <body>
@@ -373,15 +324,11 @@
         <div class="modal text-center">
             <div style="font-size: 48px; margin-bottom: 16px;">🛡️</div>
             <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">Ad Blocker Detected</h2>
-            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">
                 Please disable your ad blocker to access all features and start earning rewards.
             </p>
             <button onclick="window.location.reload()" class="btn btn-primary btn-lg" style="width: 100%;">
                 <i class="fa-solid fa-rotate-right"></i> Reload Page
-            </button>
-            <button onclick="document.getElementById('adblock-overlay').style.display='none'" 
-                    class="btn btn-outline" style="width: 100%; margin-top: 8px;">
-                Continue Anyway
             </button>
         </div>
     </div>
@@ -407,33 +354,26 @@
                     <input type="email" id="user-email" class="input-field" placeholder="Enter your email address">
                 </div>
                 
-                <button onclick="handleLogin()" class="btn btn-primary btn-lg" style="width: 100%;">
-                    <i class="fa-solid fa-arrow-right"></i> Continue
-                </button>
-                
-                <div class="divider"></div>
-                
-                <button onclick="quickDemo()" class="btn btn-outline" style="width: 100%;">
-                    <i class="fa-solid fa-bolt"></i> Quick Demo Access
+                <button id="login-btn" onclick="handleLogin()" class="btn btn-primary btn-lg" style="width: 100%;">
+                    <i class="fa-solid fa-arrow-right"></i> Send Verification OTP
                 </button>
             </div>
             
             <!-- OTP Verification -->
             <div id="otp-section" style="display: none;">
-                <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px;">
-                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Your verification code:</p>
-                    <div id="otp-display" style="font-size: 36px; font-weight: 800; letter-spacing: 8px; color: var(--accent-amber); font-family: 'Plus Jakarta Sans', sans-serif;">
-                        ----
-                    </div>
+                <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: 15px; margin-bottom: 20px;">
+                    <p style="font-size: 13px; color: var(--text-secondary);">
+                        An OTP code has been sent to your Gmail. Please check your inbox or spam folder.
+                    </p>
                 </div>
                 
                 <div style="margin-bottom: 20px; text-align: left;">
                     <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
                         <i class="fa-solid fa-lock" style="color: var(--accent-amber); margin-right: 6px;"></i>
-                        Enter Verification Code
+                        Enter 4-Digit OTP
                     </label>
                     <input type="text" id="otp-input" class="input-field" 
-                           placeholder="Enter 4-digit code" maxlength="4"
+                           placeholder="••••" maxlength="4"
                            style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
                 </div>
                 
@@ -443,7 +383,7 @@
                         Create Security PIN
                     </label>
                     <input type="password" id="user-pin" class="input-field" 
-                           placeholder="4-digit PIN" maxlength="4"
+                           placeholder="••••" maxlength="4"
                            style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
                 </div>
                 
@@ -460,7 +400,6 @@
         <!-- HEADER -->
         <header style="background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 16px 0; position: sticky; top: 0; z-index: 40; backdrop-filter: blur(12px);">
             <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
-                <!-- Logo -->
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <div style="width: 40px; height: 40px; background: var(--gradient-1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 20px;">
                         💎
@@ -473,7 +412,6 @@
                     </div>
                 </div>
                 
-                <!-- Stats -->
                 <div style="display: flex; align-items: center; gap: 16px;">
                     <div style="background: var(--bg-secondary); padding: 8px 16px; border-radius: 24px; border: 1px solid var(--border-color);">
                         <span style="font-size: 12px; color: var(--text-muted);">Balance</span>
@@ -489,6 +427,13 @@
         <!-- MAIN CONTENT -->
         <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;">
             
+            <!-- MID-PAGE RESPONSIVE AD CONTEXT -->
+            <div class="ad-container">
+                <div class="ad-label">Sponsored Advertisement</div>
+                <!-- PASALIN CODE DIN TALLANKA NA ADSTERRA / ADSENSE A NAN -->
+                <div style="color: var(--text-muted); font-size: 12px;"><i class="fa-solid fa-rectangle-ad"></i> Ad Banner Zone (728x90 or Responsive)</div>
+            </div>
+
             <!-- Welcome Section -->
             <div class="section animate-fade-in">
                 <div class="card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.05));">
@@ -555,9 +500,6 @@
                                 <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
                                     Answer intelligent questions and earn up to <strong style="color: var(--accent-purple);">50 PTS</strong> per correct answer.
                                 </p>
-                                <div style="margin-top: 12px;">
-                                    <span class="badge badge-purple">3 Difficulty Levels</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -573,9 +515,6 @@
                                 <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
                                     Watch high-quality advertisements and earn up to <strong style="color: var(--accent-blue);">100 PTS</strong> per view.
                                 </p>
-                                <div style="margin-top: 12px;">
-                                    <span class="badge badge-purple">3 Reward Tiers</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -591,9 +530,6 @@
                                 <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
                                     Share our platform and earn <strong style="color: var(--accent-green);">100 PTS</strong> per verified social post.
                                 </p>
-                                <div style="margin-top: 12px;">
-                                    <span class="badge badge-green">4 Platforms</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -601,15 +537,11 @@
             </div>
             
             <!-- Interactive Area -->
-            <div id="interactive-area" class="section" style="display: none;">
-                <!-- Dynamic content loads here -->
-            </div>
+            <div id="interactive-area" class="section" style="display: none;"></div>
             
             <!-- Withdrawal Section -->
             <div class="section">
                 <h3 class="section-title">Withdraw Your Earnings</h3>
-                <p class="section-subtitle">Minimum withdrawal: 1,000 PTS. Funds processed within 24 hours.</p>
-                
                 <div class="card">
                     <div class="grid-2">
                         <div>
@@ -619,22 +551,13 @@
                             <select id="withdraw-method" class="input-field" onchange="updateWithdrawOptions()">
                                 <option value="bank">🏦 Bank Transfer</option>
                                 <option value="mpesa">📱 M-Pesa</option>
-                                <option value="airtel">📱 Airtel Money</option>
-                                <option value="mtn">📱 MTN Mobile Money</option>
                             </select>
                         </div>
                         <div>
                             <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
                                 Select Institution
                             </label>
-                            <select id="withdraw-bank" class="input-field">
-                                <option value="">Choose...</option>
-                                <option value="OPay">OPay</option>
-                                <option value="PalmPay">PalmPay</option>
-                                <option value="Kuda">Kuda Bank</option>
-                                <option value="Access">Access Bank</option>
-                                <option value="GTB">GTBank</option>
-                            </select>
+                            <select id="withdraw-bank" class="input-field"></select>
                         </div>
                         <div>
                             <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
@@ -646,8 +569,7 @@
                             <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
                                 Amount (PTS)
                             </label>
-                            <input type="number" id="withdraw-amount" class="input-field" 
-                                   placeholder="Min: 1,000" min="1000" onkeyup="updateConversion()">
+                            <input type="number" id="withdraw-amount" class="input-field" placeholder="Min: 1,000" onkeyup="updateConversion()">
                         </div>
                     </div>
                     
@@ -661,13 +583,31 @@
                     </button>
                 </div>
             </div>
-            
         </main>
     </div>
 
+    <!-- ============ STICKY BOTTOM AD ZONE ============ -->
+    <div class="sticky-bottom-ad">
+        <!-- SAUKAR DA TALLAN ADSTERRA MOBILE BANNER (320x50) A NAN -->
+        <span style="font-size: 10px; color: var(--text-muted); margin-right: 10px;">Ad:</span>
+        <div style="font-size: 12px; color: var(--text-muted); text-align: center;">Mobile Smart Ad Unit Loaded</div>
+    </div>
+
     <script>
+        // ============ EMAILJS CONFIGURATION ============
+        const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; 
+        const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+        const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+
+        // Initialize EmailJS
+        (function() {
+            if(EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+            }
+        })();
+
         // ============ APP STATE ============
-        const APP = {
+        let APP = {
             points: 0,
             totalEarned: 0,
             level: 1,
@@ -677,23 +617,49 @@
             email: null
         };
         
-        // ============ LOGIN SYSTEM ============
+        // ============ LOGIN SYSTEM W/ REAL GMAIL OTP ============
         function handleLogin() {
             const email = document.getElementById('user-email').value.trim();
+            const loginBtn = document.getElementById('login-btn');
             
             if (!email || !email.includes('@')) {
                 showNotification('Please enter a valid email address', 'error');
                 return;
             }
+
+            if(EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+                showNotification('EmailJS Key ba a sa ba! Amma an ba ka damar shiga.', 'warning');
+                APP.email = email;
+                APP.otp = "1234";
+                alert("Demo Mode OTP dinka shine: 1234");
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('otp-section').style.display = 'block';
+                return;
+            }
+            
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Sending OTP...';
             
             APP.email = email;
             APP.otp = Math.floor(1000 + Math.random() * 9000).toString();
             
-            document.getElementById('otp-display').textContent = APP.otp;
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('otp-section').style.display = 'block';
-            
-            showNotification('Verification code generated! Check above.', 'success');
+            const templateParams = {
+                to_email: email,
+                otp_code: APP.otp,
+                project_name: "Alamin Special Earn"
+            };
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(function(response) {
+                    showNotification('OTP code has been sent to your email!', 'success');
+                    document.getElementById('login-form').style.display = 'none';
+                    document.getElementById('otp-section').style.display = 'block';
+                }, function(error) {
+                    showNotification('Failed to send OTP. Try again later.', 'error');
+                    console.log('EmailJS Error:', error);
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> Send Verification OTP';
+                });
         }
         
         function verifyOTP() {
@@ -710,30 +676,16 @@
                 return;
             }
             
-            // Save login
             localStorage.setItem('alamin_pin', pin);
             localStorage.setItem('alamin_email', APP.email);
             localStorage.setItem('alamin_logged_in', 'true');
             
-            // Show main app
             document.getElementById('login-overlay').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             
             loadAppState();
             updateAllUI();
-            
-            showNotification('Welcome! Start earning now.', 'success');
-        }
-        
-        function quickDemo() {
-            APP.email = 'demo@alamin.com';
-            APP.otp = '1234';
-            
-            document.getElementById('otp-display').textContent = '1234';
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('otp-section').style.display = 'block';
-            
-            showNotification('Demo Mode: Use OTP 1234', 'info');
+            showNotification('Access Granted! Welcome.', 'success');
         }
         
         function logout() {
@@ -742,6 +694,8 @@
             document.getElementById('login-overlay').style.display = 'flex';
             document.getElementById('otp-section').style.display = 'none';
             document.getElementById('login-form').style.display = 'block';
+            document.getElementById('login-btn').disabled = false;
+            document.getElementById('login-btn').innerHTML = '<i class="fa-solid fa-arrow-right"></i> Send Verification OTP';
         }
         
         // ============ EARNING MODULES ============
@@ -756,17 +710,17 @@
                     <div class="card card-interactive text-center" onclick="startQuiz('easy')">
                         <div style="font-size: 32px; margin-bottom: 12px;">⭐</div>
                         <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Easy</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+10 PTS per answer</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">+10 PTS</p>
                     </div>
                     <div class="card card-interactive text-center" onclick="startQuiz('medium')">
                         <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
                         <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Medium</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+25 PTS per answer</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">+25 PTS</p>
                     </div>
                     <div class="card card-interactive text-center" onclick="startQuiz('hard')">
                         <div style="font-size: 32px; margin-bottom: 12px;">💎</div>
                         <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Hard</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+50 PTS per answer</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">+50 PTS</p>
                     </div>
                 </div>
             `;
@@ -774,18 +728,9 @@
         
         function startQuiz(difficulty) {
             const questions = {
-                easy: [
-                    { q: "What is the capital of Nigeria?", opts: ["Lagos", "Abuja", "Kano", "Ibadan"], ans: 1 },
-                    { q: "How many days are in a week?", opts: ["5", "6", "7", "8"], ans: 2 }
-                ],
-                medium: [
-                    { q: "What is 15% of 200?", opts: ["20", "25", "30", "35"], ans: 2 },
-                    { q: "Largest continent by area?", opts: ["Africa", "Asia", "Europe", "America"], ans: 1 }
-                ],
-                hard: [
-                    { q: "Chemical symbol for Gold?", opts: ["Ag", "Au", "Fe", "Cu"], ans: 1 },
-                    { q: "Square root of 144?", opts: ["10", "11", "12", "13"], ans: 2 }
-                ]
+                easy: [{ q: "What is the capital of Nigeria?", opts: ["Lagos", "Abuja", "Kano"], ans: 1 }],
+                medium: [{ q: "What is 15% of 200?", opts: ["20", "25", "30"], ans: 2 }],
+                hard: [{ q: "Chemical symbol for Gold?", opts: ["Ag", "Au", "Fe"], ans: 1 }]
             };
             
             const rewards = { easy: 10, medium: 25, hard: 50 };
@@ -794,19 +739,11 @@
             const area = document.getElementById('interactive-area');
             area.innerHTML = `
                 <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <span class="badge badge-purple">${difficulty.toUpperCase()} • +${rewards[difficulty]} PTS</span>
-                        <button onclick="document.getElementById('interactive-area').style.display='none'" 
-                                style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px;">
-                            ✕
-                        </button>
-                    </div>
-                    <p style="font-size: 16px; font-weight: 500; margin-bottom: 24px; line-height: 1.6;">${question.q}</p>
+                    <p class="font-bold text-lg mb-4">${question.q}</p>
                     <div class="grid-2">
                         ${question.opts.map((opt, i) => `
-                            <button onclick="checkAnswer(${i}, ${question.ans}, ${rewards[difficulty]}, '${difficulty}')"
-                                    class="btn btn-outline" style="justify-content: flex-start; text-align: left;">
-                                <strong>${String.fromCharCode(65 + i)}.</strong> ${opt}
+                            <button onclick="checkAnswer(${i}, ${question.ans}, ${rewards[difficulty]}, '${difficulty}')" class="btn btn-outline">
+                                ${opt}
                             </button>
                         `).join('')}
                     </div>
@@ -818,7 +755,7 @@
             if (chosen === correct) {
                 addPoints(reward);
                 showNotification(`Correct! +${reward} PTS`, 'success');
-                setTimeout(() => startQuiz(difficulty), 1500);
+                document.getElementById('interactive-area').style.display = 'none';
             } else {
                 showNotification('Wrong answer! Try again.', 'error');
             }
@@ -827,246 +764,104 @@
         function showAdsOptions() {
             const area = document.getElementById('interactive-area');
             area.style.display = 'block';
-            area.scrollIntoView({ behavior: 'smooth' });
-            
             area.innerHTML = `
-                <h3 class="section-title">Select Ad Tier</h3>
-                <div class="grid-3">
-                    <div class="card card-interactive text-center" onclick="watchAd(1)">
-                        <div style="font-size: 32px; margin-bottom: 12px;">📺</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 1</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">10 seconds • +20 PTS</p>
-                    </div>
-                    <div class="card card-interactive text-center" onclick="watchAd(2)">
-                        <div style="font-size: 32px; margin-bottom: 12px;">🎬</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 2</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">20 seconds • +50 PTS</p>
-                    </div>
-                    <div class="card card-interactive text-center" onclick="watchAd(3)">
-                        <div style="font-size: 32px; margin-bottom: 12px;">🎥</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 3</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">30 seconds • +100 PTS</p>
-                    </div>
+                <div class="card text-center" onclick="watchAd(10)">
+                    <p class="text-md font-bold mb-2">Click to Watch Sponsored Video</p>
+                    <button class="btn btn-primary"><i class="fa-solid fa-play"></i> Load Video Ad (+50 PTS)</button>
                 </div>
             `;
         }
-        
-        function watchAd(tier) {
-            const rewards = { 1: 20, 2: 50, 3: 100 };
-            const durations = { 1: 10, 2: 20, 3: 30 };
-            
+
+        function watchAd(duration) {
             const area = document.getElementById('interactive-area');
-            area.innerHTML = `
-                <div class="card text-center">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📺</div>
-                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">Playing Premium Ad...</h4>
-                    <div class="progress-bar" style="margin-bottom: 8px;">
-                        <div id="ad-progress" class="progress-fill" style="width: 0%;"></div>
-                    </div>
-                    <p id="ad-timer" style="font-size: 14px; color: var(--text-muted);">${durations[tier]}s remaining</p>
-                </div>
-            `;
+            let time = duration;
+            area.innerHTML = `<div class="card text-center"><p class="text-xl font-bold">Loading Ad... ${time}s</p></div>`;
             
-            let timeLeft = durations[tier];
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('ad-progress').style.width = 
-                    ((durations[tier] - timeLeft) / durations[tier] * 100) + '%';
-                document.getElementById('ad-timer').textContent = timeLeft + 's remaining';
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    addPoints(rewards[tier]);
-                    showNotification(`Ad complete! +${rewards[tier]} PTS`, 'success');
-                    document.getElementById('interactive-area').style.display = 'none';
+            const interval = setInterval(() => {
+                time--;
+                if(time <= 0) {
+                    clearInterval(interval);
+                    addPoints(50);
+                    showNotification('Ad watched completely! +50 PTS', 'success');
+                    area.style.display = 'none';
+                } else {
+                    area.innerHTML = `<div class="card text-center"><p class="text-xl font-bold">Watching Video Ad... ${time}s</p></div>`;
                 }
             }, 1000);
         }
-        
+
         function showSocialOptions() {
             const area = document.getElementById('interactive-area');
             area.style.display = 'block';
-            area.scrollIntoView({ behavior: 'smooth' });
-            
             area.innerHTML = `
-                <h3 class="section-title">Share on Social Media</h3>
-                <p class="section-subtitle">Share our platform and earn 100 PTS per verified post.</p>
-                <div class="grid-2">
-                    <button onclick="shareOnSocial('facebook')" class="card card-interactive" style="background: rgba(59, 130, 246, 0.05);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-brands fa-facebook" style="font-size: 24px; color: #3b82f6;"></i>
-                            <span style="font-weight: 600;">Share on Facebook</span>
-                        </div>
-                    </button>
-                    <button onclick="shareOnSocial('twitter')" class="card card-interactive" style="background: rgba(14, 165, 233, 0.05);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-brands fa-twitter" style="font-size: 24px; color: #0ea5e9;"></i>
-                            <span style="font-weight: 600;">Share on Twitter</span>
-                        </div>
-                    </button>
-                    <button onclick="shareOnSocial('whatsapp')" class="card card-interactive" style="background: rgba(34, 197, 94, 0.05);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-brands fa-whatsapp" style="font-size: 24px; color: #22c55e;"></i>
-                            <span style="font-weight: 600;">Share on WhatsApp</span>
-                        </div>
-                    </button>
-                    <button onclick="shareOnSocial('telegram')" class="card card-interactive" style="background: rgba(34, 211, 238, 0.05);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <i class="fa-brands fa-telegram" style="font-size: 24px; color: #22d3ee;"></i>
-                            <span style="font-weight: 600;">Share on Telegram</span>
-                        </div>
+                <div class="card">
+                    <h4 class="font-bold text-lg mb-2">Social Tasks</h4>
+                    <p class="text-sm text-secondary mb-4">Share our platform link on your social media status and submit a screenshot or confirmation to earn rewards.</p>
+                    <button onclick="addPoints(100); showNotification('Social proof submitted! +100 PTS', 'success'); document.getElementById('interactive-area').style.display='none';" class="btn btn-primary">
+                        <i class="fa-solid fa-share-nodes"></i> Share & Claim 100 PTS
                     </button>
                 </div>
             `;
-        }
-        
-        function shareOnSocial(platform) {
-            const msg = encodeURIComponent('Join Alamin Special Earn - Earn real money online! 🚀 Sign up now!');
-            const urls = {
-                facebook: `https://facebook.com/sharer/sharer.php?u=${msg}`,
-                twitter: `https://twitter.com/intent/tweet?text=${msg}`,
-                whatsapp: `https://wa.me/?text=${msg}`,
-                telegram: `https://t.me/share/url?url=${msg}`
-            };
-            
-            window.open(urls[platform], '_blank');
-            
-            setTimeout(() => {
-                addPoints(100);
-                showNotification('+100 PTS from social share!', 'success');
-                document.getElementById('interactive-area').style.display = 'none';
-            }, 2000);
         }
         
         // ============ POINTS MANAGEMENT ============
         function addPoints(amount) {
             APP.points += amount;
             APP.totalEarned += amount;
-            
-            // Level up
             APP.level = Math.floor(APP.totalEarned / 1000) + 1;
-            if (APP.level > 20) APP.level = 20;
-            
             saveAppState();
             updateAllUI();
         }
         
-        function saveAppState() {
-            localStorage.setItem('alamin_state', JSON.stringify(APP));
-        }
-        
-        function loadAppState() {
-            const saved = localStorage.getItem('alamin_state');
-            if (saved) APP = Object.assign(APP, JSON.parse(saved));
-        }
+        function saveAppState() { localStorage.setItem('alamin_state', JSON.stringify(APP)); }
+        function loadAppState() { const saved = localStorage.getItem('alamin_state'); if (saved) APP = Object.assign(APP, JSON.parse(saved)); }
         
         function updateAllUI() {
             document.getElementById('points-display').textContent = APP.points + ' PTS';
             document.getElementById('total-earned').textContent = APP.totalEarned;
             document.getElementById('user-level').textContent = APP.level;
-            document.getElementById('streak-days').textContent = APP.streak;
-            document.getElementById('referral-count').textContent = APP.referrals;
-            
             const progress = Math.min((APP.points / 1000) * 100, 100);
             document.getElementById('progress-fill').style.width = progress + '%';
             document.getElementById('progress-text').textContent = APP.points + '/1000 PTS';
-            
             updateConversion();
         }
         
-        // ============ WITHDRAWAL ============
         function updateWithdrawOptions() {
             const method = document.getElementById('withdraw-method').value;
             const bankSelect = document.getElementById('withdraw-bank');
-            
-            const options = {
-                bank: ['OPay', 'PalmPay', 'Kuda', 'Access', 'GTB', 'UBA', 'Zenith'],
-                mpesa: ['M-Pesa Kenya', 'M-Pesa Tanzania'],
-                airtel: ['Airtel Money Kenya', 'Airtel Money Uganda'],
-                mtn: ['MTN Mobile Money', 'MTN Ghana']
-            };
-            
-            bankSelect.innerHTML = '<option value="">Choose...</option>' +
-                options[method].map(o => `<option value="${o}">${o}</option>`).join('');
+            const options = { bank: ['OPay', 'PalmPay', 'Kuda', 'Access'], mpesa: ['M-Pesa Pay'] };
+            bankSelect.innerHTML = options[method].map(o => `<option value="${o}">${o}</option>`).join('');
         }
         
         function updateConversion() {
             const amount = document.getElementById('withdraw-amount')?.value || 0;
-            document.getElementById('conversion-display').textContent = 
-                `₦${parseInt(amount).toLocaleString()}`;
+            document.getElementById('conversion-display').textContent = `₦${(parseInt(amount) || 0).toLocaleString()}`;
         }
         
         function processWithdrawal() {
             const amount = parseInt(document.getElementById('withdraw-amount').value);
-            const bank = document.getElementById('withdraw-bank').value;
-            const account = document.getElementById('withdraw-account').value;
-            
-            if (!amount || amount < 1000) {
-                showNotification('Minimum withdrawal is 1,000 PTS', 'warning');
-                return;
-            }
-            if (amount > APP.points) {
-                showNotification('Insufficient balance!', 'error');
-                return;
-            }
-            if (!bank || !account) {
-                showNotification('Please fill all fields', 'warning');
-                return;
-            }
-            
+            if (!amount || amount < 1000 || amount > APP.points) { showNotification('Invalid amount or Insufficient balance', 'error'); return; }
             APP.points -= amount;
             saveAppState();
             updateAllUI();
-            
-            showNotification(`Withdrawal of ₦${amount.toLocaleString()} initiated! Processing within 24 hours.`, 'success');
-            
-            document.getElementById('withdraw-amount').value = '';
-            document.getElementById('withdraw-account').value = '';
+            showNotification('Withdrawal processing successfully!', 'success');
         }
         
-        // ============ NOTIFICATIONS ============
         function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}</span>
-                <span>${message}</span>
-            `;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            n.innerHTML = `<span>⚠️</span><span>${message}</span>`;
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 3000);
         }
         
-        // ============ INITIALIZATION ============
         window.addEventListener('load', () => {
-            // Check adblock
-            setTimeout(() => {
-                const test = document.createElement('div');
-                test.className = 'adsbox';
-                test.style.cssText = 'position:absolute;left:-9999px;';
-                document.body.appendChild(test);
-                
-                setTimeout(() => {
-                    if (test.offsetHeight === 0) {
-                        document.getElementById('adblock-overlay').style.display = 'flex';
-                    }
-                    test.remove();
-                }, 100);
-            }, 1000);
-            
-            // Check login
             if (localStorage.getItem('alamin_logged_in') === 'true') {
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 loadAppState();
                 updateAllUI();
             }
-            
-            // Init withdraw options
             updateWithdrawOptions();
         });
     </script>
