@@ -3,867 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Special Earn - Professional Edition</title>
-    
+    <title>Alamin Special Earn - Global Premium Edition</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
-    <!-- Font Awesome -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
     <style>
-        /* ============ GOOGLE FONTS ============ */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
-        /* ============ ROOT VARIABLES ============ */
-        :root {
-            --bg-primary: #0a0e17;
-            --bg-secondary: #111827;
-            --bg-card: #1a1f2e;
-            --border-color: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --accent-purple: #8b5cf6;
-            --accent-blue: #3b82f6;
-            --accent-green: #10b981;
-            --accent-amber: #f59e0b;
-            --accent-red: #ef4444;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
-            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.6);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
-            --radius-2xl: 24px;
-        }
-        
-        /* ============ GLOBAL STYLES ============ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding-bottom: 70px; /* Space for sticky ad */
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            line-height: 1.3;
-        }
-        
-        /* ============ CUSTOM SCROLLBAR ============ */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
-        
-        /* ============ ANIMATIONS ============ */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .animate-slide-up {
-            animation: slideUp 0.6s ease-out;
-        }
-        
-        /* ============ COMPONENT STYLES ============ */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            border-color: var(--accent-purple);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .card-interactive {
-            cursor: pointer;
-        }
-        
-        .card-interactive:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-1);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        
-        .btn-outline:hover {
-            border-color: var(--accent-purple);
-            color: var(--accent-purple);
-        }
-        
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 12px;
-        }
-        
-        .btn-lg {
-            padding: 16px 32px;
-            font-size: 16px;
-        }
-        
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-purple {
-            background: rgba(139, 92, 246, 0.1);
-            color: var(--accent-purple);
-        }
-        
-        .badge-green {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-green);
-        }
-        
-        .badge-amber {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent-amber);
-        }
-        
-        .input-field {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-        
-        .input-field:focus {
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-        
-        .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 24px 0;
-        }
-        
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        
-        @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } .grid-2 { grid-template-columns: 1fr; } }
-        @media (max-width: 640px) { .grid-4, .grid-3 { grid-template-columns: 1fr; } }
-        
-        /* ============ PREMIUM AD UNITS PRESETS ============ */
-        .ad-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px dashed var(--border-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            margin: 20px 0;
-            padding: 10px;
-            min-height: 90px;
-            position: relative;
-        }
-        .ad-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-        .sticky-bottom-ad {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            z-index: 49;
-            padding: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-        }
-
-        /* ============ NOTIFICATION ============ */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            padding: 16px 24px;
-            border-radius: var(--radius-md);
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-xl);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            animation: slideUp 0.3s ease-out;
-            max-width: 400px;
-        }
-        .notification-success { border-left: 4px solid var(--accent-green); }
-        .notification-error { border-left: 4px solid var(--accent-red); }
-        .notification-warning { border-left: 4px solid var(--accent-amber); }
-        
-        /* ============ OVERLAY ============ */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            padding: 20px;
-        }
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-2xl);
-            padding: 32px;
-            max-width: 480px;
-            width: 100%;
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .progress-bar { width: 100%; height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gradient-1); border-radius: 4px; transition: width 0.6s ease; }
-        .section { margin-bottom: 32px; }
-        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
-        .section-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+        .neon-glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+        .neon-glow-amber { box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+        .neon-glow-indigo { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+        .glass-panel { backdrop-filter: blur(12px); background-color: rgba(15, 23, 42, 0.75); }
     </style>
 </head>
-<body>
+<body class="bg-slate-950 text-white font-sans min-h-screen overflow-x-hidden selection:bg-emerald-500 selection:text-slate-900">
 
-    <!-- ============ ADBLOCK OVERLAY ============ -->
-    <div id="adblock-overlay" class="overlay" style="display: none;">
-        <div class="modal text-center">
-            <div style="font-size: 48px; margin-bottom: 16px;">🛡️</div>
-            <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">Ad Blocker Detected</h2>
-            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">
-                Please disable your ad blocker to access all features and start earning rewards.
-            </p>
-            <button onclick="window.location.reload()" class="btn btn-primary btn-lg" style="width: 100%;">
-                <i class="fa-solid fa-rotate-right"></i> Reload Page
+    <!-- AD-BLOCK DETECTOR OVERLAY -->
+    <div id="adblock-overlay" class="fixed inset-0 bg-slate-950/95 z-[60] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-rose-500/30 w-full max-w-md rounded-2xl p-6 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-rose-500/10 text-rose-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
+                <i class="fa-solid fa-hand"></i>
+            </div>
+            <h2 class="text-xl font-black text-rose-400 mb-2">Ad-Blocker Detected!</h2>
+            <p class="text-slate-300 text-sm mb-6 leading-relaxed">Please disable your ad blocker or shields extension and reload the page to continue earning rewards safely.</p>
+            <button onclick="window.location.reload()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 rounded-xl transition shadow-lg cursor-pointer">
+                I've Disabled It, Reload <i class="fa-solid fa-rotate-right ml-1"></i>
             </button>
         </div>
     </div>
 
-    <!-- ============ LOGIN OVERLAY ============ -->
-    <div id="login-overlay" class="overlay">
-        <div class="modal text-center">
-            <div style="font-size: 40px; margin-bottom: 12px;">💎</div>
-            <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 4px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Alamin Special Earn
-            </h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 32px;">
-                Professional Earning Platform
-            </p>
-            
-            <!-- Login Form -->
-            <div id="login-form">
-                <div style="margin-bottom: 20px; text-align: left;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                        <i class="fa-solid fa-envelope" style="color: var(--accent-purple); margin-right: 6px;"></i>
-                        Email Address
-                    </label>
-                    <input type="email" id="user-email" class="input-field" placeholder="Enter your email address">
+    <!-- LOGIN SCREEN OVERLAY -->
+    <div id="login-overlay" class="fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl text-center">
+            <div class="inline-block bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4 tracking-wider uppercase animate-pulse">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Secure Access Protocol
+            </div>
+            <h2 class="text-3xl font-black text-emerald-400 mb-1 tracking-wide">ALAMIN SPECIAL</h2>
+            <h2 class="text-2xl font-black text-white mb-2 tracking-wide">EARN PLATFORM</h2>
+            <p class="text-slate-400 text-xs mb-6">Enter your Gmail to receive a dynamic security OTP code</p>
+
+            <div id="email-step">
+                <div class="mb-4 text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">Gmail Address</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-500"></i>
+                        <input type="email" id="user-email" placeholder="example@gmail.com" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white transition">
+                    </div>
                 </div>
-                
-                <button id="login-btn" onclick="handleLogin()" class="btn btn-primary btn-lg" style="width: 100%;">
-                    <i class="fa-solid fa-arrow-right"></i> Send Verification OTP
+                <button id="otp-btn" onclick="sendOTP()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center shadow-lg">
+                    <span id="btn-text">Request OTP Token</span> <i class="fa-solid fa-paper-plane ml-2"></i>
                 </button>
             </div>
-            
-            <!-- OTP Verification -->
-            <div id="otp-section" style="display: none;">
-                <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: 15px; margin-bottom: 20px;">
-                    <p style="font-size: 13px; color: var(--text-secondary);">
-                        An OTP code has been sent to your Gmail. Please check your inbox or spam folder.
-                    </p>
+
+            <div id="otp-step" class="hidden">
+                <div class="mb-4 text-left">
+                    <label class="text-xs font-semibold text-slate-400 block mb-2">Enter Verification Code</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-3.5 text-slate-500"></i>
+                        <input type="number" id="otp-input" placeholder="4-Digit Code" 
+                               class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-emerald-500 text-white tracking-widest font-bold text-center">
+                    </div>
+                    <p class="text-xs text-amber-400 mt-2 text-center" id="otp-hint"></p>
                 </div>
-                
-                <div style="margin-bottom: 20px; text-align: left;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                        <i class="fa-solid fa-lock" style="color: var(--accent-amber); margin-right: 6px;"></i>
-                        Enter 4-Digit OTP
-                    </label>
-                    <input type="text" id="otp-input" class="input-field" 
-                           placeholder="••••" maxlength="4"
-                           style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
-                </div>
-                
-                <div style="margin-bottom: 20px; text-align: left;">
-                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                        <i class="fa-solid fa-key" style="color: var(--accent-purple); margin-right: 6px;"></i>
-                        Create Security PIN
-                    </label>
-                    <input type="password" id="user-pin" class="input-field" 
-                           placeholder="••••" maxlength="4"
-                           style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
-                </div>
-                
-                <button onclick="verifyOTP()" class="btn btn-primary btn-lg" style="width: 100%;">
-                    <i class="fa-solid fa-shield-halved"></i> Verify & Access
+                <button onclick="verifyOTP()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-xl transition duration-200 cursor-pointer shadow-lg">
+                    Verify & Authenticate <i class="fa-solid fa-circle-check ml-2"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- ============ MAIN APP ============ -->
-    <div id="main-app" style="display: none;">
-        
-        <!-- HEADER -->
-        <header style="background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 16px 0; position: sticky; top: 0; z-index: 40; backdrop-filter: blur(12px);">
-            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 40px; height: 40px; background: var(--gradient-1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                        💎
+    <!-- MAIN APP CONTENT -->
+    <div id="main-app" class="hidden">
+        <!-- Header -->
+        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40">
+            <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-lg font-black text-emerald-400 tracking-wider flex items-center">
+                    <i class="fa-solid fa-wallet mr-2 text-emerald-400"></i>ALAMIN SPECIAL EARN
+                </h1>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-full flex items-center shadow-inner">
+                        <i class="fa-solid fa-coins text-amber-400 mr-1.5 text-sm"></i>
+                        <span id="points-display" class="font-black text-amber-400 text-sm">0</span> <span class="text-[10px] ml-1 text-slate-400 font-bold">PTS</span>
                     </div>
-                    <div>
-                        <h1 style="font-size: 18px; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            Alamin Earn
-                        </h1>
-                        <p style="font-size: 11px; color: var(--text-muted);">Professional Platform</p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <div style="background: var(--bg-secondary); padding: 8px 16px; border-radius: 24px; border: 1px solid var(--border-color);">
-                        <span style="font-size: 12px; color: var(--text-muted);">Balance</span>
-                        <span id="points-display" style="font-weight: 700; color: var(--accent-amber); margin-left: 8px;">0 PTS</span>
-                    </div>
-                    <button onclick="logout()" class="btn btn-outline btn-sm">
+                    <button onclick="logOut()" class="bg-rose-500/10 hover:bg-rose-500 border border-rose-500/20 hover:border-transparent text-rose-400 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
             </div>
         </header>
-        
-        <!-- MAIN CONTENT -->
-        <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;">
-            
-            <!-- MID-PAGE RESPONSIVE AD CONTEXT -->
-            <div class="ad-container">
-                <div class="ad-label">Sponsored Advertisement</div>
-                <!-- PASALIN CODE DIN TALLANKA NA ADSTERRA / ADSENSE A NAN -->
-                <div style="color: var(--text-muted); font-size: 12px;"><i class="fa-solid fa-rectangle-ad"></i> Ad Banner Zone (728x90 or Responsive)</div>
+
+        <main class="max-w-4xl mx-auto px-4 py-6">
+            <!-- Welcome Hero Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-center">
+                    <h2 class="text-xl font-black mb-1 text-slate-100">Welcome Back! 👋</h2>
+                    <p id="user-welcome" class="text-slate-400 text-xs">Test your global knowledge or complete interactive premium offers to boost your point balance.</p>
+                    
+                    <!-- Progress Bar to 1000 PTS -->
+                    <div class="mt-4">
+                        <div class="flex justify-between text-[11px] font-bold text-slate-400 mb-1">
+                            <span>Payout Completion Goal</span>
+                            <span id="progress-text">0% (0/1000)</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-2.5 p-0.5 border border-slate-800">
+                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Daily Reward Card -->
+                <div class="bg-slate-900 border border-amber-500/20 rounded-2xl p-5 shadow-xl text-center flex flex-col justify-between items-center">
+                    <div>
+                        <div class="text-amber-400 text-2xl mb-1"><i class="fa-solid fa-gift animate-bounce"></i></div>
+                        <h4 class="text-sm font-black text-slate-200">Daily Attendance</h4>
+                        <p class="text-[11px] text-slate-400 mt-1">Claim your continuous streak allocation of <span class="text-amber-400 font-bold">+50 PTS</span> every 24 hours.</p>
+                    </div>
+                    <button id="daily-btn" onclick="claimDailyBonus()" class="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-xs py-2.5 rounded-xl transition neon-glow-amber cursor-pointer">
+                        Claim Bonus
+                    </button>
+                </div>
             </div>
 
-            <!-- Welcome Section -->
-            <div class="section animate-fade-in">
-                <div class="card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.05));">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-                        <div>
-                            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 4px;">Welcome Back! 👋</h2>
-                            <p style="font-size: 14px; color: var(--text-secondary);">
-                                Complete tasks below to earn points and withdraw real money.
-                            </p>
+            <!-- Main Interactive Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Quiz Portal Card -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-emerald-500/30 transition duration-300">
+                    <div>
+                        <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-brain"></i>
                         </div>
-                        <div style="text-align: right;">
-                            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Today's Progress</p>
-                            <div style="width: 200px;">
-                                <div class="progress-bar" style="margin-bottom: 4px;">
-                                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
-                                </div>
-                                <span id="progress-text" style="font-size: 11px; color: var(--text-muted);">0/1000 PTS</span>
-                            </div>
-                        </div>
+                        <h3 class="text-lg font-black mb-1">Interactive Quiz Engine</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Choose your preferred native language and answer complex knowledge challenges. Earn <span class="text-emerald-400 font-bold">+10 PTS</span> per win.</p>
                     </div>
+                    <button onclick="showLanguageSelection()" class="w-full bg-slate-950 border border-emerald-500/30 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 font-bold py-3 rounded-xl transition neon-glow-emerald cursor-pointer">
+                        Launch Quiz Module
+                    </button>
+                </div>
+
+                <!-- Premium Ads Card -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg hover:border-amber-500/30 transition duration-300">
+                    <div>
+                        <div class="bg-amber-500/10 text-amber-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-rectangle-ad"></i>
+                        </div>
+                        <h3 class="text-lg font-black mb-1">Premium Ads Stream</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">Watch premium sponsored distributions from localized networks. Earn guaranteed allocations of <span class="text-amber-400 font-bold">+20 PTS</span>.</p>
+                    </div>
+                    <button onclick="watchAd()" class="w-full bg-slate-950 border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-bold py-3 rounded-xl transition neon-glow-amber cursor-pointer">
+                        Stream Ad Offer
+                    </button>
                 </div>
             </div>
-            
-            <!-- Quick Stats -->
-            <div class="section">
-                <div class="grid-4">
-                    <div class="card text-center">
-                        <div style="font-size: 28px; margin-bottom: 8px;">💰</div>
-                        <div style="font-size: 20px; font-weight: 700;" id="total-earned">0</div>
-                        <p style="font-size: 12px; color: var(--text-muted);">Total Earned</p>
-                    </div>
-                    <div class="card text-center">
-                        <div style="font-size: 28px; margin-bottom: 8px;">⭐</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-purple);" id="user-level">1</div>
-                        <p style="font-size: 12px; color: var(--text-muted);">Level</p>
-                    </div>
-                    <div class="card text-center">
-                        <div style="font-size: 28px; margin-bottom: 8px;">🔥</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);" id="streak-days">0</div>
-                        <p style="font-size: 12px; color: var(--text-muted);">Day Streak</p>
-                    </div>
-                    <div class="card text-center">
-                        <div style="font-size: 28px; margin-bottom: 8px;">👥</div>
-                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-blue);" id="referral-count">0</div>
-                        <p style="font-size: 12px; color: var(--text-muted);">Referrals</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Earning Methods -->
-            <div class="section">
-                <h3 class="section-title">Choose Earning Method</h3>
-                <p class="section-subtitle">Select any option below to start earning points instantly.</p>
+
+            <!-- DYNAMIC INTERACTIVE DISPLAY AREA -->
+            <div id="interactive-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hidden shadow-2xl mb-6 relative">
                 
-                <div class="grid-3">
-                    <!-- Quiz Card -->
-                    <div class="card card-interactive" onclick="showQuizOptions()" style="border-top: 3px solid var(--accent-purple);">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="width: 48px; height: 48px; background: rgba(139, 92, 246, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                                🤖
-                            </div>
-                            <div style="flex: 1;">
-                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">AI Quiz Mining</h4>
-                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                                    Answer intelligent questions and earn up to <strong style="color: var(--accent-purple);">50 PTS</strong> per correct answer.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Ads Card -->
-                    <div class="card card-interactive" onclick="showAdsOptions()" style="border-top: 3px solid var(--accent-blue);">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                                📺
-                            </div>
-                            <div style="flex: 1;">
-                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Premium Ads</h4>
-                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                                    Watch high-quality advertisements and earn up to <strong style="color: var(--accent-blue);">100 PTS</strong> per view.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Social Card -->
-                    <div class="card card-interactive" onclick="showSocialOptions()" style="border-top: 3px solid var(--accent-green);">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                                🌐
-                            </div>
-                            <div style="flex: 1;">
-                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Social Mining</h4>
-                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
-                                    Share our platform and earn <strong style="color: var(--accent-green);">100 PTS</strong> per verified social post.
-                                </p>
-                            </div>
-                        </div>
+                <!-- Language Selector Step -->
+                <div id="quiz-lang-selector" class="hidden text-center">
+                    <h3 class="text-md font-black mb-4 text-emerald-400 uppercase tracking-wider">Select Quiz Language</h3>
+                    <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+                        <button onclick="startQuiz('en')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm cursor-pointer">🇺🇸 English</button>
+                        <button onclick="startQuiz('ha')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm cursor-pointer">🇳🇬 Hausa</button>
+                        <button onclick="startQuiz('ar')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm cursor-pointer">🇸🇦 العربية (Arabic)</button>
+                        <button onclick="startQuiz('yo')" class="bg-slate-950 hover:bg-emerald-500 hover:text-slate-950 border border-slate-800 p-4 rounded-xl font-bold transition text-sm cursor-pointer">🇳🇬 Yorùbá</button>
                     </div>
                 </div>
+
+                <!-- Question Render Container -->
+                <div id="quiz-content" class="hidden"></div>
+                
+                <!-- Premium Secured Advertisement Interface -->
+                <div id="ads-content" class="hidden text-center py-2">
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
+                        <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-rectangle-ad mr-1"></i> Premium Live Asset</span>
+                        <span id="ad-timer" class="text-xs bg-amber-500 text-slate-900 px-3 py-0.5 rounded-full font-black tracking-wide">10s</span>
+                    </div>
+                    
+                    <!-- Dynamic Anti-Duplicate Refresh Container Box -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-900 min-h-[260px] flex items-center justify-center text-center relative">
+                        <div id="ad-placement-zone" class="w-full overflow-hidden flex justify-center items-center">
+                            <!-- Premium Placement Zone -->
+                        </div>
+                        
+                        <!-- Fallback Placeholder -->
+                        <div id="ad-fallback-placeholder" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-4 text-center">
+                            <i class="fa-solid fa-circle-notch animate-spin text-amber-400 text-3xl mb-3"></i>
+                            <h5 class="text-xs font-bold text-slate-300">Synchronizing Live Distribution...</h5>
+                            <p class="text-[10px] text-slate-500 mt-1 max-w-xs">Waiting for next premium offer placement from network hosts.</p>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-4">Do not close this panel or navigate away until the security ledger updates.</p>
+                </div>
+                
+                <!-- Success State Display -->
+                <div id="ad-success-content" class="hidden text-center py-6">
+                    <h4 class="text-emerald-400 font-black text-xl mb-1"><i class="fa-solid fa-circle-check mr-2"></i>Reward Dispatched!</h4>
+                    <p class="text-slate-300 text-sm">Verification Ledger approved. Added <span class="text-amber-400 font-bold">+20 Points</span>.</p>
+                    <button onclick="closeBox()" class="mt-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs px-6 py-2.5 rounded-xl shadow-md transition cursor-pointer">Continue</button>
+                </div>
             </div>
-            
-            <!-- Interactive Area -->
-            <div id="interactive-area" class="section" style="display: none;"></div>
-            
-            <!-- Withdrawal Section -->
-            <div class="section">
-                <h3 class="section-title">Withdraw Your Earnings</h3>
-                <div class="card">
-                    <div class="grid-2">
+
+            <!-- BOTTOM METRIC PANELS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Global Leaderboard -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-black mb-3 text-slate-200 flex items-center">
+                            <i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Global Leaderboard
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-300">1. Alamin Specialist ⭐</span>
+                                <span class="font-black text-amber-400">4,850 PTS</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-400">2. Ibrahim Kano</span>
+                                <span class="font-bold text-slate-300">3,120 PTS</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded-xl border border-slate-900 text-xs">
+                                <span class="font-medium text-slate-400">3. Rilwanu Tech</span>
+                                <span class="font-bold text-slate-300">2,900 PTS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-4 text-center">Rankings update automatically weekly.</p>
+                </div>
+
+                <!-- Secure Bank Settlement Center -->
+                <div class="md:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="bg-indigo-500/10 text-indigo-400 w-9 h-9 rounded-xl flex items-center justify-center text-md">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                        </div>
+                        <h3 class="text-base font-black">Settlement Gateway</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">Minimum threshold verification benchmark: <span class="text-amber-400 font-bold">1000 PTS (= ₦1,000)</span></p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                                Payment Method
-                            </label>
-                            <select id="withdraw-method" class="input-field" onchange="updateWithdrawOptions()">
-                                <option value="bank">🏦 Bank Transfer</option>
-                                <option value="mpesa">📱 M-Pesa</option>
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Target Institution</label>
+                            <select id="withdraw-bank" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Moniepoint">Moniepoint</option>
+                                <option value="Kuda Bank">Kuda Bank</option>
                             </select>
                         </div>
                         <div>
-                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                                Select Institution
-                            </label>
-                            <select id="withdraw-bank" class="input-field"></select>
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Account Number (NUBAN)</label>
+                            <input type="number" id="withdraw-account" placeholder="10-Digit Standard Number" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
                         </div>
-                        <div>
-                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                                Account Number
-                            </label>
-                            <input type="text" id="withdraw-account" class="input-field" placeholder="Enter account number">
-                        </div>
-                        <div>
-                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
-                                Amount (PTS)
-                            </label>
-                            <input type="number" id="withdraw-amount" class="input-field" placeholder="Min: 1,000" onkeyup="updateConversion()">
+                        <div class="md:col-span-2">
+                            <label class="text-[11px] font-bold text-slate-400 block mb-1">Points Liquidation Volume</label>
+                            <input type="number" id="withdraw-amount" placeholder="Minimum: 1000" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3 text-xs text-white focus:outline-none focus:border-indigo-500">
                         </div>
                     </div>
-                    
-                    <div style="margin-top: 16px; padding: 16px; background: var(--bg-secondary); border-radius: var(--radius-md);">
-                        <span style="font-size: 13px; color: var(--text-muted);">You will receive:</span>
-                        <span id="conversion-display" style="font-size: 20px; font-weight: 700; margin-left: 8px;">₦0.00</span>
-                    </div>
-                    
-                    <button onclick="processWithdrawal()" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 16px;">
-                        <i class="fa-solid fa-paper-plane"></i> Withdraw Now
+                    <button onclick="processWithdrawal()" class="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-xl text-xs transition shadow-md neon-glow-indigo cursor-pointer">
+                        Execute Settlement Order
                     </button>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ============ STICKY BOTTOM AD ZONE ============ -->
-    <div class="sticky-bottom-ad">
-        <!-- SAUKAR DA TALLAN ADSTERRA MOBILE BANNER (320x50) A NAN -->
-        <span style="font-size: 10px; color: var(--text-muted); margin-right: 10px;">Ad:</span>
-        <div style="font-size: 12px; color: var(--text-muted); text-align: center;">Mobile Smart Ad Unit Loaded</div>
-    </div>
+    <!-- Micro Decoy Component to Trip Active Browser Extensions -->
+    <div class="ad-banner-check adsbox ads-holder" style="position:absolute; left:-9999px; width:1px; height:1px;"></div>
 
     <script>
-        // ============ EMAILJS CONFIGURATION ============
-        const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; 
-        const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-        const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+        const SALT_KEY = "GLOBAL_SECURE_ALAMIN_SUPER_991823";
+        let totalPoints = 0;
+        let generatedOTP = null;
+        let lastActionTime = 0;
+        let adCountdownInterval = null;
 
-        // Initialize EmailJS
-        (function() {
-            if(EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-                emailjs.init(EMAILJS_PUBLIC_KEY);
-            }
-        })();
+        const pointsDisplay = document.getElementById('points-display');
+        const interactiveBox = document.getElementById('interactive-box');
+        const quizLangSelector = document.getElementById('quiz-lang-selector');
+        const quizContent = document.getElementById('quiz-content');
+        const adsContent = document.getElementById('ads-content');
+        const adSuccessContent = document.getElementById('ad-success-content');
+        const adZone = document.getElementById('ad-placement-zone');
+        const adFallback = document.getElementById('ad-fallback-placeholder');
 
-        // ============ APP STATE ============
-        let APP = {
-            points: 0,
-            totalEarned: 0,
-            level: 1,
-            streak: 0,
-            referrals: 0,
-            otp: null,
-            email: null
+        const PUBLIC_KEY = "ujdxkAckzXLPYsTkH"; 
+        const SERVICE_ID = "service_adq70ak"; 
+        const TEMPLATE_ID = "template_74pioox"; 
+
+        emailjs.init(PUBLIC_KEY);
+
+        const quizMasterDatabase = {
+            en: [
+                { fanni: "Cybersecurity", q: "What does the 'S' stand for in HTTPS?", a: "Standard", b: "Secure", c: "Speed", d: "Science", ans: "b" },
+                { fanni: "Web Architecture", q: "Which programming language runs natively inside web browsers?", a: "Python", b: "C++", c: "JavaScript", d: "Java", ans: "c" }
+            ],
+            ha: [
+                { fanni: "Tarihin Najeriya", q: "A wace shekara aka samar da tsarin mulkin kasarnan na yanzu?", a: "1960", b: "1999", c: "2015", d: "1963", ans: "b" },
+                { fanni: "Harshe", q: "Wane harafi ne ba ya cikin haruffan boko na Hausa?", a: "C", b: "P", c: "X", d: "Q", ans: "c" }
+            ],
+            ar: [
+                { fanni: "لغة عربية", q: "ما هو الاسم الآخر للمدينة المنورة؟", a: "طيبة", b: "مكة", c: "القدس", d: "بغداد", ans: "a" },
+                { fanni: "ثقافة عامة", q: "كم عدد سور القرآن الكريم؟", a: "١1٣", b: "١١٤", c: "١١٥", d: "١٢٠", ans: "b" }
+            ],
+            yo: [
+                { fanni: "Àṣà Ìbílẹ̀", q: "Kini orúkọ olú-ìlú ìpínlẹ̀ Ọ̀yọ́?", a: "Èkó", b: "Ìbàdàn", c: "Abẹ́òkúta", d: "Akúrẹ́", ans: "b" },
+                { fanni: "Èdè", q: "Kini ìtumọ̀ ọ̀rọ̀ náà 'Ọmọ' ní èdè gẹ̀ẹ́sì?", a: "Father", b: "Mother", c: "Child", d: "Friend", ans: "c" }
+            ]
         };
-        
-        // ============ LOGIN SYSTEM W/ REAL GMAIL OTP ============
-        function handleLogin() {
-            const email = document.getElementById('user-email').value.trim();
-            const loginBtn = document.getElementById('login-btn');
+
+        let activeQuizLanguage = 'en';
+        let activeQuestion = null;
+
+        function getSecurePoints() {
+            const raw = localStorage.getItem('alamin_pts_secure');
+            const hash = localStorage.getItem('alamin_pts_hash');
+            if(!raw || !hash) return 0;
+            if(btoa(raw + SALT_KEY) !== hash) {
+                setSecurePoints(0);
+                return 0;
+            }
+            return parseInt(atob(raw));
+        }
+
+        function setSecurePoints(value) {
+            let encodedValue = btoa(value.toString());
+            let computedHash = btoa(encodedValue + SALT_KEY);
+            localStorage.setItem('alamin_pts_secure', encodedValue);
+            localStorage.setItem('alamin_pts_hash', computedHash);
+            totalPoints = value;
+            updateUI();
+        }
+
+        function updateUI() {
+            pointsDisplay.innerText = totalPoints;
+            let percent = Math.min((totalPoints / 1000) * 100, 100);
+            document.getElementById('progress-bar').style.width = percent + "%";
+            document.getElementById('progress-text').innerText = `${Math.floor(percent)}% (${totalPoints}/1000)`;
             
-            if (!email || !email.includes('@')) {
-                showNotification('Please enter a valid email address', 'error');
+            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
+            const todayStr = new Date().toDateString();
+            const dailyBtn = document.getElementById('daily-btn');
+            if(lastClaim === todayStr) {
+                dailyBtn.innerText = "Claimed Today";
+                dailyBtn.disabled = true;
+                dailyBtn.className = "w-full mt-3 bg-slate-800 text-slate-500 font-bold text-xs py-2.5 rounded-xl cursor-not-allowed";
+            }
+        }
+
+        function detectAdBlocker() {
+            const decoy = document.querySelector('.ad-banner-check');
+            if (!decoy || decoy.offsetHeight === 0 || window.getComputedStyle(decoy).display === 'none') {
+                document.getElementById('adblock-overlay').classList.remove('hidden');
+                return true;
+            }
+            document.getElementById('adblock-overlay').classList.add('hidden');
+            return false;
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(detectAdBlocker, 1200);
+            totalPoints = getSecurePoints();
+            checkLoginStatus();
+            updateUI();
+        });
+
+        function checkLoginStatus() {
+            if(localStorage.getItem('user_logged_in') === 'true') {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                let email = localStorage.getItem('user_gmail');
+                document.getElementById('user-welcome').innerText = `Authenticated Session: ${email}. Complete tasks to unlock liquidation milestones.`;
+            } else {
+                document.getElementById('login-overlay').classList.remove('hidden');
+                document.getElementById('main-app').classList.add('hidden');
+            }
+        }
+
+        function sendOTP() {
+            const emailInput = document.getElementById('user-email').value;
+            const btnText = document.getElementById('btn-text');
+            const otpBtn = document.getElementById('otp-btn');
+
+            if(!emailInput.includes('@') || !emailInput.includes('.com')) {
+                alert('Please enter a valid global email address!');
                 return;
             }
 
-            if(EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
-                showNotification('EmailJS Key ba a sa ba! Amma an ba ka damar shiga.', 'warning');
-                APP.email = email;
-                APP.otp = "1234";
-                alert("Demo Mode OTP dinka shine: 1234");
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('otp-section').style.display = 'block';
-                return;
-            }
-            
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Sending OTP...';
-            
-            APP.email = email;
-            APP.otp = Math.floor(1000 + Math.random() * 9000).toString();
-            
+            btnText.innerText = "Transmitting Token...";
+            otpBtn.disabled = true;
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+
             const templateParams = {
-                to_email: email,
-                otp_code: APP.otp,
-                project_name: "Alamin Special Earn"
+                to_email: emailInput,
+                to_name: emailInput,
+                otp_code: generatedOTP,
+                message: `Your requested authentication token is: ${generatedOTP}`
             };
 
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-                .then(function(response) {
-                    showNotification('OTP code has been sent to your email!', 'success');
-                    document.getElementById('login-form').style.display = 'none';
-                    document.getElementById('otp-section').style.display = 'block';
-                }, function(error) {
-                    showNotification('Failed to send OTP. Try again later.', 'error');
-                    console.log('EmailJS Error:', error);
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> Send Verification OTP';
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+                .then(function() {
+                    alert('Security token dispatched successfully to your email inbox.');
+                    document.getElementById('email-step').classList.add('hidden');
+                    document.getElementById('otp-step').classList.remove('hidden');
+                    document.getElementById('otp-hint').innerText = `Inspect inbox or spam folder for: ${emailInput}`;
+                }, function() {
+                    alert('Transmission layer failure. Verify active device parameters.');
+                    btnText.innerText = "Request OTP Token";
+                    otpBtn.disabled = false;
                 });
         }
-        
+
         function verifyOTP() {
-            const otp = document.getElementById('otp-input').value;
-            const pin = document.getElementById('user-pin').value;
-            
-            if (otp !== APP.otp) {
-                showNotification('Invalid verification code!', 'error');
-                return;
-            }
-            
-            if (!pin || pin.length !== 4) {
-                showNotification('Please create a 4-digit PIN', 'warning');
-                return;
-            }
-            
-            localStorage.setItem('alamin_pin', pin);
-            localStorage.setItem('alamin_email', APP.email);
-            localStorage.setItem('alamin_logged_in', 'true');
-            
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            
-            loadAppState();
-            updateAllUI();
-            showNotification('Access Granted! Welcome.', 'success');
-        }
-        
-        function logout() {
-            localStorage.removeItem('alamin_logged_in');
-            document.getElementById('main-app').style.display = 'none';
-            document.getElementById('login-overlay').style.display = 'flex';
-            document.getElementById('otp-section').style.display = 'none';
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('login-btn').disabled = false;
-            document.getElementById('login-btn').innerHTML = '<i class="fa-solid fa-arrow-right"></i> Send Verification OTP';
-        }
-        
-        // ============ EARNING MODULES ============
-        function showQuizOptions() {
-            const area = document.getElementById('interactive-area');
-            area.style.display = 'block';
-            area.scrollIntoView({ behavior: 'smooth' });
-            
-            area.innerHTML = `
-                <h3 class="section-title">Select Quiz Difficulty</h3>
-                <div class="grid-3">
-                    <div class="card card-interactive text-center" onclick="startQuiz('easy')">
-                        <div style="font-size: 32px; margin-bottom: 12px;">⭐</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Easy</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+10 PTS</p>
-                    </div>
-                    <div class="card card-interactive text-center" onclick="startQuiz('medium')">
-                        <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Medium</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+25 PTS</p>
-                    </div>
-                    <div class="card card-interactive text-center" onclick="startQuiz('hard')">
-                        <div style="font-size: 32px; margin-bottom: 12px;">💎</div>
-                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Hard</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">+50 PTS</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        function startQuiz(difficulty) {
-            const questions = {
-                easy: [{ q: "What is the capital of Nigeria?", opts: ["Lagos", "Abuja", "Kano"], ans: 1 }],
-                medium: [{ q: "What is 15% of 200?", opts: ["20", "25", "30"], ans: 2 }],
-                hard: [{ q: "Chemical symbol for Gold?", opts: ["Ag", "Au", "Fe"], ans: 1 }]
-            };
-            
-            const rewards = { easy: 10, medium: 25, hard: 50 };
-            const question = questions[difficulty][Math.floor(Math.random() * questions[difficulty].length)];
-            
-            const area = document.getElementById('interactive-area');
-            area.innerHTML = `
-                <div class="card">
-                    <p class="font-bold text-lg mb-4">${question.q}</p>
-                    <div class="grid-2">
-                        ${question.opts.map((opt, i) => `
-                            <button onclick="checkAnswer(${i}, ${question.ans}, ${rewards[difficulty]}, '${difficulty}')" class="btn btn-outline">
-                                ${opt}
-                            </button>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-        
-        function checkAnswer(chosen, correct, reward, difficulty) {
-            if (chosen === correct) {
-                addPoints(reward);
-                showNotification(`Correct! +${reward} PTS`, 'success');
-                document.getElementById('interactive-area').style.display = 'none';
+            const userOTP = document.getElementById('otp-input').value;
+            if(userOTP == generatedOTP) {
+                const emailInput = document.getElementById('user-email').value;
+                localStorage.setItem('user_logged_in', 'true');
+                localStorage.setItem('user_gmail', emailInput);
+                checkLoginStatus();
             } else {
-                showNotification('Wrong answer! Try again.', 'error');
+                alert('Invalid security authorization checksum.');
             }
         }
-        
-        function showAdsOptions() {
-            const area = document.getElementById('interactive-area');
-            area.style.display = 'block';
-            area.innerHTML = `
-                <div class="card text-center" onclick="watchAd(10)">
-                    <p class="text-md font-bold mb-2">Click to Watch Sponsored Video</p>
-                    <button class="btn btn-primary"><i class="fa-solid fa-play"></i> Load Video Ad (+50 PTS)</button>
+
+        function logOut() {
+            localStorage.removeItem('user_logged_in');
+            localStorage.removeItem('user_gmail');
+            checkLoginStatus();
+        }
+
+        function claimDailyBonus() {
+            if(detectAdBlocker()) return;
+            const lastClaim = localStorage.getItem('last_daily_bonus_claim');
+            const todayStr = new Date().toDateString();
+
+            if (lastClaim === todayStr) {
+                alert("Allocation limits reached for today. Return tomorrow.");
+                return;
+            }
+
+            localStorage.setItem('last_daily_bonus_claim', todayStr);
+            setSecurePoints(totalPoints + 50);
+            alert("Success! Authenticated Daily Bonus allocation +50 PTS has settled.");
+        }
+
+        function showLanguageSelection() {
+            if(detectAdBlocker()) return;
+            clearInterval(adCountdownInterval);
+            interactiveBox.classList.remove('hidden');
+            quizLangSelector.classList.remove('hidden');
+            quizContent.classList.add('hidden');
+            adsContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
+        }
+
+        function startQuiz(lang) {
+            activeQuizLanguage = lang;
+            quizLangSelector.classList.add('hidden');
+            quizContent.classList.remove('hidden');
+
+            const bank = quizMasterDatabase[lang];
+            const randomIndex = Math.floor(Math.random() * bank.length);
+            activeQuestion = bank[randomIndex];
+
+            quizContent.innerHTML = `
+                <div>
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
+                        <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">${activeQuestion.fanni}</span>
+                        <button onclick="closeBox()" class="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">&times; Close Portal</button>
+                    </div>
+                    <p class="text-base font-semibold mb-6 text-slate-100">${activeQuestion.q}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer('a')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs cursor-pointer">A) ${activeQuestion.a}</button>
+                        <button onclick="checkAnswer('b')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs cursor-pointer">B) ${activeQuestion.b}</button>
+                        <button onclick="checkAnswer('c')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs cursor-pointer">C) ${activeQuestion.c}</button>
+                        <button onclick="checkAnswer('d')" class="w-full text-left bg-slate-950 hover:bg-slate-800 p-3.5 rounded-xl transition border border-slate-800 hover:border-emerald-500/40 text-xs cursor-pointer">D) ${activeQuestion.d}</button>
+                    </div>
                 </div>
             `;
         }
 
-        function watchAd(duration) {
-            const area = document.getElementById('interactive-area');
-            let time = duration;
-            area.innerHTML = `<div class="card text-center"><p class="text-xl font-bold">Loading Ad... ${time}s</p></div>`;
+        function checkAnswer(choice) {
+            const now = Date.now();
+            if(now - lastActionTime < 1000) return;
+            lastActionTime = now;
+
+            if(choice === activeQuestion.ans) {
+                setSecurePoints(totalPoints + 10);
+                quizContent.innerHTML = `
+                    <div class="text-center py-6">
+                        <div class="text-emerald-400 text-4xl mb-2"><i class="fa-solid fa-circle-check"></i></div>
+                        <h4 class="text-emerald-400 font-black text-lg mb-1">Correct Answer!</h4>
+                        <p class="text-slate-400 text-xs">Allocation +10 Points processed successfully.</p>
+                        <div class="flex justify-center space-x-3 mt-5">
+                            <button onclick="startQuiz('${activeQuizLanguage}')" class="bg-emerald-500 text-slate-950 text-xs font-black px-5 py-2.5 rounded-xl cursor-pointer">Next Challenge</button>
+                            <button onclick="closeBox()" class="bg-slate-950 text-slate-400 text-xs font-bold px-5 py-2.5 border border-slate-800 rounded-xl cursor-pointer">Terminate Session</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                quizContent.innerHTML = `
+                    <div class="text-center py-6">
+                        <div class="text-rose-400 text-4xl mb-2"><i class="fa-solid fa-circle-xmark"></i></div>
+                        <h4 class="text-rose-400 font-black text-lg mb-1">Incorrect Assertion!</h4>
+                        <p class="text-slate-400 text-xs">Accurate tracking pointer was: <span class="font-black text-emerald-400">${activeQuestion.ans.toUpperCase()}</span></p>
+                        <div class="flex justify-center space-x-3 mt-5">
+                            <button onclick="startQuiz('${activeQuizLanguage}')" class="bg-slate-950 text-slate-300 border border-slate-800 text-xs px-5 py-2.5 rounded-xl cursor-pointer">Retry Block</button>
+                            <button onclick="closeBox()" class="bg-slate-950 text-slate-500 text-xs px-5 py-2.5 rounded-xl cursor-pointer">Exit</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function watchAd() {
+            if(detectAdBlocker()) return;
+
+            clearInterval(adCountdownInterval);
+            interactiveBox.classList.remove('hidden');
+            adsContent.classList.remove('hidden');
+            quizLangSelector.classList.add('hidden');
+            quizContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
             
-            const interval = setInterval(() => {
-                time--;
-                if(time <= 0) {
-                    clearInterval(interval);
-                    addPoints(50);
-                    showNotification('Ad watched completely! +50 PTS', 'success');
-                    area.style.display = 'none';
+            adZone.innerHTML = '';
+            adFallback.style.display = 'flex';
+
+            setTimeout(() => {
+                // Safely injecting the dynamic script tags
+                const adScript = document.createElement('script');
+                adScript.type = 'text/javascript';
+                adScript.src = '//pl30146139.effectivecpmnetwork.com/2798cb95d48c52b9c5336facbcedece3/invoke.js';
+                adScript.async = true;
+                adScript.setAttribute('data-cfasync', 'false');
+                
+                const adContainer = document.createElement('div');
+                adContainer.id = 'container-2798cb95d48c52b9c5336facbcedece3';
+                
+                adZone.appendChild(adContainer);
+                adZone.appendChild(adScript);
+                
+                adFallback.style.display = 'none';
+            }, 1500);
+
+            let timeLeft = 10;
+            const timerDisplay = document.getElementById('ad-timer');
+            timerDisplay.innerText = "10s";
+            
+            adCountdownInterval = setInterval(() => {
+                timeLeft--;
+                if(timeLeft > 0) {
+                    timerDisplay.innerText = timeLeft + "s";
                 } else {
-                    area.innerHTML = `<div class="card text-center"><p class="text-xl font-bold">Watching Video Ad... ${time}s</p></div>`;
+                    clearInterval(adCountdownInterval);
+                    setSecurePoints(totalPoints + 20);
+                    adsContent.classList.add('hidden');
+                    adSuccessContent.classList.remove('hidden');
                 }
             }, 1000);
         }
 
-        function showSocialOptions() {
-            const area = document.getElementById('interactive-area');
-            area.style.display = 'block';
-            area.innerHTML = `
-                <div class="card">
-                    <h4 class="font-bold text-lg mb-2">Social Tasks</h4>
-                    <p class="text-sm text-secondary mb-4">Share our platform link on your social media status and submit a screenshot or confirmation to earn rewards.</p>
-                    <button onclick="addPoints(100); showNotification('Social proof submitted! +100 PTS', 'success'); document.getElementById('interactive-area').style.display='none';" class="btn btn-primary">
-                        <i class="fa-solid fa-share-nodes"></i> Share & Claim 100 PTS
-                    </button>
-                </div>
-            `;
-        }
-        
-        // ============ POINTS MANAGEMENT ============
-        function addPoints(amount) {
-            APP.points += amount;
-            APP.totalEarned += amount;
-            APP.level = Math.floor(APP.totalEarned / 1000) + 1;
-            saveAppState();
-            updateAllUI();
-        }
-        
-        function saveAppState() { localStorage.setItem('alamin_state', JSON.stringify(APP)); }
-        function loadAppState() { const saved = localStorage.getItem('alamin_state'); if (saved) APP = Object.assign(APP, JSON.parse(saved)); }
-        
-        function updateAllUI() {
-            document.getElementById('points-display').textContent = APP.points + ' PTS';
-            document.getElementById('total-earned').textContent = APP.totalEarned;
-            document.getElementById('user-level').textContent = APP.level;
-            const progress = Math.min((APP.points / 1000) * 100, 100);
-            document.getElementById('progress-fill').style.width = progress + '%';
-            document.getElementById('progress-text').textContent = APP.points + '/1000 PTS';
-            updateConversion();
-        }
-        
-        function updateWithdrawOptions() {
-            const method = document.getElementById('withdraw-method').value;
-            const bankSelect = document.getElementById('withdraw-bank');
-            const options = { bank: ['OPay', 'PalmPay', 'Kuda', 'Access'], mpesa: ['M-Pesa Pay'] };
-            bankSelect.innerHTML = options[method].map(o => `<option value="${o}">${o}</option>`).join('');
-        }
-        
-        function updateConversion() {
-            const amount = document.getElementById('withdraw-amount')?.value || 0;
-            document.getElementById('conversion-display').textContent = `₦${(parseInt(amount) || 0).toLocaleString()}`;
-        }
-        
         function processWithdrawal() {
+            const bank = document.getElementById('withdraw-bank').value;
+            const account = document.getElementById('withdraw-account').value;
             const amount = parseInt(document.getElementById('withdraw-amount').value);
-            if (!amount || amount < 1000 || amount > APP.points) { showNotification('Invalid amount or Insufficient balance', 'error'); return; }
-            APP.points -= amount;
-            saveAppState();
-            updateAllUI();
-            showNotification('Withdrawal processing successfully!', 'success');
-        }
-        
-        function showNotification(message, type = 'info') {
-            const n = document.createElement('div');
-            n.className = `notification notification-${type}`;
-            n.innerHTML = `<span>⚠️</span><span>${message}</span>`;
-            document.body.appendChild(n);
-            setTimeout(() => n.remove(), 3000);
-        }
-        
-        window.addEventListener('load', () => {
-            if (localStorage.getItem('alamin_logged_in') === 'true') {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                loadAppState();
-                updateAllUI();
+
+            if(!account || account.length < 10) {
+                alert('NUBAN formatting rule exception. Enter a valid 10-digit account number.');
+                return;
             }
-            updateWithdrawOptions();
-        });
+            if(!amount || amount < 1000) {
+                alert('Threshold condition error. Minimum extraction volume is 1,000 PTS.');
+                return;
+            }
+            if(amount > totalPoints) {
+                alert('Liquidation failed. Insufficient ledger balance.');
+                return;
+            }
+
+            setSecurePoints(totalPoints - amount);
+            alert(`Liquidation Order Dispatched Successfully!\n\nInstitution: ${bank}\nAccount: ${account}\nVolume: ${amount} PTS\n\nLedger clearance verification pending.`);
+            
+            document.getElementById('withdraw-account').value = '';
+            document.getElementById('withdraw-amount').value = '';
+        }
+
+        function closeBox() { 
+            clearInterval(adCountdownInterval);
+            interactiveBox.classList.add('hidden'); 
+            adsContent.classList.add('hidden');
+            quizLangSelector.classList.add('hidden');
+            quizContent.classList.add('hidden');
+            adSuccessContent.classList.add('hidden');
+        }
     </script>
 </body>
 </html>
