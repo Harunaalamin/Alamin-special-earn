@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Special Earn - ULTIMATE EXCLUSIVE EDITION</title>
+    <title>Alamin Special Earn - Professional Edition</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -11,633 +11,654 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
-    
     <style>
         /* ============ GOOGLE FONTS ============ */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
-        /* ============ CSS VARIABLES ============ */
+        /* ============ ROOT VARIABLES ============ */
         :root {
-            --primary: #8b5cf6;
-            --secondary: #ec4899;
-            --accent: #06b6d4;
-            --gold: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --dark: #0f172a;
-            --darker: #020617;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f2e;
+            --border-color: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.6);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+        }
+        
+        /* ============ GLOBAL STYLES ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.3;
+        }
+        
+        /* ============ CUSTOM SCROLLBAR ============ */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
         
         /* ============ ANIMATIONS ============ */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px var(--primary), 0 0 20px var(--secondary); }
-            50% { box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes slide-up {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
         
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
         }
         
-        @keyframes border-glow {
-            0%, 100% { border-color: rgba(139, 92, 246, 0.3); }
-            50% { border-color: rgba(139, 92, 246, 0.8); }
+        .animate-slide-up {
+            animation: slideUp 0.6s ease-out;
         }
         
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* ============ CUSTOM CLASSES ============ */
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .font-poppins { font-family: 'Poppins', sans-serif; }
-        
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
+        /* ============ COMPONENT STYLES ============ */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
             transition: all 0.3s ease;
         }
         
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
+        .card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: var(--shadow-md);
         }
         
-        .gradient-text {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradient-shift 3s ease infinite;
+        .card-interactive {
+            cursor: pointer;
+        }
+        
+        .card-interactive:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            gap: 8px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: var(--gradient-1);
             color: white;
-            font-weight: bold;
-            border-radius: 16px;
-            padding: 14px 28px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
         }
         
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+        .btn-success {
+            background: var(--accent-green);
+            color: white;
         }
         
-        .btn-primary:active::after {
-            width: 300px;
-            height: 300px;
+        .btn-success:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
         
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
         
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        .btn-outline:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
         }
         
-        /* ============ SCROLLBAR ============ */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--darker); }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 4px;
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
         }
         
-        /* ============ MOBILE MONEY STYLES ============ */
-        .mobile-money-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            border: 2px solid #10b981;
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 16px;
         }
         
-        .mobile-money-btn:hover {
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
         }
         
-        /* ============ NOTIFICATION STYLES ============ */
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-purple);
+        }
+        
+        .badge-green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+        }
+        
+        .badge-amber {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-amber);
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .input-field:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .input-field::placeholder {
+            color: var(--text-muted);
+        }
+        
+        select.input-field {
+            cursor: pointer;
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 24px 0;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .grid-4, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ============ NOTIFICATION ============ */
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 9999;
-            animation: slideInRight 0.5s ease;
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideUp 0.3s ease-out;
+            max-width: 400px;
         }
         
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .notification-success {
+            border-left: 4px solid var(--accent-green);
+        }
+        
+        .notification-error {
+            border-left: 4px solid var(--accent-red);
+        }
+        
+        .notification-warning {
+            border-left: 4px solid var(--accent-amber);
+        }
+        
+        /* ============ OVERLAY ============ */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 20px;
+        }
+        
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-2xl);
+            padding: 32px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* ============ PROGRESS BAR ============ */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        
+        /* ============ SECTION SPACING ============ */
+        .section {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
         }
     </style>
 </head>
-<body class="bg-[#020617] text-white font-poppins min-h-screen overflow-x-hidden">
+<body>
 
-    <!-- ============ ANIMATED PARTICLES BACKGROUND ============ -->
-    <canvas id="particles-canvas" style="position:fixed;top:0;left:0;z-index:-1;"></canvas>
-
-    <!-- ============ AD-BLOCK DETECTOR ============ -->
-    <div id="adblock-overlay" class="fixed inset-0 bg-black/95 z-60 flex items-center justify-center p-4 hidden">
-        <div class="glass-card p-10 max-w-lg w-full text-center animate__animated animate__fadeIn">
-            <div class="text-8xl mb-6 animate-bounce">🛡️</div>
-            <h2 class="text-3xl font-black font-orbitron gradient-text mb-4">EXCLUSIVE ACCESS</h2>
-            <p class="text-gray-300 mb-6">
-                To unlock <span class="text-purple-400 font-bold">WORLD-EXCLUSIVE FEATURES</span>, 
-                please disable your ad blocker. We offer revolutionary earning opportunities!
+    <!-- ============ ADBLOCK OVERLAY ============ -->
+    <div id="adblock-overlay" class="overlay" style="display: none;">
+        <div class="modal text-center">
+            <div style="font-size: 48px; margin-bottom: 16px;">🛡️</div>
+            <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">Ad Blocker Detected</h2>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+                Please disable your ad blocker to access all features and start earning rewards.
             </p>
-            <button onclick="window.location.reload()" 
-                    class="btn-primary w-full mb-3">
-                <i class="fa-solid fa-unlock mr-2"></i>ENABLE & RELOAD
+            <button onclick="window.location.reload()" class="btn btn-primary btn-lg" style="width: 100%;">
+                <i class="fa-solid fa-rotate-right"></i> Reload Page
             </button>
-            <button onclick="skipAdBlocker()" 
-                    class="w-full bg-transparent border border-gray-700 text-gray-400 hover:text-white py-3 rounded-2xl transition">
+            <button onclick="document.getElementById('adblock-overlay').style.display='none'" 
+                    class="btn btn-outline" style="width: 100%; margin-top: 8px;">
                 Continue Anyway
             </button>
         </div>
     </div>
 
-    <!-- ============ LOGIN OVERLAY WITH IMPROVED OTP ============ -->
-    <div id="login-overlay" class="fixed inset-0 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 z-50 flex items-center justify-center p-4">
-        <div class="glass-card p-10 max-w-md w-full text-center">
+    <!-- ============ LOGIN OVERLAY ============ -->
+    <div id="login-overlay" class="overlay">
+        <div class="modal text-center">
+            <div style="font-size: 40px; margin-bottom: 12px;">💎</div>
+            <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 4px; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Alamin Special Earn
+            </h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 32px;">
+                Professional Earning Platform
+            </p>
             
-            <!-- EXCLUSIVE BADGE -->
-            <div class="inline-flex items-center bg-gradient-to-r from-yellow-500 to-amber-500 px-5 py-2.5 rounded-full text-sm font-black mb-6 text-black animate-pulse">
-                <i class="fa-solid fa-crown mr-2"></i>
-                WORLD EXCLUSIVE v5.0
-            </div>
-            
-            <!-- LOGO -->
-            <div class="text-6xl mb-4" style="animation: float 3s ease-in-out infinite;">💎</div>
-            
-            <h1 class="text-4xl font-black font-orbitron gradient-text mb-1">ALAMIN</h1>
-            <h2 class="text-2xl font-black text-white mb-1">SPECIAL EARN</h2>
-            <p class="text-purple-400 text-xs mb-8 font-orbitron tracking-widest">ULTIMATE EXCLUSIVE PLATFORM</p>
-            
-            <!-- LOGIN METHOD SELECTOR -->
-            <div class="grid grid-cols-3 gap-2 mb-6">
-                <button class="login-method-btn bg-purple-600 text-white p-3 rounded-xl text-xs font-bold active" data-method="email">
-                    <i class="fa-solid fa-envelope block text-lg mb-1"></i>Email
-                </button>
-                <button class="login-method-btn bg-gray-800 text-gray-400 p-3 rounded-xl text-xs font-bold" data-method="phone">
-                    <i class="fa-solid fa-mobile block text-lg mb-1"></i>Phone
-                </button>
-                <button class="login-method-btn bg-gray-800 text-gray-400 p-3 rounded-xl text-xs font-bold" data-method="username">
-                    <i class="fa-solid fa-user block text-lg mb-1"></i>Username
-                </button>
-            </div>
-            
-            <!-- Email Login Step -->
-            <div id="login-email-step">
-                <div class="text-left mb-4">
-                    <label class="text-xs font-semibold text-gray-400 block mb-2">
-                        <i class="fa-solid fa-envelope mr-2 text-purple-400"></i>Email Address
+            <!-- Login Form -->
+            <div id="login-form">
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                        <i class="fa-solid fa-envelope" style="color: var(--accent-purple); margin-right: 6px;"></i>
+                        Email Address
                     </label>
-                    <input type="email" id="user-email" 
-                           placeholder="your@email.com" 
-                           class="w-full bg-gray-900 border border-gray-700 rounded-2xl py-4 px-4 text-sm focus:outline-none focus:border-purple-500 text-white transition">
+                    <input type="email" id="user-email" class="input-field" placeholder="Enter your email address">
                 </div>
+                
+                <button onclick="handleLogin()" class="btn btn-primary btn-lg" style="width: 100%;">
+                    <i class="fa-solid fa-arrow-right"></i> Continue
+                </button>
+                
+                <div class="divider"></div>
+                
+                <button onclick="quickDemo()" class="btn btn-outline" style="width: 100%;">
+                    <i class="fa-solid fa-bolt"></i> Quick Demo Access
+                </button>
             </div>
             
-            <!-- Phone Login Step -->
-            <div id="login-phone-step" class="hidden">
-                <div class="text-left mb-4">
-                    <label class="text-xs font-semibold text-gray-400 block mb-2">
-                        <i class="fa-solid fa-mobile mr-2 text-purple-400"></i>Phone Number
-                    </label>
-                    <div class="flex space-x-2">
-                        <select class="bg-gray-900 border border-gray-700 rounded-xl px-3 py-4 text-white w-24 text-xs">
-                            <option>+234</option>
-                            <option>+233</option>
-                            <option>+254</option>
-                            <option>+1</option>
-                            <option>+44</option>
-                        </select>
-                        <input type="tel" id="user-phone" 
-                               placeholder="8012345678" 
-                               class="flex-1 bg-gray-900 border border-gray-700 rounded-2xl py-4 px-4 text-sm focus:outline-none focus:border-purple-500 text-white transition">
+            <!-- OTP Verification -->
+            <div id="otp-section" style="display: none;">
+                <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px;">
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Your verification code:</p>
+                    <div id="otp-display" style="font-size: 36px; font-weight: 800; letter-spacing: 8px; color: var(--accent-amber); font-family: 'Plus Jakarta Sans', sans-serif;">
+                        ----
                     </div>
                 </div>
-            </div>
-            
-            <!-- Username Login Step -->
-            <div id="login-username-step" class="hidden">
-                <div class="text-left mb-4">
-                    <label class="text-xs font-semibold text-gray-400 block mb-2">
-                        <i class="fa-solid fa-user mr-2 text-purple-400"></i>Username
+                
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                        <i class="fa-solid fa-lock" style="color: var(--accent-amber); margin-right: 6px;"></i>
+                        Enter Verification Code
                     </label>
-                    <input type="text" id="user-username" 
-                           placeholder="Choose a username" 
-                           class="w-full bg-gray-900 border border-gray-700 rounded-2xl py-4 px-4 text-sm focus:outline-none focus:border-purple-500 text-white transition">
+                    <input type="text" id="otp-input" class="input-field" 
+                           placeholder="Enter 4-digit code" maxlength="4"
+                           style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
                 </div>
-            </div>
-            
-            <!-- PIN SETUP (NEW) -->
-            <div id="pin-setup-section" class="hidden mb-4">
-                <div class="text-left">
-                    <label class="text-xs font-semibold text-gray-400 block mb-2">
-                        <i class="fa-solid fa-lock mr-2 text-amber-400"></i>Create Security PIN
+                
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                        <i class="fa-solid fa-key" style="color: var(--accent-purple); margin-right: 6px;"></i>
+                        Create Security PIN
                     </label>
-                    <input type="password" id="user-pin" 
-                           placeholder="4-digit PIN" 
-                           maxlength="4"
-                           class="w-full bg-gray-900 border border-gray-700 rounded-2xl py-4 px-4 text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:border-amber-500 text-white transition">
+                    <input type="password" id="user-pin" class="input-field" 
+                           placeholder="4-digit PIN" maxlength="4"
+                           style="text-align: center; font-size: 24px; font-weight: 700; letter-spacing: 8px;">
                 </div>
-            </div>
-            
-            <!-- LOGIN BUTTON -->
-            <button onclick="handleLogin()" id="login-btn"
-                    class="btn-primary w-full mt-4">
-                <span id="login-btn-text"><i class="fa-solid fa-right-to-bracket mr-2"></i>ACCESS PLATFORM</span>
-            </button>
-            
-            <!-- OTP VERIFICATION STEP (SHOWN AFTER LOGIN) -->
-            <div id="otp-verification-section" class="hidden mt-6">
-                <div class="border-t border-gray-800 pt-6">
-                    <label class="text-xs font-semibold text-gray-400 block mb-3">
-                        <i class="fa-solid fa-shield-halved mr-2 text-amber-400"></i>Verification Required
-                    </label>
-                    
-                    <!-- GENERATED OTP DISPLAY -->
-                    <div id="otp-display-box" class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4 mb-4">
-                        <p class="text-xs text-gray-400 mb-2">Your verification code is:</p>
-                        <div id="otp-code-display" class="text-3xl font-black text-amber-400 font-orbitron tracking-[0.3em]">
-                            ----
-                        </div>
-                        <p class="text-[10px] text-gray-500 mt-2">This code is displayed for demo purposes</p>
-                    </div>
-                    
-                    <input type="text" id="otp-input" 
-                           placeholder="Enter the 4-digit code" 
-                           maxlength="4"
-                           class="w-full bg-gray-900 border border-gray-700 rounded-2xl py-4 px-4 text-center text-2xl font-bold tracking-[0.5em] focus:outline-none focus:border-amber-500 text-white mb-3">
-                    
-                    <button onclick="verifyOTPCode()"
-                            class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold py-4 rounded-2xl transition hover:scale-105">
-                        <i class="fa-solid fa-check mr-2"></i>VERIFY CODE
-                    </button>
-                    
-                    <p class="text-[10px] text-gray-500 mt-3">
-                        <i class="fa-solid fa-info-circle mr-1"></i>
-                        For demo: Check the code displayed above
-                    </p>
-                </div>
-            </div>
-            
-            <!-- DIVIDER -->
-            <div class="relative my-6">
-                <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-gray-800"></div>
-                </div>
-                <div class="relative flex justify-center text-xs">
-                    <span class="px-4 bg-[#020617] text-gray-600">OR CONTINUE WITH</span>
-                </div>
-            </div>
-            
-            <!-- QUICK ACCESS OPTIONS -->
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="quickAccess()" class="bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-2xl py-3 px-4 text-xs font-bold text-gray-300 transition">
-                    <i class="fa-solid fa-bolt mr-1 text-yellow-400"></i> Quick Access
-                </button>
-                <button onclick="demoLogin()" class="bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-2xl py-3 px-4 text-xs font-bold text-gray-300 transition">
-                    <i class="fa-solid fa-play mr-1 text-green-400"></i> Demo Mode
+                
+                <button onclick="verifyOTP()" class="btn btn-primary btn-lg" style="width: 100%;">
+                    <i class="fa-solid fa-shield-halved"></i> Verify & Access
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- ============ MAIN APPLICATION ============ -->
-    <div id="main-app" class="hidden">
+    <!-- ============ MAIN APP ============ -->
+    <div id="main-app" style="display: none;">
         
         <!-- HEADER -->
-        <header class="glass-card sticky top-4 z-40 mx-4 mt-4 border-b-0 shadow-2xl">
-            <div class="max-w-7xl mx-auto px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl" style="animation: pulse-glow 2s infinite;">
-                            <i class="fa-solid fa-diamond text-white text-xl"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-black font-orbitron gradient-text">ALAMIN</h1>
-                            <p class="text-[10px] text-purple-400">ULTIMATE EXCLUSIVE v5.0</p>
-                        </div>
+        <header style="background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 16px 0; position: sticky; top: 0; z-index: 40; backdrop-filter: blur(12px);">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
+                <!-- Logo -->
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                        💎
                     </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <!-- Points Display -->
-                        <div class="bg-gradient-to-r from-yellow-500 to-amber-500 px-5 py-2.5 rounded-full flex items-center shadow-lg">
-                            <i class="fa-solid fa-coins text-black mr-2"></i>
-                            <span id="points-display" class="font-black text-black text-lg">0</span>
-                            <span class="text-[10px] ml-1 text-black/70 font-bold">PTS</span>
-                        </div>
-                        
-                        <!-- Level Badge -->
-                        <div class="bg-purple-600 px-4 py-2 rounded-full text-xs font-bold">
-                            LVL <span id="user-level">1</span>
-                        </div>
-                        
-                        <!-- Logout -->
-                        <button onclick="logout()" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 p-2.5 rounded-xl transition">
-                            <i class="fa-solid fa-right-from-bracket text-red-400"></i>
-                        </button>
+                    <div>
+                        <h1 style="font-size: 18px; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            Alamin Earn
+                        </h1>
+                        <p style="font-size: 11px; color: var(--text-muted);">Professional Platform</p>
                     </div>
+                </div>
+                
+                <!-- Stats -->
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="background: var(--bg-secondary); padding: 8px 16px; border-radius: 24px; border: 1px solid var(--border-color);">
+                        <span style="font-size: 12px; color: var(--text-muted);">Balance</span>
+                        <span id="points-display" style="font-weight: 700; color: var(--accent-amber); margin-left: 8px;">0 PTS</span>
+                    </div>
+                    <button onclick="logout()" class="btn btn-outline btn-sm">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
             </div>
         </header>
-
-        <main class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+        
+        <!-- MAIN CONTENT -->
+        <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;">
             
-            <!-- ============ EXCLUSIVE FEATURE #1: MOBILE MONEY DASHBOARD ============ -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glass-card p-6 text-center card-hover">
-                    <div class="text-3xl mb-2">📱</div>
-                    <div class="text-xl font-black text-white">M-Pesa</div>
-                    <p class="text-[10px] text-green-400 mt-1">Available</p>
-                </div>
-                <div class="glass-card p-6 text-center card-hover">
-                    <div class="text-3xl mb-2">💳</div>
-                    <div class="text-xl font-black text-white">Airtel</div>
-                    <p class="text-[10px] text-red-400 mt-1">Available</p>
-                </div>
-                <div class="glass-card p-6 text-center card-hover">
-                    <div class="text-3xl mb-2">🏦</div>
-                    <div class="text-xl font-black text-white">MTN Mobile</div>
-                    <p class="text-[10px] text-yellow-400 mt-1">Available</p>
-                </div>
-                <div class="glass-card p-6 text-center card-hover">
-                    <div class="text-3xl mb-2">🌍</div>
-                    <div class="text-xl font-black text-white">Bank Transfer</div>
-                    <p class="text-[10px] text-blue-400 mt-1">Available</p>
-                </div>
-            </div>
-            
-            <!-- ============ EXCLUSIVE FEATURE #2: GAMIFICATION MISSIONS ============ -->
-            <div class="glass-card p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-black font-orbitron">🎯 DAILY MISSIONS</h3>
-                    <span class="text-xs text-gray-400">Resets in: <span id="mission-timer">24:00:00</span></span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Mission 1 -->
-                    <div class="bg-gray-900/50 rounded-2xl p-5 border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">📝</span>
-                            <span class="bg-green-500/20 text-green-400 text-[10px] px-2 py-1 rounded-full">+30 PTS</span>
+            <!-- Welcome Section -->
+            <div class="section animate-fade-in">
+                <div class="card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(59, 130, 246, 0.05));">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div>
+                            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 4px;">Welcome Back! 👋</h2>
+                            <p style="font-size: 14px; color: var(--text-secondary);">
+                                Complete tasks below to earn points and withdraw real money.
+                            </p>
                         </div>
-                        <h4 class="font-bold text-sm mb-1">Complete 3 Quizzes</h4>
-                        <div class="w-full bg-gray-800 rounded-full h-2 mb-2">
-                            <div id="mission1-progress" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Today's Progress</p>
+                            <div style="width: 200px;">
+                                <div class="progress-bar" style="margin-bottom: 4px;">
+                                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                                </div>
+                                <span id="progress-text" style="font-size: 11px; color: var(--text-muted);">0/1000 PTS</span>
+                            </div>
                         </div>
-                        <p class="text-[10px] text-gray-500">Progress: <span id="mission1-count">0/3</span></p>
-                    </div>
-                    
-                    <!-- Mission 2 -->
-                    <div class="bg-gray-900/50 rounded-2xl p-5 border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">📺</span>
-                            <span class="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-1 rounded-full">+50 PTS</span>
-                        </div>
-                        <h4 class="font-bold text-sm mb-1">Watch 5 Ads</h4>
-                        <div class="w-full bg-gray-800 rounded-full h-2 mb-2">
-                            <div id="mission2-progress" class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
-                        </div>
-                        <p class="text-[10px] text-gray-500">Progress: <span id="mission2-count">0/5</span></p>
-                    </div>
-                    
-                    <!-- Mission 3 -->
-                    <div class="bg-gray-900/50 rounded-2xl p-5 border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">👥</span>
-                            <span class="bg-purple-500/20 text-purple-400 text-[10px] px-2 py-1 rounded-full">+100 PTS</span>
-                        </div>
-                        <h4 class="font-bold text-sm mb-1">Invite 1 Friend</h4>
-                        <div class="w-full bg-gray-800 rounded-full h-2 mb-2">
-                            <div id="mission3-progress" class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
-                        </div>
-                        <p class="text-[10px] text-gray-500">Progress: <span id="mission3-count">0/1</span></p>
                     </div>
                 </div>
             </div>
             
-            <!-- ============ EXCLUSIVE FEATURE #3: LIVE CHAT SUPPORT ============ -->
-            <div class="glass-card p-6 cursor-pointer" onclick="toggleChat()">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
-                        <i class="fa-solid fa-headset text-white text-xl"></i>
+            <!-- Quick Stats -->
+            <div class="section">
+                <div class="grid-4">
+                    <div class="card text-center">
+                        <div style="font-size: 28px; margin-bottom: 8px;">💰</div>
+                        <div style="font-size: 20px; font-weight: 700;" id="total-earned">0</div>
+                        <p style="font-size: 12px; color: var(--text-muted);">Total Earned</p>
                     </div>
-                    <div class="flex-1">
-                        <h4 class="font-bold">💬 LIVE SUPPORT</h4>
-                        <p class="text-xs text-gray-400">Click to chat with our AI assistant</p>
+                    <div class="card text-center">
+                        <div style="font-size: 28px; margin-bottom: 8px;">⭐</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-purple);" id="user-level">1</div>
+                        <p style="font-size: 12px; color: var(--text-muted);">Level</p>
                     </div>
-                    <div class="bg-green-500 w-3 h-3 rounded-full"></div>
+                    <div class="card text-center">
+                        <div style="font-size: 28px; margin-bottom: 8px;">🔥</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);" id="streak-days">0</div>
+                        <p style="font-size: 12px; color: var(--text-muted);">Day Streak</p>
+                    </div>
+                    <div class="card text-center">
+                        <div style="font-size: 28px; margin-bottom: 8px;">👥</div>
+                        <div style="font-size: 20px; font-weight: 700; color: var(--accent-blue);" id="referral-count">0</div>
+                        <p style="font-size: 12px; color: var(--text-muted);">Referrals</p>
+                    </div>
                 </div>
             </div>
             
-            <!-- ============ CHAT INTERFACE (HIDDEN) ============ -->
-            <div id="chat-interface" class="glass-card p-6 hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="font-bold">AI Support Assistant</h4>
-                    <button onclick="toggleChat()" class="text-gray-400 hover:text-white">
-                        <i class="fa-solid fa-times"></i>
-                    </button>
-                </div>
-                <div id="chat-messages" class="h-64 overflow-y-auto space-y-3 mb-4 bg-gray-900/50 rounded-xl p-4">
-                    <div class="flex items-start space-x-2">
-                        <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-xs">AI</div>
-                        <div class="bg-gray-800 rounded-2xl rounded-tl-none p-3 text-xs">
-                            Hello! How can I help you today? 👋
-                        </div>
-                    </div>
-                </div>
-                <div class="flex space-x-2">
-                    <input type="text" id="chat-input" placeholder="Type your message..." 
-                           class="flex-1 bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-sm text-white"
-                           onkeypress="if(event.key==='Enter') sendChatMessage()">
-                    <button onclick="sendChatMessage()" class="btn-primary px-6">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- ============ MAIN EARNING OPTIONS ============ -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Quiz Card -->
-                <div class="glass-card p-6 card-hover cursor-pointer" onclick="startQuizMining()">
-                    <div class="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center text-2xl mb-4">
-                        🤖
-                    </div>
-                    <h3 class="font-bold mb-1">AI Quiz Mining</h3>
-                    <p class="text-xs text-gray-400 mb-4">Answer questions, earn up to 50 PTS</p>
-                    <span class="text-[10px] bg-purple-600/20 text-purple-400 px-3 py-1 rounded-full">3 Levels</span>
-                </div>
+            <!-- Earning Methods -->
+            <div class="section">
+                <h3 class="section-title">Choose Earning Method</h3>
+                <p class="section-subtitle">Select any option below to start earning points instantly.</p>
                 
-                <!-- Ads Card -->
-                <div class="glass-card p-6 card-hover cursor-pointer" onclick="startAdsMining()">
-                    <div class="w-14 h-14 bg-blue-600/20 rounded-2xl flex items-center justify-center text-2xl mb-4">
-                        📺
-                    </div>
-                    <h3 class="font-bold mb-1">Premium Ads</h3>
-                    <p class="text-xs text-gray-400 mb-4">Watch ads, earn up to 100 PTS</p>
-                    <span class="text-[10px] bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full">3 Tiers</span>
-                </div>
-                
-                <!-- Social Card -->
-                <div class="glass-card p-6 card-hover cursor-pointer" onclick="startSocialMining()">
-                    <div class="w-14 h-14 bg-green-600/20 rounded-2xl flex items-center justify-center text-2xl mb-4">
-                        🌐
-                    </div>
-                    <h3 class="font-bold mb-1">Social Mining</h3>
-                    <p class="text-xs text-gray-400 mb-4">Share & earn 100 PTS per post</p>
-                    <span class="text-[10px] bg-green-600/20 text-green-400 px-3 py-1 rounded-full">4 Platforms</span>
-                </div>
-                
-                <!-- Referral Card -->
-                <div class="glass-card p-6 card-hover cursor-pointer" onclick="showReferralSystem()">
-                    <div class="w-14 h-14 bg-yellow-600/20 rounded-2xl flex items-center justify-center text-2xl mb-4">
-                        👑
-                    </div>
-                    <h3 class="font-bold mb-1">Referral Empire</h3>
-                    <p class="text-xs text-gray-400 mb-4">Earn up to 10% commission</p>
-                    <span class="text-[10px] bg-yellow-600/20 text-yellow-400 px-3 py-1 rounded-full">10 Levels</span>
-                </div>
-            </div>
-            
-            <!-- ============ INTERACTIVE AREA ============ -->
-            <div id="interactive-box" class="glass-card p-8 hidden"></div>
-            
-            <!-- ============ WITHDRAWAL SECTION ============ -->
-            <div class="glass-card p-8">
-                <h3 class="text-xl font-black font-orbitron mb-6">💱 MULTI-CURRENCY WITHDRAWAL</h3>
-                
-                <!-- Withdrawal Method Selector -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                    <button class="withdraw-method-btn bg-purple-600 text-white p-3 rounded-xl text-xs font-bold active" data-method="bank">
-                        <i class="fa-solid fa-building-columns block text-lg mb-1"></i>Bank Transfer
-                    </button>
-                    <button class="withdraw-method-btn bg-gray-800 text-gray-400 p-3 rounded-xl text-xs font-bold" data-method="mpesa">
-                        <i class="fa-solid fa-mobile block text-lg mb-1"></i>M-Pesa
-                    </button>
-                    <button class="withdraw-method-btn bg-gray-800 text-gray-400 p-3 rounded-xl text-xs font-bold" data-method="airtel">
-                        <i class="fa-solid fa-wallet block text-lg mb-1"></i>Airtel Money
-                    </button>
-                    <button class="withdraw-method-btn bg-gray-800 text-gray-400 p-3 rounded-xl text-xs font-bold" data-method="mtn">
-                        <i class="fa-solid fa-phone block text-lg mb-1"></i>MTN Mobile
-                    </button>
-                </div>
-                
-                <!-- Dynamic Withdrawal Form -->
-                <div id="withdrawal-form">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label class="text-xs font-bold text-gray-400 block mb-2">Currency</label>
-                            <select id="currency-select" onchange="updateConversion()"
-                                    class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-white text-sm">
-                                <option value="NGN">🇳🇬 Naira (₦)</option>
-                                <option value="USD">🇺🇸 Dollar ($)</option>
-                                <option value="EUR">🇪🇺 Euro (€)</option>
-                                <option value="GBP">🇬🇧 Pound (£)</option>
-                                <option value="KES">🇰🇪 Shilling (KSh)</option>
-                                <option value="GHS">🇬🇭 Cedi (₵)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-gray-400 block mb-2">Bank/Mobile</label>
-                            <select id="withdraw-bank"
-                                    class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-white text-sm">
-                                <option value="">Select...</option>
-                                <option value="OPay">OPay</option>
-                                <option value="PalmPay">PalmPay</option>
-                                <option value="M-Pesa">M-Pesa</option>
-                                <option value="Airtel">Airtel Money</option>
-                                <option value="MTN">MTN Mobile Money</option>
-                                <option value="Kuda">Kuda Bank</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-gray-400 block mb-2">Account/Phone</label>
-                            <input type="text" id="withdraw-account" placeholder="Enter details"
-                                   class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-white text-sm">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="text-xs font-bold text-gray-400 block mb-2">Amount (PTS)</label>
-                            <input type="number" id="withdraw-amount" placeholder="Min: 1000" onkeyup="updateConversion()"
-                                   class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-white text-sm">
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-gray-400 block mb-2">You'll Receive</label>
-                            <div id="conversion-display" class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-white font-bold text-lg">
-                                ₦0.00
+                <div class="grid-3">
+                    <!-- Quiz Card -->
+                    <div class="card card-interactive" onclick="showQuizOptions()" style="border-top: 3px solid var(--accent-purple);">
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <div style="width: 48px; height: 48px; background: rgba(139, 92, 246, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                                🤖
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">AI Quiz Mining</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                    Answer intelligent questions and earn up to <strong style="color: var(--accent-purple);">50 PTS</strong> per correct answer.
+                                </p>
+                                <div style="margin-top: 12px;">
+                                    <span class="badge badge-purple">3 Difficulty Levels</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <button onclick="processWithdrawal()" class="btn-primary w-full">
-                        <i class="fa-solid fa-paper-plane mr-2"></i>WITHDRAW NOW
-                    </button>
+                    <!-- Ads Card -->
+                    <div class="card card-interactive" onclick="showAdsOptions()" style="border-top: 3px solid var(--accent-blue);">
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                                📺
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Premium Ads</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                    Watch high-quality advertisements and earn up to <strong style="color: var(--accent-blue);">100 PTS</strong> per view.
+                                </p>
+                                <div style="margin-top: 12px;">
+                                    <span class="badge badge-purple">3 Reward Tiers</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Card -->
+                    <div class="card card-interactive" onclick="showSocialOptions()" style="border-top: 3px solid var(--accent-green);">
+                        <div style="display: flex; align-items: flex-start; gap: 16px;">
+                            <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                                🌐
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Social Mining</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                                    Share our platform and earn <strong style="color: var(--accent-green);">100 PTS</strong> per verified social post.
+                                </p>
+                                <div style="margin-top: 12px;">
+                                    <span class="badge badge-green">4 Platforms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <!-- ============ PROFIT SHARING POOL ============ -->
-            <div class="glass-card p-8 text-center">
-                <h3 class="text-xl font-black font-orbitron mb-2">💰 WEEKLY PROFIT SHARING</h3>
-                <p class="text-gray-400 text-sm mb-4">Top earners share <span class="text-yellow-400 font-bold">10,000 PTS</span> weekly bonus pool!</p>
-                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-                    <div class="bg-gray-900/50 rounded-2xl p-4">
-                        <div class="text-3xl mb-1">🥇</div>
-                        <p class="font-bold">1st Place</p>
-                        <p class="text-yellow-400 font-bold">5,000 PTS</p>
+            <!-- Interactive Area -->
+            <div id="interactive-area" class="section" style="display: none;">
+                <!-- Dynamic content loads here -->
+            </div>
+            
+            <!-- Withdrawal Section -->
+            <div class="section">
+                <h3 class="section-title">Withdraw Your Earnings</h3>
+                <p class="section-subtitle">Minimum withdrawal: 1,000 PTS. Funds processed within 24 hours.</p>
+                
+                <div class="card">
+                    <div class="grid-2">
+                        <div>
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                                Payment Method
+                            </label>
+                            <select id="withdraw-method" class="input-field" onchange="updateWithdrawOptions()">
+                                <option value="bank">🏦 Bank Transfer</option>
+                                <option value="mpesa">📱 M-Pesa</option>
+                                <option value="airtel">📱 Airtel Money</option>
+                                <option value="mtn">📱 MTN Mobile Money</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                                Select Institution
+                            </label>
+                            <select id="withdraw-bank" class="input-field">
+                                <option value="">Choose...</option>
+                                <option value="OPay">OPay</option>
+                                <option value="PalmPay">PalmPay</option>
+                                <option value="Kuda">Kuda Bank</option>
+                                <option value="Access">Access Bank</option>
+                                <option value="GTB">GTBank</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                                Account Number
+                            </label>
+                            <input type="text" id="withdraw-account" class="input-field" placeholder="Enter account number">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">
+                                Amount (PTS)
+                            </label>
+                            <input type="number" id="withdraw-amount" class="input-field" 
+                                   placeholder="Min: 1,000" min="1000" onkeyup="updateConversion()">
+                        </div>
                     </div>
-                    <div class="bg-gray-900/50 rounded-2xl p-4">
-                        <div class="text-3xl mb-1">🥈</div>
-                        <p class="font-bold">2nd Place</p>
-                        <p class="text-gray-300 font-bold">3,000 PTS</p>
+                    
+                    <div style="margin-top: 16px; padding: 16px; background: var(--bg-secondary); border-radius: var(--radius-md);">
+                        <span style="font-size: 13px; color: var(--text-muted);">You will receive:</span>
+                        <span id="conversion-display" style="font-size: 20px; font-weight: 700; margin-left: 8px;">₦0.00</span>
                     </div>
-                    <div class="bg-gray-900/50 rounded-2xl p-4">
-                        <div class="text-3xl mb-1">🥉</div>
-                        <p class="font-bold">3rd Place</p>
-                        <p class="text-amber-600 font-bold">2,000 PTS</p>
-                    </div>
+                    
+                    <button onclick="processWithdrawal()" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 16px;">
+                        <i class="fa-solid fa-paper-plane"></i> Withdraw Now
+                    </button>
                 </div>
             </div>
             
@@ -645,476 +666,262 @@
     </div>
 
     <script>
-        // ============ CONFIGURATION ============
-        const CONFIG = {
-            APP_NAME: 'Alamin Special Earn',
-            VERSION: '5.0.0-ULTIMATE',
-            MIN_WITHDRAWAL: 1000,
-            OTP_LENGTH: 4,
-            MISSIONS: {
-                quiz: { target: 3, reward: 30 },
-                ads: { target: 5, reward: 50 },
-                referral: { target: 1, reward: 100 }
-            },
-            REWARDS: {
-                quiz_easy: 10,
-                quiz_medium: 25,
-                quiz_hard: 50,
-                ad_tier1: 20,
-                ad_tier2: 50,
-                ad_tier3: 100,
-                social: 100,
-                daily_bonus: 100,
-                referral_level1: 0.10,
-                referral_level2: 0.05,
-                referral_level3: 0.03
-            },
-            CURRENCIES: {
-                NGN: { symbol: '₦', rate: 1 },
-                USD: { symbol: '$', rate: 0.00065 },
-                EUR: { symbol: '€', rate: 0.00060 },
-                GBP: { symbol: '£', rate: 0.00052 },
-                KES: { symbol: 'KSh', rate: 0.085 },
-                GHS: { symbol: '₵', rate: 0.008 }
-            }
-        };
-
-        // ============ GLOBAL STATE ============
-        let APP_STATE = {
+        // ============ APP STATE ============
+        const APP = {
             points: 0,
             totalEarned: 0,
             level: 1,
-            generatedOTP: null,
-            userEmail: null,
-            missions: {
-                quiz: 0,
-                ads: 0,
-                referral: 0
-            },
-            lastDailyBonus: null
+            streak: 0,
+            referrals: 0,
+            otp: null,
+            email: null
         };
-
-        // ============ PARTICLES BACKGROUND ============
-        function initParticles() {
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const particles = Array.from({ length: 80 }, () => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5,
-                opacity: Math.random() * 0.5 + 0.1,
-                color: ['#8b5cf6', '#ec4899', '#06b6d4'][Math.floor(Math.random() * 3)]
-            }));
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                particles.forEach((p, i) => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    
-                    if (p.x < 0) p.x = canvas.width;
-                    if (p.x > canvas.width) p.x = 0;
-                    if (p.y < 0) p.y = canvas.height;
-                    if (p.y > canvas.height) p.y = 0;
-                    
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color.replace(')', `, ${p.opacity})`).replace('rgb', 'rgba');
-                    ctx.fill();
-                    
-                    // Draw connections
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = p.x - particles[j].x;
-                        const dy = p.y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (dist < 150) {
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(139, 92, 246, ${0.05 * (1 - dist / 150)})`;
-                            ctx.stroke();
-                        }
-                    }
-                });
-                
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-        }
-
-        // ============ IMPROVED LOGIN SYSTEM (NO EMAILJS) ============
+        
+        // ============ LOGIN SYSTEM ============
         function handleLogin() {
-            let userIdentifier = '';
-            const activeMethod = document.querySelector('.login-method-btn.active').dataset.method;
+            const email = document.getElementById('user-email').value.trim();
             
-            switch(activeMethod) {
-                case 'email':
-                    userIdentifier = document.getElementById('user-email').value;
-                    if (!userIdentifier.includes('@')) {
-                        showNotification('Please enter a valid email', 'error');
-                        return;
-                    }
-                    break;
-                case 'phone':
-                    userIdentifier = document.getElementById('user-phone').value;
-                    if (userIdentifier.length < 10) {
-                        showNotification('Please enter a valid phone number', 'error');
-                        return;
-                    }
-                    break;
-                case 'username':
-                    userIdentifier = document.getElementById('user-username').value;
-                    if (userIdentifier.length < 3) {
-                        showNotification('Username must be at least 3 characters', 'error');
-                        return;
-                    }
-                    break;
-            }
-            
-            // Show PIN setup if first time
-            if (!localStorage.getItem('user_pin')) {
-                document.getElementById('pin-setup-section').classList.remove('hidden');
-                document.getElementById('login-btn-text').innerHTML = '<i class="fa-solid fa-lock mr-2"></i>SET PIN & CONTINUE';
-                
-                // Save user info and generate OTP
-                APP_STATE.userEmail = userIdentifier;
-                APP_STATE.generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-                
-                // Display OTP on screen (no email sending)
-                document.getElementById('otp-code-display').textContent = APP_STATE.generatedOTP;
-                
-                // Show OTP section
-                document.getElementById('otp-verification-section').classList.remove('hidden');
-                document.getElementById('login-btn').classList.add('hidden');
-                
-                showNotification('🔐 Set your PIN and verify the code below', 'info');
-            } else {
-                // Returning user - verify PIN
-                verifyReturningUser(userIdentifier);
-            }
-        }
-
-        function verifyReturningUser(identifier) {
-            const pin = prompt('Enter your 4-digit PIN to continue:');
-            const savedPin = localStorage.getItem('user_pin');
-            
-            if (pin === savedPin) {
-                completeLogin(identifier);
-            } else {
-                showNotification('❌ Invalid PIN!', 'error');
-            }
-        }
-
-        function verifyOTPCode() {
-            const userOTP = document.getElementById('otp-input').value;
-            const userPin = document.getElementById('user-pin')?.value;
-            
-            if (!userPin || userPin.length !== 4) {
-                showNotification('Please set a 4-digit PIN first', 'warning');
+            if (!email || !email.includes('@')) {
+                showNotification('Please enter a valid email address', 'error');
                 return;
             }
             
-            if (userOTP === APP_STATE.generatedOTP) {
-                // Save credentials
-                localStorage.setItem('user_pin', userPin);
-                localStorage.setItem('user_identifier', APP_STATE.userEmail);
-                localStorage.setItem('is_logged_in', 'true');
-                
-                completeLogin(APP_STATE.userEmail);
-            } else {
-                showNotification('❌ Invalid verification code!', 'error');
-            }
-        }
-
-        function completeLogin(identifier) {
-            document.getElementById('login-overlay').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
+            APP.email = email;
+            APP.otp = Math.floor(1000 + Math.random() * 9000).toString();
             
-            APP_STATE.userEmail = identifier;
+            document.getElementById('otp-display').textContent = APP.otp;
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
+            
+            showNotification('Verification code generated! Check above.', 'success');
+        }
+        
+        function verifyOTP() {
+            const otp = document.getElementById('otp-input').value;
+            const pin = document.getElementById('user-pin').value;
+            
+            if (otp !== APP.otp) {
+                showNotification('Invalid verification code!', 'error');
+                return;
+            }
+            
+            if (!pin || pin.length !== 4) {
+                showNotification('Please create a 4-digit PIN', 'warning');
+                return;
+            }
+            
+            // Save login
+            localStorage.setItem('alamin_pin', pin);
+            localStorage.setItem('alamin_email', APP.email);
+            localStorage.setItem('alamin_logged_in', 'true');
+            
+            // Show main app
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            
             loadAppState();
             updateAllUI();
             
-            showNotification('✅ Welcome to Ultimate Exclusive Platform!', 'success');
-            launchConfetti();
+            showNotification('Welcome! Start earning now.', 'success');
         }
-
-        function quickAccess() {
-            // Quick demo access
-            APP_STATE.userEmail = 'demo@alamin.com';
-            document.getElementById('otp-code-display').textContent = '1234';
-            APP_STATE.generatedOTP = '1234';
+        
+        function quickDemo() {
+            APP.email = 'demo@alamin.com';
+            APP.otp = '1234';
             
-            document.getElementById('otp-verification-section').classList.remove('hidden');
-            document.getElementById('login-btn').classList.add('hidden');
-            document.getElementById('pin-setup-section').classList.remove('hidden');
+            document.getElementById('otp-display').textContent = '1234';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
             
-            showNotification('⚡ Quick Access: Use OTP 1234', 'info');
+            showNotification('Demo Mode: Use OTP 1234', 'info');
         }
-
-        function demoLogin() {
-            APP_STATE.userEmail = 'demo@alamin.com';
-            localStorage.setItem('user_pin', '1234');
-            localStorage.setItem('is_logged_in', 'true');
-            completeLogin('demo@alamin.com');
+        
+        function logout() {
+            localStorage.removeItem('alamin_logged_in');
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('login-overlay').style.display = 'flex';
+            document.getElementById('otp-section').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
         }
-
-        // ============ LOGIN METHOD SWITCHING ============
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.login-method-btn')) {
-                document.querySelectorAll('.login-method-btn').forEach(btn => {
-                    btn.classList.remove('bg-purple-600', 'text-white', 'active');
-                    btn.classList.add('bg-gray-800', 'text-gray-400');
-                });
-                const btn = e.target.closest('.login-method-btn');
-                btn.classList.remove('bg-gray-800', 'text-gray-400');
-                btn.classList.add('bg-purple-600', 'text-white', 'active');
-                
-                // Show relevant input
-                document.getElementById('login-email-step').classList.add('hidden');
-                document.getElementById('login-phone-step').classList.add('hidden');
-                document.getElementById('login-username-step').classList.add('hidden');
-                
-                const method = btn.dataset.method;
-                document.getElementById(`login-${method}-step`).classList.remove('hidden');
-            }
-        });
-
-        // ============ GAMIFICATION SYSTEM ============
-        function updateMissions(type) {
-            APP_STATE.missions[type]++;
-            saveAppState();
-            
-            const config = CONFIG.MISSIONS[type];
-            const progressEl = document.getElementById(`mission${type === 'quiz' ? '1' : type === 'ads' ? '2' : '3'}-progress`);
-            const countEl = document.getElementById(`mission${type === 'quiz' ? '1' : type === 'ads' ? '2' : '3'}-count`);
-            
-            if (progressEl && countEl) {
-                const progress = (APP_STATE.missions[type] / config.target) * 100;
-                progressEl.style.width = Math.min(progress, 100) + '%';
-                countEl.textContent = `${APP_STATE.missions[type]}/${config.target}`;
-                
-                if (APP_STATE.missions[type] >= config.target) {
-                    addPoints(config.reward, `${type} mission completed`);
-                    APP_STATE.missions[type] = 0; // Reset
-                    showNotification(`🎉 Mission Complete! +${config.reward} PTS`, 'success');
-                    launchConfetti();
-                }
-            }
-        }
-
-        // ============ POINTS MANAGEMENT ============
-        function addPoints(amount, source) {
-            const bonus = Math.floor(amount * (APP_STATE.level - 1) * 0.1);
-            const total = amount + bonus;
-            
-            APP_STATE.points += total;
-            APP_STATE.totalEarned += total;
-            
-            // Level up system
-            APP_STATE.level = Math.floor(APP_STATE.totalEarned / 1000) + 1;
-            if (APP_STATE.level > 10) APP_STATE.level = 10;
-            
-            saveAppState();
-            updateAllUI();
-            
-            // Track for analytics
-            console.log(`+${total} PTS (${source}) - Level ${APP_STATE.level}`);
-        }
-
-        function saveAppState() {
-            localStorage.setItem('app_state', JSON.stringify(APP_STATE));
-        }
-
-        function loadAppState() {
-            const saved = localStorage.getItem('app_state');
-            if (saved) {
-                APP_STATE = JSON.parse(saved);
-            }
-        }
-
-        function updateAllUI() {
-            document.getElementById('points-display').textContent = APP_STATE.points;
-            document.getElementById('user-level').textContent = APP_STATE.level;
-            updateConversion();
-        }
-
+        
         // ============ EARNING MODULES ============
-        function startQuizMining() {
-            const box = document.getElementById('interactive-box');
-            box.classList.remove('hidden');
-            box.scrollIntoView({ behavior: 'smooth' });
+        function showQuizOptions() {
+            const area = document.getElementById('interactive-area');
+            area.style.display = 'block';
+            area.scrollIntoView({ behavior: 'smooth' });
             
-            box.innerHTML = `
-                <div class="text-center">
-                    <div class="text-6xl mb-6">🤖</div>
-                    <h3 class="text-2xl font-black mb-4">AI QUIZ MINING</h3>
-                    <div class="grid grid-cols-3 gap-4 mb-6">
-                        <button onclick="runQuiz('easy')" class="bg-gradient-to-br from-green-500 to-emerald-600 p-6 rounded-2xl font-bold hover:scale-105 transition">
-                            ⭐ EASY<br><span class="text-xs">+10 PTS</span>
-                        </button>
-                        <button onclick="runQuiz('medium')" class="bg-gradient-to-br from-yellow-500 to-amber-600 p-6 rounded-2xl font-bold hover:scale-105 transition">
-                            ⚡ MEDIUM<br><span class="text-xs">+25 PTS</span>
-                        </button>
-                        <button onclick="runQuiz('hard')" class="bg-gradient-to-br from-red-500 to-pink-600 p-6 rounded-2xl font-bold hover:scale-105 transition">
-                            💎 HARD<br><span class="text-xs">+50 PTS</span>
-                        </button>
+            area.innerHTML = `
+                <h3 class="section-title">Select Quiz Difficulty</h3>
+                <div class="grid-3">
+                    <div class="card card-interactive text-center" onclick="startQuiz('easy')">
+                        <div style="font-size: 32px; margin-bottom: 12px;">⭐</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Easy</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">+10 PTS per answer</p>
                     </div>
-                    <button onclick="closeBox()" class="text-gray-500 hover:text-gray-300 text-sm">
-                        <i class="fa-solid fa-times mr-1"></i>Close
-                    </button>
+                    <div class="card card-interactive text-center" onclick="startQuiz('medium')">
+                        <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Medium</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">+25 PTS per answer</p>
+                    </div>
+                    <div class="card card-interactive text-center" onclick="startQuiz('hard')">
+                        <div style="font-size: 32px; margin-bottom: 12px;">💎</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Hard</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">+50 PTS per answer</p>
+                    </div>
                 </div>
             `;
         }
-
-        function runQuiz(difficulty) {
+        
+        function startQuiz(difficulty) {
             const questions = {
                 easy: [
-                    { q: "What is 5 + 3?", opt: ["6", "7", "8", "9"], ans: 2 },
-                    { q: "Capital of Nigeria?", opt: ["Lagos", "Abuja", "Kano", "Port Harcourt"], ans: 1 }
+                    { q: "What is the capital of Nigeria?", opts: ["Lagos", "Abuja", "Kano", "Ibadan"], ans: 1 },
+                    { q: "How many days are in a week?", opts: ["5", "6", "7", "8"], ans: 2 }
                 ],
                 medium: [
-                    { q: "What is 15% of 200?", opt: ["20", "25", "30", "35"], ans: 2 },
-                    { q: "Largest continent?", opt: ["Africa", "Asia", "Europe", "America"], ans: 1 }
+                    { q: "What is 15% of 200?", opts: ["20", "25", "30", "35"], ans: 2 },
+                    { q: "Largest continent by area?", opts: ["Africa", "Asia", "Europe", "America"], ans: 1 }
                 ],
                 hard: [
-                    { q: "Square root of 144?", opt: ["10", "11", "12", "13"], ans: 2 },
-                    { q: "Chemical symbol of Gold?", opt: ["Ag", "Au", "Fe", "Cu"], ans: 1 }
+                    { q: "Chemical symbol for Gold?", opts: ["Ag", "Au", "Fe", "Cu"], ans: 1 },
+                    { q: "Square root of 144?", opts: ["10", "11", "12", "13"], ans: 2 }
                 ]
             };
             
-            const question = questions[difficulty][Math.floor(Math.random() * questions[difficulty].length)];
             const rewards = { easy: 10, medium: 25, hard: 50 };
+            const question = questions[difficulty][Math.floor(Math.random() * questions[difficulty].length)];
             
-            const box = document.getElementById('interactive-box');
-            box.innerHTML = `
-                <div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="bg-purple-600/20 text-purple-400 px-4 py-2 rounded-full text-xs font-bold">
-                            ${difficulty.toUpperCase()} • ${rewards[difficulty]} PTS
-                        </span>
-                        <button onclick="startQuizMining()" class="text-gray-400 hover:text-white">
-                            <i class="fa-solid fa-times"></i>
+            const area = document.getElementById('interactive-area');
+            area.innerHTML = `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <span class="badge badge-purple">${difficulty.toUpperCase()} • +${rewards[difficulty]} PTS</span>
+                        <button onclick="document.getElementById('interactive-area').style.display='none'" 
+                                style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px;">
+                            ✕
                         </button>
                     </div>
-                    <p class="text-lg font-semibold mb-6">${question.q}</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        ${question.opt.map((opt, i) => `
-                            <button onclick="checkQuizAnswer(${i}, ${question.ans}, ${rewards[difficulty]}, '${difficulty}')"
-                                    class="bg-gray-800 hover:bg-purple-600/20 p-4 rounded-xl border border-gray-700 transition text-left">
-                                ${String.fromCharCode(65 + i)}) ${opt}
+                    <p style="font-size: 16px; font-weight: 500; margin-bottom: 24px; line-height: 1.6;">${question.q}</p>
+                    <div class="grid-2">
+                        ${question.opts.map((opt, i) => `
+                            <button onclick="checkAnswer(${i}, ${question.ans}, ${rewards[difficulty]}, '${difficulty}')"
+                                    class="btn btn-outline" style="justify-content: flex-start; text-align: left;">
+                                <strong>${String.fromCharCode(65 + i)}.</strong> ${opt}
                             </button>
                         `).join('')}
                     </div>
                 </div>
             `;
         }
-
-        function checkQuizAnswer(chosen, correct, reward, difficulty) {
+        
+        function checkAnswer(chosen, correct, reward, difficulty) {
             if (chosen === correct) {
-                addPoints(reward, `Quiz ${difficulty}`);
-                updateMissions('quiz');
-                showNotification(`✅ Correct! +${reward} PTS`, 'success');
-                launchConfetti();
+                addPoints(reward);
+                showNotification(`Correct! +${reward} PTS`, 'success');
+                setTimeout(() => startQuiz(difficulty), 1500);
             } else {
-                showNotification('❌ Wrong answer!', 'error');
+                showNotification('Wrong answer! Try again.', 'error');
             }
-            setTimeout(() => runQuiz(difficulty), 1000);
         }
-
-        function startAdsMining() {
-            const box = document.getElementById('interactive-box');
-            box.classList.remove('hidden');
-            box.scrollIntoView({ behavior: 'smooth' });
+        
+        function showAdsOptions() {
+            const area = document.getElementById('interactive-area');
+            area.style.display = 'block';
+            area.scrollIntoView({ behavior: 'smooth' });
             
-            box.innerHTML = `
-                <div class="text-center">
-                    <div class="text-6xl mb-6">📺</div>
-                    <h3 class="text-2xl font-black mb-4">PREMIUM ADS</h3>
-                    <div class="grid grid-cols-3 gap-4 mb-6">
-                        <button onclick="watchAd(1)" class="bg-gradient-to-br from-blue-500 to-cyan-600 p-6 rounded-2xl font-bold hover:scale-105 transition">
-                            TIER 1<br><span class="text-xs">10s • +20 PTS</span>
-                        </button>
-                        <button onclick="watchAd(2)" class="bg-gradient-to-br from-purple-500 to-pink-600 p-6 rounded-2xl font-bold hover:scale-105 transition">
-                            TIER 2<br><span class="text-xs">20s • +50 PTS</span>
-                        </button>
-                        <button onclick="watchAd(3)" class="bg-gradient-to-br from-yellow-500 to-amber-600 p-6 rounded-2xl font-bold hover:scale-105 transition text-black">
-                            TIER 3<br><span class="text-xs">30s • +100 PTS</span>
-                        </button>
+            area.innerHTML = `
+                <h3 class="section-title">Select Ad Tier</h3>
+                <div class="grid-3">
+                    <div class="card card-interactive text-center" onclick="watchAd(1)">
+                        <div style="font-size: 32px; margin-bottom: 12px;">📺</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 1</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">10 seconds • +20 PTS</p>
+                    </div>
+                    <div class="card card-interactive text-center" onclick="watchAd(2)">
+                        <div style="font-size: 32px; margin-bottom: 12px;">🎬</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 2</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">20 seconds • +50 PTS</p>
+                    </div>
+                    <div class="card card-interactive text-center" onclick="watchAd(3)">
+                        <div style="font-size: 32px; margin-bottom: 12px;">🎥</div>
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">Tier 3</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">30 seconds • +100 PTS</p>
                     </div>
                 </div>
             `;
         }
-
+        
         function watchAd(tier) {
             const rewards = { 1: 20, 2: 50, 3: 100 };
             const durations = { 1: 10, 2: 20, 3: 30 };
             
-            const box = document.getElementById('interactive-box');
-            box.innerHTML = `
-                <div class="text-center">
-                    <div class="animate-spin text-4xl mb-4">📺</div>
-                    <h4 class="font-bold mb-4">Playing Ad...</h4>
-                    <div class="w-full bg-gray-800 rounded-full h-4 mb-4">
-                        <div id="ad-progress" class="bg-purple-600 h-4 rounded-full" style="width:0%"></div>
+            const area = document.getElementById('interactive-area');
+            area.innerHTML = `
+                <div class="card text-center">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📺</div>
+                    <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">Playing Premium Ad...</h4>
+                    <div class="progress-bar" style="margin-bottom: 8px;">
+                        <div id="ad-progress" class="progress-fill" style="width: 0%;"></div>
                     </div>
-                    <p id="ad-timer">${durations[tier]}s remaining</p>
+                    <p id="ad-timer" style="font-size: 14px; color: var(--text-muted);">${durations[tier]}s remaining</p>
                 </div>
             `;
             
             let timeLeft = durations[tier];
             const timer = setInterval(() => {
                 timeLeft--;
-                document.getElementById('ad-progress').style.width = ((durations[tier] - timeLeft) / durations[tier] * 100) + '%';
+                document.getElementById('ad-progress').style.width = 
+                    ((durations[tier] - timeLeft) / durations[tier] * 100) + '%';
                 document.getElementById('ad-timer').textContent = timeLeft + 's remaining';
                 
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    addPoints(rewards[tier], `Ad Tier ${tier}`);
-                    updateMissions('ads');
-                    showNotification(`✅ Ad complete! +${rewards[tier]} PTS`, 'success');
-                    launchConfetti();
-                    startAdsMining();
+                    addPoints(rewards[tier]);
+                    showNotification(`Ad complete! +${rewards[tier]} PTS`, 'success');
+                    document.getElementById('interactive-area').style.display = 'none';
                 }
             }, 1000);
         }
-
-        function startSocialMining() {
-            const box = document.getElementById('interactive-box');
-            box.classList.remove('hidden');
+        
+        function showSocialOptions() {
+            const area = document.getElementById('interactive-area');
+            area.style.display = 'block';
+            area.scrollIntoView({ behavior: 'smooth' });
             
-            box.innerHTML = `
-                <div class="text-center">
-                    <div class="text-6xl mb-6">🌐</div>
-                    <h3 class="text-2xl font-black mb-4">SOCIAL MINING</h3>
-                    <p class="text-gray-400 mb-6">Share & earn 100 PTS per post!</p>
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <button onclick="shareOnSocial('facebook')" class="bg-blue-600 p-4 rounded-xl font-bold hover:scale-105 transition">
-                            <i class="fa-brands fa-facebook text-2xl block mb-1"></i>Facebook
-                        </button>
-                        <button onclick="shareOnSocial('twitter')" class="bg-sky-500 p-4 rounded-xl font-bold hover:scale-105 transition">
-                            <i class="fa-brands fa-twitter text-2xl block mb-1"></i>Twitter
-                        </button>
-                        <button onclick="shareOnSocial('whatsapp')" class="bg-green-500 p-4 rounded-xl font-bold hover:scale-105 transition">
-                            <i class="fa-brands fa-whatsapp text-2xl block mb-1"></i>WhatsApp
-                        </button>
-                        <button onclick="shareOnSocial('telegram')" class="bg-blue-400 p-4 rounded-xl font-bold hover:scale-105 transition">
-                            <i class="fa-brands fa-telegram text-2xl block mb-1"></i>Telegram
-                        </button>
-                    </div>
+            area.innerHTML = `
+                <h3 class="section-title">Share on Social Media</h3>
+                <p class="section-subtitle">Share our platform and earn 100 PTS per verified post.</p>
+                <div class="grid-2">
+                    <button onclick="shareOnSocial('facebook')" class="card card-interactive" style="background: rgba(59, 130, 246, 0.05);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-brands fa-facebook" style="font-size: 24px; color: #3b82f6;"></i>
+                            <span style="font-weight: 600;">Share on Facebook</span>
+                        </div>
+                    </button>
+                    <button onclick="shareOnSocial('twitter')" class="card card-interactive" style="background: rgba(14, 165, 233, 0.05);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-brands fa-twitter" style="font-size: 24px; color: #0ea5e9;"></i>
+                            <span style="font-weight: 600;">Share on Twitter</span>
+                        </div>
+                    </button>
+                    <button onclick="shareOnSocial('whatsapp')" class="card card-interactive" style="background: rgba(34, 197, 94, 0.05);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-brands fa-whatsapp" style="font-size: 24px; color: #22c55e;"></i>
+                            <span style="font-weight: 600;">Share on WhatsApp</span>
+                        </div>
+                    </button>
+                    <button onclick="shareOnSocial('telegram')" class="card card-interactive" style="background: rgba(34, 211, 238, 0.05);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-brands fa-telegram" style="font-size: 24px; color: #22d3ee;"></i>
+                            <span style="font-weight: 600;">Share on Telegram</span>
+                        </div>
+                    </button>
                 </div>
             `;
         }
-
+        
         function shareOnSocial(platform) {
-            const msg = encodeURIComponent('🚀 Join Alamin Special Earn - Earn real money online! Sign up now: https://alamin-special.com');
+            const msg = encodeURIComponent('Join Alamin Special Earn - Earn real money online! 🚀 Sign up now!');
             const urls = {
                 facebook: `https://facebook.com/sharer/sharer.php?u=${msg}`,
                 twitter: `https://twitter.com/intent/tweet?text=${msg}`,
@@ -1125,212 +932,142 @@
             window.open(urls[platform], '_blank');
             
             setTimeout(() => {
-                addPoints(100, 'Social share');
-                showNotification('🎉 +100 PTS from social share!', 'success');
-                launchConfetti();
+                addPoints(100);
+                showNotification('+100 PTS from social share!', 'success');
+                document.getElementById('interactive-area').style.display = 'none';
             }, 2000);
         }
-
-        // ============ CHAT SYSTEM ============
-        function toggleChat() {
-            const chat = document.getElementById('chat-interface');
-            chat.classList.toggle('hidden');
-            if (!chat.classList.contains('hidden')) {
-                chat.scrollIntoView({ behavior: 'smooth' });
-            }
+        
+        // ============ POINTS MANAGEMENT ============
+        function addPoints(amount) {
+            APP.points += amount;
+            APP.totalEarned += amount;
+            
+            // Level up
+            APP.level = Math.floor(APP.totalEarned / 1000) + 1;
+            if (APP.level > 20) APP.level = 20;
+            
+            saveAppState();
+            updateAllUI();
         }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const messagesDiv = document.getElementById('chat-messages');
-            
-            // Add user message
-            messagesDiv.innerHTML += `
-                <div class="flex items-start space-x-2 justify-end">
-                    <div class="bg-purple-600 rounded-2xl rounded-tr-none p-3 text-xs max-w-[80%]">
-                        ${message}
-                    </div>
-                    <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-xs">You</div>
-                </div>
-            `;
-            
-            input.value = '';
-            
-            // AI response
-            setTimeout(() => {
-                const responses = [
-                    "Great! How can I assist you today? 🤗",
-                    "I understand! Let me help you with that. 💪",
-                    "You can earn points by completing quizzes, watching ads, or sharing on social media! 🚀",
-                    "For withdrawals, you need minimum 1000 PTS. You can withdraw via bank, M-Pesa, or mobile money! 💰",
-                    "Keep up the great work! You're doing amazing! ⭐"
-                ];
-                
-                messagesDiv.innerHTML += `
-                    <div class="flex items-start space-x-2">
-                        <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-xs">AI</div>
-                        <div class="bg-gray-800 rounded-2xl rounded-tl-none p-3 text-xs max-w-[80%]">
-                            ${responses[Math.floor(Math.random() * responses.length)]}
-                        </div>
-                    </div>
-                `;
-                
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }, 500);
-            
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        function saveAppState() {
+            localStorage.setItem('alamin_state', JSON.stringify(APP));
         }
-
-        // ============ CURRENCY CONVERSION ============
-        function updateConversion() {
-            const points = document.getElementById('withdraw-amount')?.value || 0;
-            const currency = document.getElementById('currency-select')?.value || 'NGN';
-            const converted = (points * CONFIG.CURRENCIES[currency].rate).toFixed(2);
-            
-            const display = document.getElementById('conversion-display');
-            if (display) {
-                display.textContent = `${CONFIG.CURRENCIES[currency].symbol}${converted} ${currency}`;
-            }
+        
+        function loadAppState() {
+            const saved = localStorage.getItem('alamin_state');
+            if (saved) APP = Object.assign(APP, JSON.parse(saved));
         }
-
+        
+        function updateAllUI() {
+            document.getElementById('points-display').textContent = APP.points + ' PTS';
+            document.getElementById('total-earned').textContent = APP.totalEarned;
+            document.getElementById('user-level').textContent = APP.level;
+            document.getElementById('streak-days').textContent = APP.streak;
+            document.getElementById('referral-count').textContent = APP.referrals;
+            
+            const progress = Math.min((APP.points / 1000) * 100, 100);
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = APP.points + '/1000 PTS';
+            
+            updateConversion();
+        }
+        
         // ============ WITHDRAWAL ============
+        function updateWithdrawOptions() {
+            const method = document.getElementById('withdraw-method').value;
+            const bankSelect = document.getElementById('withdraw-bank');
+            
+            const options = {
+                bank: ['OPay', 'PalmPay', 'Kuda', 'Access', 'GTB', 'UBA', 'Zenith'],
+                mpesa: ['M-Pesa Kenya', 'M-Pesa Tanzania'],
+                airtel: ['Airtel Money Kenya', 'Airtel Money Uganda'],
+                mtn: ['MTN Mobile Money', 'MTN Ghana']
+            };
+            
+            bankSelect.innerHTML = '<option value="">Choose...</option>' +
+                options[method].map(o => `<option value="${o}">${o}</option>`).join('');
+        }
+        
+        function updateConversion() {
+            const amount = document.getElementById('withdraw-amount')?.value || 0;
+            document.getElementById('conversion-display').textContent = 
+                `₦${parseInt(amount).toLocaleString()}`;
+        }
+        
         function processWithdrawal() {
             const amount = parseInt(document.getElementById('withdraw-amount').value);
             const bank = document.getElementById('withdraw-bank').value;
             const account = document.getElementById('withdraw-account').value;
             
-            if (!amount || amount < CONFIG.MIN_WITHDRAWAL) {
-                showNotification(`⚠️ Minimum withdrawal is ${CONFIG.MIN_WITHDRAWAL} PTS`, 'warning');
+            if (!amount || amount < 1000) {
+                showNotification('Minimum withdrawal is 1,000 PTS', 'warning');
                 return;
             }
-            
-            if (amount > APP_STATE.points) {
-                showNotification('❌ Insufficient balance!', 'error');
+            if (amount > APP.points) {
+                showNotification('Insufficient balance!', 'error');
                 return;
             }
-            
             if (!bank || !account) {
-                showNotification('⚠️ Please fill all fields', 'warning');
+                showNotification('Please fill all fields', 'warning');
                 return;
             }
             
-            APP_STATE.points -= amount;
+            APP.points -= amount;
             saveAppState();
             updateAllUI();
             
-            showNotification(`✅ Withdrawal of ${amount} PTS initiated!`, 'success');
-            launchConfetti();
+            showNotification(`Withdrawal of ₦${amount.toLocaleString()} initiated! Processing within 24 hours.`, 'success');
             
             document.getElementById('withdraw-amount').value = '';
             document.getElementById('withdraw-account').value = '';
         }
-
-        // ============ UTILITY FUNCTIONS ============
+        
+        // ============ NOTIFICATIONS ============
         function showNotification(message, type = 'info') {
-            const colors = {
-                success: 'bg-green-500',
-                error: 'bg-red-500',
-                warning: 'bg-yellow-500',
-                info: 'bg-purple-500'
-            };
-            
             const notification = document.createElement('div');
-            notification.className = `notification ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl font-bold text-sm`;
-            notification.textContent = message;
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
             document.body.appendChild(notification);
             
             setTimeout(() => {
                 notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                notification.style.transition = 'all 0.3s';
+                notification.style.transition = 'opacity 0.3s';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
-
-        function launchConfetti() {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#8b5cf6', '#ec4899', '#06b6d4', '#f59e0b']
-            });
-        }
-
-        function closeBox() {
-            document.getElementById('interactive-box').classList.add('hidden');
-        }
-
-        function logout() {
-            localStorage.removeItem('is_logged_in');
-            document.getElementById('main-app').classList.add('hidden');
-            document.getElementById('login-overlay').classList.remove('hidden');
-            document.getElementById('otp-verification-section').classList.add('hidden');
-            document.getElementById('login-btn').classList.remove('hidden');
-        }
-
-        function skipAdBlocker() {
-            document.getElementById('adblock-overlay').classList.add('hidden');
-        }
-
-        // ============ WITHDRAWAL METHOD SWITCHING ============
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.withdraw-method-btn')) {
-                document.querySelectorAll('.withdraw-method-btn').forEach(btn => {
-                    btn.classList.remove('bg-purple-600', 'text-white', 'active');
-                    btn.classList.add('bg-gray-800', 'text-gray-400');
-                });
-                const btn = e.target.closest('.withdraw-method-btn');
-                btn.classList.remove('bg-gray-800', 'text-gray-400');
-                btn.classList.add('bg-purple-600', 'text-white', 'active');
-                
-                const method = btn.dataset.method;
-                const bankSelect = document.getElementById('withdraw-bank');
-                
-                // Update bank options based on method
-                const options = {
-                    bank: ['OPay', 'PalmPay', 'Kuda', 'Access', 'GTB', 'UBA', 'Zenith'],
-                    mpesa: ['M-Pesa Kenya', 'M-Pesa Tanzania', 'M-Pesa DRC'],
-                    airtel: ['Airtel Money Kenya', 'Airtel Money Uganda', 'Airtel Money Tanzania'],
-                    mtn: ['MTN Mobile Money', 'MTN Ghana', 'MTN Nigeria']
-                };
-                
-                bankSelect.innerHTML = '<option value="">Select...</option>' +
-                    options[method].map(opt => `<option value="${opt}">${opt}</option>`).join('');
-            }
-        });
-
+        
         // ============ INITIALIZATION ============
         window.addEventListener('load', () => {
-            initParticles();
+            // Check adblock
+            setTimeout(() => {
+                const test = document.createElement('div');
+                test.className = 'adsbox';
+                test.style.cssText = 'position:absolute;left:-9999px;';
+                document.body.appendChild(test);
+                
+                setTimeout(() => {
+                    if (test.offsetHeight === 0) {
+                        document.getElementById('adblock-overlay').style.display = 'flex';
+                    }
+                    test.remove();
+                }, 100);
+            }, 1000);
             
-            // Check if user is logged in
-            if (localStorage.getItem('is_logged_in') === 'true') {
-                document.getElementById('login-overlay').classList.add('hidden');
-                document.getElementById('main-app').classList.remove('hidden');
+            // Check login
+            if (localStorage.getItem('alamin_logged_in') === 'true') {
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
                 loadAppState();
                 updateAllUI();
             }
             
-            // Check for ad blocker
-            setTimeout(() => {
-                const decoy = document.querySelector('.ad-banner-check');
-                if (decoy && decoy.offsetHeight === 0) {
-                    document.getElementById('adblock-overlay').classList.remove('hidden');
-                }
-            }, 2000);
-            
-            console.log(`💎 ${CONFIG.APP_NAME} v${CONFIG.VERSION}`);
-            console.log('🌍 Ultimate Exclusive Platform Ready!');
-        });
-
-        // Update conversion on input change
-        document.addEventListener('input', function(e) {
-            if (e.target.id === 'withdraw-amount') {
-                updateConversion();
-            }
+            // Init withdraw options
+            updateWithdrawOptions();
         });
     </script>
 </body>
